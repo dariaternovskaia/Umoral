@@ -1,79 +1,153 @@
 ---
-import { getCollection } from 'astro:content';
-
-// Получаем заметки и фильтруем черновики
-let notes = await getCollection('content', ({ id }) => id.startsWith('creativity/notes/'));
-notes = notes.filter(note => !note.data.draft);
-
-// Сортируем: сначала новые
-notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <html>
   <head>
+    <title>Umoral</title>
     <meta charset="UTF-8">
-    <title>Заметки</title>
     <style>
       body { 
         font-family: sans-serif; 
-        max-width: 600px; 
+        max-width: 800px; 
         margin: 0 auto; 
         padding: 2rem;
-        line-height: 1.5;
-        color: #222;
+        background: #fafafa;
       }
-      h1 { 
-        font-size: 1.4rem;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #ddd;
+      
+      /* Аватар и облачко */
+      .welcome {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
-      .note { 
-        padding: 0.4rem 0;
-        border-bottom: 1px dashed #eee;
+      
+      .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #2563eb;
+        flex-shrink: 0;
+      }
+      
+      .speech-bubble {
         position: relative;
+        background: #fff;
+        border: 2px solid #2563eb;
+        border-radius: 12px;
+        padding: 1.5rem;
+        flex: 1;
       }
-      .note p {
-         margin: 0;
-         display: inline;
-        }
-      .note-text {
-        font-size: 0.95rem;
+      
+      .speech-bubble::before {
+        content: '';
+        position: absolute;
+        left: -12px;
+        top: 24px;
+        width: 0;
+        height: 0;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-right: 12px solid #2563eb;
       }
-      .note-date {
-        font-size: 0.75rem;
-        color: #888;
-        margin-left: 0.6rem;
-        opacity: 0 !important;
-        transition: opacity 0.2s ease;
-        pointer-events: none;
-        display: inline-block;
+      
+      .speech-bubble::after {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 26px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid #fff;
       }
-      .note:hover .note-date {
-        opacity: 1 !important;
+      
+      .speech-bubble h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.3rem;
+        color: #2563eb;
       }
-      .back { 
-        display: inline-block;
-        margin-top: 2rem;
-        color: #666;
-        font-size: 0.85rem;
-        text-decoration: none;
+      
+      .speech-bubble p {
+        margin: 0;
+        line-height: 1.6;
+        color: #444;
       }
-      .back:hover { color: #000; }
+      
+      /* Разделы */
+      .section { 
+        margin: 2rem 0; 
+        padding: 1.5rem; 
+        border-left: 4px solid #2563eb; 
+        background: white;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      }
+      h2 { 
+        margin-top: 0;
+        color: #1e40af;
+      }
+      a { 
+        color: #2563eb; 
+        text-decoration: none; 
+      }
+      a:hover { 
+        text-decoration: underline; 
+      }
+      ul {
+        margin: 0.5rem 0 0 0;
+        padding-left: 1.5rem;
+      }
+      li {
+        margin: 0.3rem 0;
+      }
     </style>
   </head>
   <body>
-    <h1>Заметки</h1>
-    
-    <div>
-      {notes.map((note) => (
-        <div class="note">
-          <span class="note-text">{note.body.trim()}</span>
-          <span class="note-date">{note.data.date.toLocaleDateString('ru-RU')}</span>
-        </div>
-      ))}
+    <!-- Приветствие с аватаркой -->
+    <div class="welcome">
+      <img src="/avatar.jpg" alt="Аватар" class="avatar">
+      <div class="speech-bubble">
+        <h1>Привет! 👋</h1>
+        <p>
+          Это мой личный уголок интернета — здесь я собираю мысли, 
+          философские размышления и творческие заметки. 
+          Чувствуй себя как дома!
+        </p>
+      </div>
     </div>
 
-    <a href="/" class="back">← На главную</a>
+    <div class="section">
+      <h2>Философия</h2>
+      <ul>
+        <li><a href="content/philosophy/essays/">Эссе и видео-эссе</a></li>
+        <li><a href="content/philosophy/comments/">Комментарии</a></li>
+        <li><a href="content/philosophy/thoughts/">Мысли</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Творчество</h2>
+      <ul>
+        <li><a href="content/creativity/poems/">Стихи</a></li>
+        <li><a href="content/creativity/prose/">Проза</a></li>
+        <li><a href="content/creativity/drawings/">Рисунки</a></li>
+        <li><a href="content/creativity/notes/">Заметки</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Журнал</h2>
+      <ul>
+        <li><a href="content/journal/diary/">Дневник</a></li>
+        <li><a href="content/journal/daily/">Ежедневник</a></li>
+      </ul>
+    </div>
   </body>
 </html>
