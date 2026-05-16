@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+
+// Получаем заметки и фильтруем черновики
+let notes = await getCollection('content', ({ id }) => id.startsWith('creativity/notes/'));
+notes = notes.filter(note => !note.data.draft);
+
+// Сортируем: сначала новые
+notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+    <style>
+      body { 
+        font-family: sans-serif; 
+        max-width: 600px; 
+        margin: 0 auto; 
+        padding: 2rem;
+        line-height: 1.5;
+        color: #222;
+      }
+      h1 { 
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      .note { 
+        padding: 0.4rem 0;
+        border-bottom: 1px dashed #eee;
+        position: relative;
+      }
+      .note-text {
+        font-size: 0.95rem;
+      }
+      .note-date {
+        font-size: 0.75rem;
+        color: #888;
+        margin-left: 0.6rem;
+        opacity: 0 !important;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        display: inline-block;
+      }
+      .note:hover .note-date {
+        opacity: 1 !important;
+      }
+      .back { 
+        display: inline-block;
+        margin-top: 2rem;
+        color: #666;
+        font-size: 0.85rem;
+        text-decoration: none;
+      }
+      .back:hover { color: #000; }
+    </style>
+  </head>
+  <body>
+    <h1>Заметки</h1>
+    
+    <div>
+      {notes.map((note) => (
+        <div class="note">
+          <span class="note-text">{note.body.trim()}</span>
+          <span class="note-date">{note.data.date.toLocaleDateString('ru-RU')}</span>
+        </div>
+      ))}
+    </div>
+
+    <a href="/" class="back">← На главную</a>
+  </body>
+</html>
