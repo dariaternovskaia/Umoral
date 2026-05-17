@@ -24,59 +24,70 @@
         padding-bottom: 350px;
       }
 
-      /* ----- ГРУППА СО СМЕЩЕНИЕМ: ДОБАВИЛИ ЕЩЁ ~6 СМ ----- */
-      /* Было: margin-left: 5.5rem; margin-top: 5.2rem (~88px / 83px)
-         Увеличиваем: +6 см примерно = +96px (6rem). Итоговые значения: 11.5rem слева, 11.2rem сверху */
+      /* ----- ГРУППА СО СМЕЩЕНИЕМ ПО ГОРИЗОНТАЛИ (вертикаль не трогаем) ----- */
+      /* 
+         Было: margin-top: 11.2rem — оставляем как есть.
+         По горизонтали смещаем сильнее вправо: было 11.5rem, ставим 17rem для заметного сдвига.
+         Также увеличиваем масштаб всей группы, чтобы боксы и надпись стали крупнее.
+      */
       .shifted-group {
-        margin-left: 11.5rem;    /* ~184px (примерно 11-12 см) – достигнуто смещение ближе к центру */
-        margin-top: 11.2rem;     /* ~179px — дополнительный отступ сверху */
+        margin-left: 17rem;      /* значительное смещение вправо */
+        margin-top: 11.2rem;     /* вертикаль без изменений */
         position: relative;
-        max-width: calc(100% - 11.5rem);
+        max-width: calc(100% - 17rem);
+        
+        /* УВЕЛИЧЕНИЕ ВСЕЙ ГРУППЫ (пропорционально: боксы, текст, отступы) */
+        transform: scale(1.35);
+        transform-origin: left top;   /* масштабируем от левого верхнего угла, чтобы не нарушить смещение */
+        
+        /* Добавляем небольшой отступ снизу, чтобы увеличенные блоки не наезжали на нижнюю сцену */
+        margin-bottom: 5rem;
       }
 
-      /* ЗАГОЛОВОК — ЦЕНТРИРУЕМ ОТНОСИТЕЛЬНО .boxes-grid */
+      /* Заголовок — центрируется относительно боксов, увеличение наследуется через transform */
       .shifted-group h1 {
         text-align: center;
-        margin-bottom: 2rem;
-        font-size: 1.8rem;
+        margin-bottom: 1.8rem;    /* немного увеличиваем отступ под масштабом (1.35x даст ~2.4rem визуально) */
+        font-size: 1.8rem;        /* базовый размер, scale увеличит */
         width: 100%;
+        white-space: nowrap;      /* чтобы заголовок не переносился при масштабе на узких экранах */
       }
       
-      /* СЕТКА БЛОКОВ (исходный вид, но без лишних отступов) */
+      /* СЕТКА БЛОКОВ */
       .boxes-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* чуть шире минимальная ширина для увеличения */
+        gap: 1.5rem;              /* увеличенный gap */
         margin: 0;
-        max-width: 700px;
-        /* Дополнительно гарантируем, что сетка занимает всю доступную ширину родителя */
+        max-width: 850px;         /* больше места для блоков */
         width: 100%;
       }
       
-      /* Стили боксов — без изменений */
+      /* Боксы — увеличиваем внутренние отступы и шрифт для лучшего вида при scale */
       .box {
         background: #fff;
         border: 2px solid #333;
-        border-radius: 8px;
-        padding: 1.5rem 0.5rem;
+        border-radius: 12px;      /* чуть крупнее скругление */
+        padding: 1.8rem 0.8rem;
         text-align: center;
-        font-size: 0.9rem;
+        font-size: 1.05rem;       /* увеличенный базовый шрифт */
         font-weight: 700;
         text-decoration: none;
         color: #333;
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 90px;
+        min-height: 110px;        /* выше */
+        line-height: 1.3;
       }
       .box:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
       }
 
-      /* ----- НИЖНЯЯ ФИКСИРОВАННАЯ СЦЕНА (БЕЗ ИЗМЕНЕНИЙ) ----- */
+      /* Нижняя сцена и прочие элементы без изменений (кроме адаптивов для корректировки наложения) */
       .bottom-scene {
         position: fixed;
         right: 24px;
@@ -163,15 +174,50 @@
         color: #000;
       }
 
-      /* ----- АДАПТИВ: НА ПЛАНШЕТАХ УМЕНЬШАЕМ СМЕЩЕНИЕ, НО ОНО ВСЁ ЕЩЕ БОЛЬШЕ ИСХОДНОГО ----- */
+      /* ----- АДАПТИВ: на планшетах уменьшаем смещение и масштаб, чтобы всё влезало ----- */
+      @media (max-width: 800px) {
+        .shifted-group {
+          margin-left: 8rem;
+          transform: scale(1.2);
+          margin-bottom: 4rem;
+        }
+        .boxes-grid {
+          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          gap: 1.2rem;
+        }
+        .box {
+          padding: 1.3rem 0.6rem;
+          font-size: 0.95rem;
+          min-height: 90px;
+        }
+        .shifted-group h1 {
+          font-size: 1.6rem;
+          white-space: normal;
+        }
+      }
+
       @media (max-width: 700px) {
         body {
           padding: 1.2rem 1rem 200px 1rem;
         }
-        /* для средних экранов уменьшаем отступы, но сохраняем эффект "ближе к центру" */
         .shifted-group {
-          margin-left: 6rem;
-          margin-top: 6rem;
+          margin-left: 3rem;
+          margin-top: 9rem;       /* чуть уменьшаем отступ сверху для компактности */
+          transform: scale(1.1);
+          margin-bottom: 3rem;
+        }
+        .boxes-grid {
+          gap: 1rem;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        .box {
+          font-size: 0.85rem;
+          padding: 1rem 0.5rem;
+          min-height: 80px;
+        }
+        .shifted-group h1 {
+          font-size: 1.4rem;
+          margin-bottom: 1.2rem;
         }
         .bottom-scene {
           right: 12px;
@@ -200,75 +246,66 @@
 
       @media (max-width: 550px) {
         .shifted-group {
-          margin-left: 3.5rem;
-          margin-top: 4rem;
+          margin-left: 1.5rem;
+          margin-top: 6rem;
+          transform: scale(1);
+          margin-bottom: 2rem;
         }
         .boxes-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-          gap: 1rem;
-          margin: 0;
-          max-width: 750px;
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+          gap: 0.9rem;
+        }
+        .box {
+          font-size: 0.8rem;
+          padding: 0.8rem 0.4rem;
+          min-height: 70px;
+        }
+        .shifted-group h1 {
+          font-size: 1.3rem;
         }
         .bottom-scene {
-          width: 360px;
+          width: 340px;
           right: 8px;
           bottom: 8px;
-          height: 220px;
+          height: 210px;
         }
         .speech-bubble {
-          width: 170px;
-          font-size: 0.65rem;
-          bottom: 50px;
+          width: 160px;
+          font-size: 0.6rem;
+          bottom: 48px;
         }
         .me-figure {
-          width: 110px;
-          bottom: 28px;
+          width: 95px;
+          bottom: 25px;
         }
         .idea-bank {
-          font-size: 0.75rem;
-          padding: 0.5rem 0.9rem;
+          font-size: 0.7rem;
+          padding: 0.4rem 0.8rem;
         }
       }
 
-      /* очень узкие экраны — отступы минимальны, но сетка удобна */
-      @media (max-width: 420px) {
+      @media (max-width: 450px) {
         .shifted-group {
-          margin-left: 1.2rem;
-          margin-top: 2rem;
+          margin-left: 0.8rem;
+          margin-top: 4rem;
+          transform: scale(0.95);
         }
         .boxes-grid {
           grid-template-columns: 1fr;
           gap: 0.8rem;
         }
         .box {
-          min-height: 70px;
-          padding: 1rem 0.5rem;
-        }
-        .speech-bubble {
-          width: 150px;
-          font-size: 0.6rem;
-          bottom: 45px;
-          padding: 0.6rem;
-        }
-        .me-figure {
-          width: 85px;
-          bottom: 28px;
-        }
-        .idea-bank {
-          font-size: 0.65rem;
-          padding: 0.3rem 0.7rem;
-          right: 8px;
+          min-height: 65px;
         }
       }
     </style>
   </head>
   <body>
     <!-- 
-      ГРУППА С УВЕЛИЧЕННЫМ СМЕЩЕНИЕМ (~+6 см к предыдущему значению):
-      margin-left: 11.5rem, margin-top: 11.2rem
-      Заголовок "Стихи" идеально центрирован относительно боксов за счёт text-align:center
-      и той же родительской ширины.
+      ГРУППА С УВЕЛИЧЕННЫМ СМЕЩЕНИЕМ ПО ГОРИЗОНТАЛИ (margin-left: 17rem),
+      ВЕРТИКАЛЬ НЕ ТРОГАЛИ (margin-top: 11.2rem).
+      ВСЯ ГРУППА МАСШТАБИРОВАНА (transform: scale(1.35)) — боксы и надпись стали крупнее,
+      при этом пропорции между заголовком и блоками сохранены, заголовок центрирован.
     -->
     <div class="shifted-group">
       <h1>Стихи</h1>
@@ -280,7 +317,7 @@
       </div>
     </div>
 
-    <!-- Фиксированная сцена — исходная, без правок -->
+    <!-- Фиксированная сцена — исходная, без изменений -->
     <div class="bottom-scene">
       <div class="speech-bubble">
         <p>
