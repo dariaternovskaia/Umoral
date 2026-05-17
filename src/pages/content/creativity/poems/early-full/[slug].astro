@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     const slug = poem.id.split('/').pop();
     return {
       params: { slug },
-      props: { poem, slug }, // Передаём slug в props
+      props: { poem, slug },
     };
   });
 }
@@ -19,28 +19,26 @@ const { poem, slug } = Astro.props;
 const { data, body } = poem;
 const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
 
-// Пастельные цвета для фона
-const pastelColors = [
-  '#FFE5E5', // розовый
-  '#E5F3FF', // голубой
-  '#FFF5E5', // персиковый
-  '#E5FFE5', // мятный
-  '#F5E5FF', // лавандовый
-  '#FFF9E5', // кремовый
-  '#E5FFF9', // бирюзовый
-  '#FFE5F0', // нежно-розовый
+// Тёмные глубокие цвета (можно добавлять свои hex-коды)
+const darkColors = [
+  '#1A1A2E', // Глубокий тёмно-синий
+  '#0F172A', // Ночной синий
+  '#1E1B4B', // Тёмный индиго
+  '#064E3B', // Глубокий изумруд
+  '#1C1917', // Угольно-чёрный
+  '#290028', // Тёмный бордо
+  '#0C1929', // Тёмный морской
+  '#141414', // Графит
 ];
 
-// Выбираем цвет на основе slug
 const getColorForPoem = (poemSlug: string) => {
-  if (!poemSlug) return '#FAFAFA'; // запасной цвет
-  
+  if (!poemSlug) return '#1A1A2E'; // запасной цвет
   let hash = 0;
   for (let i = 0; i < poemSlug.length; i++) {
     hash = poemSlug.charCodeAt(i) + ((hash << 5) - hash);
   }
-  const index = Math.abs(hash) % pastelColors.length;
-  return pastelColors[index];
+  const index = Math.abs(hash) % darkColors.length;
+  return darkColors[index];
 };
 
 const bgColor = getColorForPoem(slug);
@@ -62,12 +60,11 @@ const bgColor = getColorForPoem(slug);
         font-weight: 300;
         font-size: 1.05rem;
         line-height: 1.5;
-        color: #222;
-        background: ${bgColor};
+        color: #f0f0f0; /* Белый текст */
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 5rem 5rem 4rem 8rem !important;
+        padding: 5rem 5rem 4rem 8rem !important; /* Отступы как просила */
         min-height: 100vh;
       }
       
@@ -79,20 +76,20 @@ const bgColor = getColorForPoem(slug);
       }
       
       .nav a {
-        color: #666;
+        color: #aaa;
         text-decoration: none;
         font-size: 0.85rem;
         font-weight: 300;
         padding: 0.3rem 0.8rem;
-        border: 1px solid #ccc;
+        border: 1px solid #444;
         border-radius: 4px;
         transition: all 0.2s;
       }
       
       .nav a:hover {
-        color: #222;
+        color: #fff;
         border-color: #888;
-        background: rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.1);
       }
       
       h1 { 
@@ -101,6 +98,7 @@ const bgColor = getColorForPoem(slug);
         margin-bottom: 1.5rem;
         text-align: left;
         letter-spacing: 0.5px;
+        color: #fff;
       }
       
       .poem-text {
@@ -111,11 +109,12 @@ const bgColor = getColorForPoem(slug);
         margin-bottom: 0.5rem;
         font-weight: 300;
         max-width: 600px;
+        color: #e5e5e5;
       }
 
       .date {
         text-align: right;
-        color: #666;
+        color: #888;
         font-size: 0.85rem;
         font-style: italic;
         margin-top: 1rem;
@@ -126,7 +125,8 @@ const bgColor = getColorForPoem(slug);
       }
     </style>
   </head>
-  <body>
+  <!-- Цвет фона задаём здесь, чтобы Astro точно его применил -->
+  <body style={`background-color: ${bgColor};`}>
     <nav class="nav">
       <a href="/Umoral/">← На главную</a>
       <a href="/Umoral/content/creativity/poems/">← К стихам</a>
