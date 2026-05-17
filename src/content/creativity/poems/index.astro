@@ -1,0 +1,158 @@
+---
+---
+
+<html>
+  <head>
+    <title>Стихи | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: #fafafa;
+        color: #222;
+        padding-bottom: 350px; /* Место для иллюстрации внизу */
+      }
+      h1 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; }
+      
+      /* 4 кликабельных бокса */
+      .boxes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+      .box {
+        background: #fff;
+        border: 3px solid #333;
+        border-radius: 14px;
+        padding: 1.5rem;
+        text-align: center;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: #333;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 110px;
+      }
+      .box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        background: #f8f9fa;
+      }
+
+      /* Нижняя сцена */
+      .bottom-scene {
+        position: relative;
+        max-width: 650px;
+        margin: 0 auto;
+        min-height: 300px;
+        margin-top: 4rem;
+      }
+      
+      /* Текстовый пузырь */
+      .speech-bubble {
+        position: absolute;
+        top: 0;
+        left: 5%;
+        width: 70%;
+        background: #fff;
+        border: 2px solid #333;
+        border-radius: 12px;
+        padding: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        z-index: 2;
+      }
+      .speech-bubble::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        right: 60px;
+        width: 0; height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #333;
+      }
+      .speech-bubble::before {
+        content: '';
+        position: absolute;
+        bottom: -7px;
+        right: 62px;
+        width: 0; height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid #fff;
+      }
+
+      /* Твоя фигурка */
+      .me-figure {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 240px;
+        height: auto;
+        z-index: 1;
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+      }
+
+      /* Копилка идей */
+      .idea-bank {
+        position: absolute;
+        bottom: 25px;
+        left: 0;
+        background: #ffd166;
+        border: 2px solid #333;
+        border-radius: 10px;
+        padding: 0.6rem 1.2rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+        cursor: pointer;
+        z-index: 3;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .idea-bank:hover { 
+        background: #ffca3a; 
+        transform: scale(1.05);
+      }
+
+      /* Ссылка назад */
+      .back-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #666;
+        text-decoration: none;
+      }
+      .back-link:hover { color: #000; }
+    </style>
+  </head>
+  <body>
+    <h1>📖 Стихи</h1>
+    
+    <div class="boxes-grid">
+      <a href="early-full/" class="box">Ранние полноценки</a>
+      <a href="current-full/" class="box">Актуальные полноценки</a>
+      <a href="philosophy/" class="box">Философия в стихах</a>
+      <a href="exercises/" class="box">Упражнения</a>
+    </div>
+
+    <div class="bottom-scene">
+      <div class="speech-bubble">
+        Здесь живут мои рифмы и строки. Выбирай раздел, чтобы почитать или просто залипнуть в атмосферу.
+      </div>
+      
+      <a href="ideas-bank/" class="idea-bank">💡 Копилка идей</a>
+      
+      <img src="/me.png" alt="Моя фигурка" class="me-figure">
+    </div>
+
+    <a href="/" class="back-link">← На главную</a>
+  </body>
+</html>
