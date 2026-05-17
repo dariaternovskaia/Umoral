@@ -30,12 +30,11 @@
         font-size: 1.8rem;
       }
       
-      /* 4 бокса — СДВИНУТЫ ВНИЗ И ВПРАВО */
       .boxes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 1rem;
-        margin: 3rem 0 0 3rem; /* Сдвиг вправо и вниз */
+        margin: 3rem 0 0 3rem;
         max-width: 700px;
       }
       .box {
@@ -60,7 +59,6 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       }
 
-      /* ФИКСИРОВАННЫЙ БЛОК В ПРАВОМ НИЖНЕМ УГЛУ */
       .bottom-scene {
         position: fixed;
         right: 24px;
@@ -71,7 +69,6 @@
         z-index: 1000;
       }
       
-      /* Облачко — слева от фигурки */
       .speech-bubble {
         position: absolute;
         left: 0;
@@ -86,7 +83,6 @@
         z-index: 2;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       }
-      /* Хвостик облачка (смотрит вправо) */
       .speech-bubble::after {
         content: '';
         position: absolute;
@@ -110,9 +106,8 @@
         margin: 0;
       }
 
-      /* Фигурка — УВЕЛИЧЕНА */
       .me-figure {
-        width: 170px; /* Было 140px */
+        width: 170px;
         height: auto;
         position: absolute;
         right: 10px;
@@ -121,7 +116,6 @@
         filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       }
 
-      /* Копилка — УВЕЛИЧЕНА */
       .idea-bank {
         position: absolute;
         right: 20px;
@@ -130,8 +124,8 @@
         color: #fff;
         border: 2px solid #333;
         border-radius: 8px;
-        padding: 0.7rem 1.3rem; /* Было 0.5rem 1rem */
-        font-size: 0.95rem; /* Было 0.8rem */
+        padding: 0.7rem 1.3rem;
+        font-size: 0.95rem;
         font-weight: bold;
         text-decoration: none;
         z-index: 5;
@@ -141,7 +135,6 @@
         background: #b71c1c;
       }
 
-      /* Ссылка назад */
       .back-link {
         display: inline-block;
         margin-top: 2rem;
@@ -152,7 +145,6 @@
         color: #000;
       }
 
-      /* Адаптивность */
       @media (max-width: 700px) {
         body {
           padding: 1.2rem 1rem 200px 1rem;
