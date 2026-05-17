@@ -35,14 +35,13 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
         font-family: 'Helvetica Neue', 'Arial', sans-serif;
         font-weight: 300;
         font-size: 1.05rem;
-        line-height: 1.8;
+        line-height: 1.5; /* Уменьшила межстрочный интервал */
         color: #222;
         background: #fafafa;
-        /* Убираем центрирование, ставим контент в левый верхний угол */
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 2rem 2rem 4rem 2rem; /* отступы: сверху, справа, снизу, слева */
+        padding: 5rem 5rem 4rem 5rem; /* Увеличила отступы сверху и слева */
         min-height: 100vh;
       }
       
@@ -56,7 +55,7 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
       
       .poem-text {
         font-size: 1.05rem;
-        line-height: 2;
+        line-height: 1.6; /* Уменьшила интервал в стихе */
         white-space: pre-line;
         text-align: left;
         margin-bottom: 0.5rem;
@@ -71,7 +70,7 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
         font-style: italic;
         margin-top: 1rem;
         margin-right: 1rem;
-        align-self: flex-end; /* Прижимаем дату вправо */
+        align-self: flex-end;
         width: 100%;
         max-width: 600px;
       }
