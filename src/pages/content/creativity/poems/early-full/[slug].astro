@@ -2,18 +2,30 @@
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const poems = await getCollection('content', ({ id }) => 
-    id.startsWith('creativity/poems/early-full/')
-  );
+  // 1. Загружаем ВСЕ записи из коллекции
+  const allEntries = await getCollection('content');
   
-  return poems.map((poem) => ({
-    params: { slug: poem.slug },
-    props: { poem },
-  }));
+  // 2. Фильтруем только ранние стихи
+  const poems = allEntries.filter(entry => 
+    entry.id.startsWith('creativity/poems/early-full/')
+  );
+
+  // 3. Генерируем пути вручную
+  return poems.map((poem) => {
+    // Берём только имя файла без расширения (spirit-of-city)
+    const slug = poem.id.split('/').pop().replace(/\.md$/, '');
+    return {
+      params: { slug },
+      props: { poem },
+    };
+  });
 }
 
 const { poem } = Astro.props;
 const { data, body } = poem;
+
+// Безопасное форматирование даты (если даты нет, выведет пустую строку)
+const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
 ---
 
 <html>
@@ -30,13 +42,11 @@ const { data, body } = poem;
         background: #fafafa;
         line-height: 1.6;
       }
-      
       h1 { 
         font-size: 2rem;
         margin-bottom: 0.5rem;
         text-align: center;
       }
-      
       .date {
         text-align: center;
         color: #888;
@@ -45,14 +55,12 @@ const { data, body } = poem;
         display: block;
         font-style: italic;
       }
-
       .poem-text {
         font-size: 1.1rem;
         white-space: pre-line;
         margin-bottom: 3rem;
         text-align: center;
       }
-
       .back { 
         display: inline-block;
         margin-bottom: 2rem;
@@ -68,7 +76,7 @@ const { data, body } = poem;
     <a href="./" class="back">← К списку стихов</a>
     
     <h1>{data.title}</h1>
-    <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
+    <span class="date">{formattedDate}</span>
     
     <div class="poem-text">
       {body}
