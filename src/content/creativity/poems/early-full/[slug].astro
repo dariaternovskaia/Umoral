@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'spirit-of-city' } }, // Временная заглушка для тестов
+  ];
+}
+
+// Получаем все стихи из этой папки
+let poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/early-full/'));
+poems = poems.filter(note => !note.data.draft);
+
+const { slug } = Astro.params;
+const poem = poems.find((item) => item.slug === slug);
+
+if (!poem) {
+  return Astro.redirect('/');
+}
+
+const { data, body } = poem;
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{data.title}</title>
+    <style>
+      body { 
+        font-family: 'Georgia', serif; /* Более "книжный" шрифт для стихов */
+        max-width: 600px; 
+        margin: 0 auto; 
+        padding: 2rem;
+        color: #222;
+        background: #fafafa;
+        line-height: 1.6;
+      }
+      
+      h1 { 
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-weight: normal;
+        font-style: italic;
+      }
+      
+      .date {
+        text-align: center;
+        color: #888;
+        font-size: 0.8rem;
+        margin-bottom: 2rem;
+        display: block;
+      }
+
+      /* Сам текст стиха */
+      .poem-body {
+        white-space: pre-line; /* Сохраняет переносы строк как в файле */
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+      }
+
+      .back { 
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: #666;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-family: sans-serif;
+      }
+      .back:hover { color: #000; text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <a href="./" class="back">← К списку ранних стихов</a>
+    
+    <h1>{data.title}</h1>
+    <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
+    
+    <div class="poem-body">
+      {body}
+    </div>
+  </body>
+</html>
