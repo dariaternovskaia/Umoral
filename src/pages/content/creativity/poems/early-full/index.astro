@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+
+let poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/early-full/'));
+poems = poems.filter(note => !note.data.draft);
+poems.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ранние полноценки</title>
+    <style>
+      body { 
+        font-family: sans-serif; 
+        max-width: 600px; 
+        margin: 0 auto; 
+        padding: 2rem;
+        color: #222;
+        background: #fafafa;
+        min-height: 100vh;
+      }
+      h1 { 
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5rem;
+      }
+      
+      /* Ссылка-строка */
+      .poem-link {
+        display: block;
+        text-decoration: none;
+        color: #222;
+        padding: 0.8rem 0;
+        border-bottom: 1px dashed #ccc;
+        transition: background 0.2s;
+        cursor: pointer;
+      }
+      .poem-link:hover {
+        background: #f0f0f0;
+        padding-left: 0.5rem;
+        border-bottom-style: solid;
+      }
+
+      .poem-title {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      
+      .back { 
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: #666;
+        text-decoration: none;
+        font-size: 0.85rem;
+      }
+      .back:hover { color: #000; }
+    </style>
+  </head>
+  <body>
+    <a href="../../" class="back">← Назад к Стихам</a>
+    <h1>Ранние полноценки</h1>
+    
+    <div>
+      {poems.map((poem) => (
+        <a href={`./${poem.slug}/`} class="poem-link">
+          <span class="poem-title">{poem.data.title}</span>
+        </a>
+      ))}
+    </div>
+  </body>
+</html>
