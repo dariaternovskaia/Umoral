@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+
+// Находим все стихи из папки early-full
+let poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/early-full/'));
+
+// Создаем статические пути для каждого стиха
+export function getStaticPaths() {
+  return poems.map((poem) => ({
+    params: { slug: poem.slug },
+    props: { poem },
+  }));
+}
+
+// Получаем данные конкретного стиха из props
+const { poem } = Astro.props;
+const { data, body } = poem;
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{data.title}</title>
+    <style>
+      body { 
+        font-family: 'Georgia', serif; 
+        max-width: 600px; 
+        margin: 0 auto; 
+        padding: 2rem;
+        color: #222;
+        background: #fafafa;
+        line-height: 1.6;
+      }
+      
+      h1 { 
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+      
+      .date {
+        text-align: center;
+        color: #888;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+        display: block;
+        font-style: italic;
+      }
+
+      .poem-text {
+        font-size: 1.1rem;
+        white-space: pre-line; /* Сохраняет стихи как есть */
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .back { 
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-family: sans-serif;
+      }
+      .back:hover { color: #000; text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <a href="./" class="back">← К списку стихов</a>
+    
+    <h1>{data.title}</h1>
+    <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
+    
+    <div class="poem-text">
+      {body}
+    </div>
+  </body>
+</html>
