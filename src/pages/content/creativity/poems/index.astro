@@ -23,20 +23,23 @@
         padding-bottom: 350px;
       }
 
-      /* Заголовок и боксы сдвинуты вправо и вниз */
+      /* ВСЁ СДВИНУТО ВПРАВО */
+      .content-wrapper {
+        margin-left: 8rem; /* Сдвиг вправо */
+        max-width: 700px;
+      }
+
       h1 {
         text-align: center;
-        margin: 4rem 0 2rem 4rem; /* Сдвиг: 4rem вниз, 4rem вправо */
+        margin-bottom: 2rem;
         font-size: 1.8rem;
-        max-width: 700px;
       }
       
       .boxes-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr); /* Строго 4 колонки */
+        grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
-        margin: 0 0 3rem 4rem; /* Сдвиг вправо на 4rem */
-        max-width: 700px;
+        margin-bottom: 2rem;
       }
       
       .box {
@@ -59,6 +62,17 @@
       .box:hover {
         transform: translateY(-3px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 2rem;
+        color: #666;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #000;
       }
 
       .bottom-scene {
@@ -137,95 +151,70 @@
         background: #b71c1c;
       }
 
-      .back-link {
-        display: block;
-        margin-top: 3rem;
-        color: #666;
-        text-decoration: none;
-        text-align: center;
-      }
-      .back-link:hover {
-        color: #000;
-      }
-
-      @media (max-width: 700px) {
-        h1 {
-          margin: 3rem 0 2rem 2rem;
+      @media (max-width: 900px) {
+        .content-wrapper {
+          margin-left: 4rem;
         }
         .boxes-grid {
-          margin: 0 0 3rem 2rem;
           grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 650px) {
+        body {
+          padding: 1rem;
+        }
+        .content-wrapper {
+          margin-left: 1rem;
+          max-width: 100%;
+        }
+        .boxes-grid {
+          grid-template-columns: 1fr;
         }
         .bottom-scene {
           right: 12px;
           bottom: 12px;
-          width: 440px;
-          height: 240px;
-        }
-        .speech-bubble {
-          width: 200px;
-          font-size: 0.7rem;
-          bottom: 55px;
-          padding: 0.8rem;
-        }
-        .me-figure {
-          width: 130px;
-          right: 0px;
-          bottom: 30px;
-        }
-        .idea-bank {
-          padding: 0.5rem 1rem;
-          font-size: 0.8rem;
-          right: 12px;
-          bottom: 6px;
-        }
-      }
-
-      @media (max-width: 550px) {
-        h1 {
-          margin: 2rem 0 1.5rem 1rem;
-          font-size: 1.5rem;
-        }
-        .boxes-grid {
-          margin: 0 0 2rem 1rem;
-          grid-template-columns: 1fr;
-        }
-        .bottom-scene {
           width: 360px;
-          right: 8px;
-          bottom: 8px;
           height: 220px;
         }
         .speech-bubble {
-          width: 170px;
+          width: 180px;
           font-size: 0.65rem;
           bottom: 50px;
+          padding: 0.7rem;
         }
         .me-figure {
           width: 110px;
+          right: 0px;
           bottom: 28px;
         }
         .idea-bank {
+          padding: 0.4rem 0.9rem;
           font-size: 0.75rem;
-          padding: 0.5rem 0.9rem;
+          right: 10px;
+          bottom: 5px;
         }
       }
     </style>
   </head>
   <body>
-    <h1>Стихи</h1>
-    
-    <div class="boxes-grid">
-      <a href="early-full/" class="box">Ранние полноценки</a>
-      <a href="current-full/" class="box">Актуальные полноценки</a>
-      <a href="philosophy/" class="box">Философия в стихах</a>
-      <a href="exercises/" class="box">Упражнения</a>
+    <div class="content-wrapper">
+      <h1>Стихи</h1>
+      
+      <div class="boxes-grid">
+        <a href="early-full/" class="box">Ранние полноценки</a>
+        <a href="current-full/" class="box">Актуальные полноценки</a>
+        <a href="philosophy/" class="box">Философия в стихах</a>
+        <a href="exercises/" class="box">Упражнения</a>
+      </div>
+
+      <a href="https://dariaternovskaia.github.io/Umoral/" class="back-link">← На главную</a>
     </div>
 
     <div class="bottom-scene">
       <div class="speech-bubble">
         <p>
-          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанием, открыла такое явление (да-да, именно явление), как мысль творческая. 
+          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию, открыла такое явление (да-да, именно явление), как мысль творческая. 
           Именно поэтому в основу большей части собранных здесь текстов положен принцип от внешнего к внутреннему, что открывает огромные возможности для интерпретаций. Здесь знаки первичны по отношению к смыслу и значению, и, как следствие, читатель волен сам этими смыслами и значениями их наделять.
         </p>
       </div>
@@ -233,7 +222,5 @@
       <img src="/Umoral/me.png" alt="Моя фигурка" class="me-figure">
       <a href="ideas-bank/" class="idea-bank">Копилка идей</a>
     </div>
-
-    <a href="https://dariaternovskaia.github.io/Umoral/" class="back-link">← На главную</a>
   </body>
 </html>
