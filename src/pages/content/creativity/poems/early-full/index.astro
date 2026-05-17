@@ -16,30 +16,39 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
         max-width: 600px; 
         margin: 0 auto; 
         padding: 2rem;
-        color: #222;
-        background: #fafafa;
+        color: #f0f0f0; /* Светлый текст для контраста */
+        /* Фон с автобусом + затемнение */
+        background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('/Umoral/bg-early-poems.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
         min-height: 100vh;
       }
+      
       h1 { 
         font-size: 1.4rem;
         margin-bottom: 1.5rem;
-        border-bottom: 1px solid #ddd;
         padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
       }
       
+      /* Ссылка-строка */
       .poem-link {
         display: block;
         text-decoration: none;
-        color: #222;
+        color: #e5e5e5;
         padding: 0.8rem 0;
-        border-bottom: 1px dashed #ccc;
-        transition: background 0.2s;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+        transition: all 0.2s;
         cursor: pointer;
       }
       .poem-link:hover {
-        background: #f0f0f0;
+        background: rgba(255, 255, 255, 0.1);
         padding-left: 0.5rem;
         border-bottom-style: solid;
+        color: #fff;
       }
 
       .poem-title {
@@ -50,11 +59,11 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
       .back { 
         display: inline-block;
         margin-bottom: 2rem;
-        color: #666;
+        color: #bbb;
         text-decoration: none;
         font-size: 0.85rem;
       }
-      .back:hover { color: #000; }
+      .back:hover { color: #fff; }
     </style>
   </head>
   <body>
@@ -63,7 +72,6 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
     
     <div>
       {poems.map((poem) => {
-        // Извлекаем slug из id
         const slug = poem.id.split('/').pop();
         return (
           <a href={`/Umoral/content/creativity/poems/early-full/${slug}/`} class="poem-link">
