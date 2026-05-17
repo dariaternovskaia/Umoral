@@ -13,10 +13,12 @@
         padding: 2rem;
         background: #fafafa;
         color: #222;
-        padding-bottom: 100px; 
+        /* Оставляем много места снизу, чтобы композиция не обрезалась */
+        padding-bottom: 300px; 
       }
       h1 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; }
       
+      /* Меню с боксами */
       .boxes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -42,85 +44,86 @@
       }
       .box:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-      /* Нижняя сцена: привязываем к правому краю */
+      /* Композиция: ПРИЖАТА ВНИЗУ И СПРАВА */
       .bottom-scene {
         position: relative;
         width: 100%;
         max-width: 800px;
         margin: 0 auto;
-        min-height: 260px;
-        padding-right: 20px;
+        height: 220px; /* Фиксируем высоту сцены */
       }
       
-      /* Облачко: слева от фигурки, хвостик смотрит вправо */
+      /* Облачко текста: СЛЕВА от фигурки, ВНИЗУ */
       .speech-bubble {
         position: absolute;
-        right: 230px; 
-        bottom: 80px;
-        width: 250px;
+        bottom: 40px; /* Поднимаем чуть над кнопкой */
+        right: 150px; /* Отступаем от правого края (место для фигурки) */
+        width: 240px;
         background: #fff;
         border: 2px solid #333;
         border-radius: 12px;
         padding: 1rem;
-        font-size: 0.8rem;
-        line-height: 1.4;
+        font-size: 0.75rem; /* Чуть меньше шрифт, чтобы влезло */
+        line-height: 1.3;
         z-index: 2;
       }
+      /* Хвостик облачка (смотрит вправо) */
       .speech-bubble::after {
         content: '';
         position: absolute;
+        top: 50%;
         right: -12px;
-        top: 40%;
         transform: translateY(-50%);
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-left: 12px solid #333; /* Хвостик вправо */
+        border-left: 12px solid #333;
       }
       .speech-bubble::before {
         content: '';
         position: absolute;
+        top: 50%;
         right: -8px;
-        top: 40%;
         transform: translateY(-50%);
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
-        border-left: 10px solid #fff; /* Внутренняя часть хвостика */
+        border-left: 10px solid #fff;
       }
       .speech-bubble p { margin: 0; }
 
-      /* Фигурка: справа, сверху кнопки */
+      /* Фигурка: В САМОМ ПРАВОМ НИЖНЕМ УГЛУ */
       .me-figure {
-        width: 200px;
+        width: 140px; /* Чуть уменьшил, чтобы влезла */
         height: auto;
         position: absolute;
         right: 0;
-        bottom: 10px;
-        z-index: 3; /* Выше кнопки */
+        bottom: 0;
+        z-index: 3; /* ПОВЕРХ кнопки */
         filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       }
 
-      /* Копилка: красная, под фигуркой */
+      /* Копилка: ПОД ФИГУРКОЙ */
       .idea-bank {
         position: absolute;
-        right: 15px;
+        right: 10px;
         bottom: 0;
         background: #d32f2f;
         color: #fff;
         border: 2px solid #333;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
         font-weight: bold;
         text-decoration: none;
-        z-index: 1; /* Ниже фигурки */
+        z-index: 1; /* ПОД фигуркой */
         transition: background 0.2s;
       }
       .idea-bank:hover { background: #b71c1c; }
 
-      /* Ссылка назад: ИСПРАВЛЕНА */
+      /* Ссылка назад */
       .back-link {
         display: block;
         text-align: center;
-        margin-top: 3rem;
+        margin-top: 2rem;
         color: #666;
         text-decoration: none;
       }
@@ -140,7 +143,7 @@
     <div class="bottom-scene">
       <div class="speech-bubble">
         <p>
-          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию, открыла такое явление (да-да, именно явление), как мысль творческая. 
+          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию и организации, открыла такое явление (да-да, именно явление), как мысль творческая. 
           Именно поэтому в основу большей части собранных здесь текстов положен принцип от внешнего к внутреннему, что открывает огромные возможности для интерпретаций. Здесь знаки первичны по отношению к смыслу и значению, и, как следствие, читатель волен сам этими смыслами и значениями их наделять.
         </p>
       </div>
@@ -149,7 +152,7 @@
       <a href="ideas-bank/" class="idea-bank">Копилка идей</a>
     </div>
 
-    <!-- Ссылка исправлена на 3 уровня вверх -->
-    <a href="../../../" class="back-link">← На главную</a>
+    <!-- Полная ссылка, чтобы точно работала -->
+    <a href="https://dariaternovskaia.github.io/Umoral/" class="back-link">← На главную</a>
   </body>
 </html>
