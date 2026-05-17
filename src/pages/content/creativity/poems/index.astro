@@ -30,12 +30,13 @@
         font-size: 1.8rem;
       }
       
-      /* 4 бокса — как ты хотела */
+      /* 4 бокса — СДВИНУТЫ ВНИЗ И ВПРАВО */
       .boxes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 1rem;
-        margin-bottom: 3rem;
+        margin: 3rem 0 0 3rem; /* Сдвиг вправо и вниз */
+        max-width: 700px;
       }
       .box {
         background: #fff;
@@ -109,9 +110,9 @@
         margin: 0;
       }
 
-      /* Фигурка — справа, наезжает на кнопку */
+      /* Фигурка — УВЕЛИЧЕНА */
       .me-figure {
-        width: 140px;
+        width: 170px; /* Было 140px */
         height: auto;
         position: absolute;
         right: 10px;
@@ -120,7 +121,7 @@
         filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       }
 
-      /* Копилка — КРАСНАЯ (под фигуркой) */
+      /* Копилка — УВЕЛИЧЕНА */
       .idea-bank {
         position: absolute;
         right: 20px;
@@ -129,8 +130,8 @@
         color: #fff;
         border: 2px solid #333;
         border-radius: 8px;
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.7rem 1.3rem; /* Было 0.5rem 1rem */
+        font-size: 0.95rem; /* Было 0.8rem */
         font-weight: bold;
         text-decoration: none;
         z-index: 5;
@@ -156,6 +157,9 @@
         body {
           padding: 1.2rem 1rem 200px 1rem;
         }
+        .boxes-grid {
+          margin: 3rem 0 0 2rem;
+        }
         .bottom-scene {
           right: 12px;
           bottom: 12px;
@@ -169,19 +173,22 @@
           padding: 0.8rem;
         }
         .me-figure {
-          width: 110px;
+          width: 130px;
           right: 0px;
           bottom: 30px;
         }
         .idea-bank {
-          padding: 0.4rem 0.8rem;
-          font-size: 0.75rem;
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
           right: 12px;
           bottom: 6px;
         }
       }
 
       @media (max-width: 550px) {
+        .boxes-grid {
+          margin: 3rem 0 0 1rem;
+        }
         .bottom-scene {
           width: 360px;
           right: 8px;
@@ -194,12 +201,12 @@
           bottom: 50px;
         }
         .me-figure {
-          width: 90px;
+          width: 110px;
           bottom: 28px;
         }
         .idea-bank {
-          font-size: 0.7rem;
-          padding: 0.4rem 0.7rem;
+          font-size: 0.75rem;
+          padding: 0.5rem 0.9rem;
         }
       }
     </style>
@@ -217,7 +224,7 @@
     <div class="bottom-scene">
       <div class="speech-bubble">
         <p>
-          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию и организации, открыла такое явление (да-да, именно явление), как мысль творческая. 
+          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанием, открыла такое явление (да-да, именно явление), как мысль творческая. 
           Именно поэтому в основу большей части собранных здесь текстов положен принцип от внешнего к внутреннему, что открывает огромные возможности для интерпретаций. Здесь знаки первичны по отношению к смыслу и значению, и, как следствие, читатель волен сам этими смыслами и значениями их наделять.
         </p>
       </div>
