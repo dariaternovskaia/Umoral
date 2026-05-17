@@ -1,18 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
 
-// Находим все стихи из папки early-full
-let poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/early-full/'));
-
-// Создаем статические пути для каждого стиха
 export function getStaticPaths() {
+  // Получаем коллекцию ВНУТРИ getStaticPaths
+  const poems = getCollection('content', ({ id }) => id.startsWith('creativity/poems/early-full/'));
+  
   return poems.map((poem) => ({
     params: { slug: poem.slug },
     props: { poem },
   }));
 }
 
-// Получаем данные конкретного стиха из props
+// Получаем данные из props
 const { poem } = Astro.props;
 const { data, body } = poem;
 ---
@@ -49,7 +48,7 @@ const { data, body } = poem;
 
       .poem-text {
         font-size: 1.1rem;
-        white-space: pre-line; /* Сохраняет стихи как есть */
+        white-space: pre-line;
         margin-bottom: 3rem;
         text-align: center;
       }
