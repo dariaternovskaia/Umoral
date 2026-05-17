@@ -16,8 +16,7 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
         max-width: 600px; 
         margin: 0 auto; 
         padding: 2rem;
-        color: #f0f0f0; /* Светлый текст для контраста */
-        /* Фон с автобусом + затемнение */
+        color: #f0f0f0; 
         background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('/Umoral/bg-early-poems.jpg');
         background-size: cover;
         background-position: center;
@@ -26,6 +25,13 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
         min-height: 100vh;
       }
       
+      /* Навигация сверху */
+      .nav {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
       h1 { 
         font-size: 1.4rem;
         margin-bottom: 1.5rem;
@@ -34,7 +40,6 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
         color: #fff;
       }
       
-      /* Ссылка-строка */
       .poem-link {
         display: block;
         text-decoration: none;
@@ -57,17 +62,21 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
       }
       
       .back { 
-        display: inline-block;
-        margin-bottom: 2rem;
         color: #bbb;
         text-decoration: none;
         font-size: 0.85rem;
+        transition: color 0.2s;
       }
       .back:hover { color: #fff; }
     </style>
   </head>
   <body>
-    <a href="../../" class="back">← Назад к Стихам</a>
+    <!-- Рабочие кнопки навигации -->
+    <div class="nav">
+      <a href="/Umoral/" class="back">← На главную</a>
+      <a href="/Umoral/content/creativity/poems/" class="back">← К стихам</a>
+    </div>
+    
     <h1>Ранние полноценки</h1>
     
     <div>
