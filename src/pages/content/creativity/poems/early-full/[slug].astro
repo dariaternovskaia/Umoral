@@ -25,22 +25,31 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
     <meta charset="UTF-8">
     <title>{data.title}</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
       body { 
         font-family: 'Helvetica Neue', 'Arial', sans-serif;
         font-weight: 300;
         font-size: 1.05rem;
         line-height: 1.8;
-        max-width: 700px; 
-        margin: 0 auto; 
-        padding: 2rem;
         color: #222;
         background: #fafafa;
+        /* Убираем центрирование, ставим контент в левый верхний угол */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 2rem 4rem 2rem; /* отступы: сверху, справа, снизу, слева */
+        min-height: 100vh;
       }
       
       h1 { 
         font-size: 1.6rem;
         font-weight: 300;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         text-align: left;
         letter-spacing: 0.5px;
       }
@@ -50,8 +59,9 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
         line-height: 2;
         white-space: pre-line;
         text-align: left;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         font-weight: 300;
+        max-width: 600px;
       }
 
       .date {
@@ -59,13 +69,16 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
         color: #666;
         font-size: 0.85rem;
         font-style: italic;
-        margin-top: 2rem;
+        margin-top: 1rem;
         margin-right: 1rem;
+        align-self: flex-end; /* Прижимаем дату вправо */
+        width: 100%;
+        max-width: 600px;
       }
 
       .back { 
         display: inline-block;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         color: #888;
         text-decoration: none;
         font-size: 0.85rem;
