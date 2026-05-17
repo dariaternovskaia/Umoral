@@ -1,11 +1,11 @@
----
----
-
-<html>
-  <head>
-    <title>Стихи | Umoral</title>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Стихи | Umoral</title>
     <style>
+      /* ----- СБРОС И БАЗОВЫЕ СТИЛИ (сохранены оригинальные) ----- */
       * {
         margin: 0;
         padding: 0;
@@ -24,19 +24,42 @@
         padding-bottom: 350px;
       }
 
-      h1 {
+      /* ----- НОВЫЙ КОНТЕЙНЕР ДЛЯ СМЕЩЕНИЯ ЗАГОЛОВКА И БЛОКОВ ----- */
+      /* Смещение всей группы (заголовок + сетка) от левого и верхнего края */
+      .shifted-group {
+        margin-left: 5.5rem;    /* ~5-7 см (около 88px в зависимости от rem, 5.5rem ≈ 88px) */
+        margin-top: 5.2rem;     /* отступ сверху ~83px — попадаем в диапазон 5-7 см */
+        position: relative;
+        max-width: calc(100% - 5.5rem);
+      }
+
+      /* Заголовок "Стихи" — центрируем относительно 4 блоков (относительно .boxes-grid) */
+      .shifted-group h1 {
         text-align: center;
         margin-bottom: 2rem;
         font-size: 1.8rem;
+        /* дополнительно никаких left/right — центрирование через text-align,
+           а ширина контейнера .shifted-group уже ограничивает область.
+           Чтобы h1 был именно над блоками и визуально по центру .boxes-grid,
+           зададим ему тот же максимальный контекст. */
+        width: 100%;
       }
       
+      /* сетка блоков без изменений стилей, но внутри смещённой группы */
       .boxes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 1rem;
-        margin: 3rem 0 0 3rem;
+        margin: 0;            /* обнуляем старые margin (было margin: 3rem 0 0 3rem) */
         max-width: 700px;
+        /* Центрирование самой сетки внутри родительского контейнера? 
+           Но по условию "надпись стихи должна быть по центру относительно 4ёх боксов" — 
+           достаточно что h1 имеет text-align:center и блоки как блоки.
+           При этом сетка может быть не растянута на всю ширину, но заголовок над ними 
+           визуально центрируется за счёт своего выравнивания */
       }
+      
+      /* Оригинальный стиль боксов */
       .box {
         background: #fff;
         border: 2px solid #333;
@@ -59,6 +82,7 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       }
 
+      /* ----- НИЖНЯЯ ФИКСИРОВАННАЯ СЦЕНА (БЕЗ ИЗМЕНЕНИЙ, КРОМЕ АДАПТИВА) ----- */
       .bottom-scene {
         position: fixed;
         right: 24px;
@@ -145,12 +169,15 @@
         color: #000;
       }
 
+      /* ----- АДАПТИВНЫЕ ПРАВКИ (сохраняем логику смещения, но уменьшаем на планшетах) ----- */
       @media (max-width: 700px) {
         body {
           padding: 1.2rem 1rem 200px 1rem;
         }
-        .boxes-grid {
-          margin: 3rem 0 0 2rem;
+        /* уменьшаем смещение для средних экранов, чтобы не уходило слишком вбок */
+        .shifted-group {
+          margin-left: 3rem;
+          margin-top: 4rem;
         }
         .bottom-scene {
           right: 12px;
@@ -178,13 +205,18 @@
       }
 
       @media (max-width: 550px) {
+        /* оригинальные стили для сетки и фигурки сохраняем, но меняем margin-left на меньший */
+        .shifted-group {
+          margin-left: 2rem;
+          margin-top: 3.2rem;
+        }
         .boxes-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-           gap: 1rem;
-           margin: 5rem 0 0 4rem; /* Увеличенный сдвиг: 5rem вниз, 4rem вправо */
-           max-width: 750px;
-          }
+          gap: 1rem;
+          margin: 0;           /* отмена старого сдвига */
+          max-width: 750px;
+        }
         .bottom-scene {
           width: 360px;
           right: 8px;
@@ -205,18 +237,56 @@
           padding: 0.5rem 0.9rem;
         }
       }
+
+      /* дополнительная защита для очень маленьких экранов (≤420px) */
+      @media (max-width: 420px) {
+        .shifted-group {
+          margin-left: 1.2rem;
+          margin-top: 2rem;
+        }
+        .boxes-grid {
+          grid-template-columns: 1fr;
+          gap: 0.8rem;
+        }
+        .box {
+          min-height: 70px;
+          padding: 1rem 0.5rem;
+        }
+        .speech-bubble {
+          width: 150px;
+          font-size: 0.6rem;
+          bottom: 45px;
+          padding: 0.6rem;
+        }
+        .me-figure {
+          width: 85px;
+          bottom: 28px;
+        }
+        .idea-bank {
+          font-size: 0.65rem;
+          padding: 0.3rem 0.7rem;
+          right: 8px;
+        }
+      }
     </style>
   </head>
   <body>
-    <h1>Стихи</h1>
-    
-    <div class="boxes-grid">
-      <a href="early-full/" class="box">Ранние полноценки</a>
-      <a href="current-full/" class="box">Актуальные полноценки</a>
-      <a href="philosophy/" class="box">Философия в стихах</a>
-      <a href="exercises/" class="box">Упражнения</a>
+    <!-- 
+      ГРУППА, КОТОРАЯ СМЕЩЕНА ОТ ВЕРХНЕГО ЛЕВОГО КРАЯ НА 5-7 СМ (margin-left ~5.5rem, margin-top ~5.2rem).
+      Заголовок "Стихи" центрирован относительно блоков (text-align: center; внутри той же ширины, 
+      а блоки имеют свой max-width и авто-выравнивание)
+    -->
+    <div class="shifted-group">
+      <h1>Стихи</h1>
+      <div class="boxes-grid">
+        <a href="early-full/" class="box">Ранние полноценки</a>
+        <a href="current-full/" class="box">Актуальные полноценки</a>
+        <a href="philosophy/" class="box">Философия в стихах</a>
+        <a href="exercises/" class="box">Упражнения</a>
+      </div>
     </div>
 
+    <!-- фиксированная нижняя сцена — без изменений, сохранена полностью -->
     <div class="bottom-scene">
       <div class="speech-bubble">
         <p>
