@@ -15,16 +15,18 @@
         color: #222;
         padding-bottom: 150px; 
       }
-      h1 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; }
+      h1 { 
+        text-align: center; 
+        margin-bottom: 2rem; 
+        font-size: 1.8rem; 
+      }
       
-      /* Боксы сдвигаем вправо */
+      /* Боксы */
       .boxes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 1rem;
-        margin-bottom: 3rem;
-        margin-left: auto; 
-        max-width: 700px;
+        margin-bottom: 4rem;
       }
       .box {
         background: #fff;
@@ -45,19 +47,20 @@
       }
       .box:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-      /* Нижняя сцена — тоже сдвинута вправо */
+      /* Нижняя сцена */
       .bottom-scene {
         position: relative;
         max-width: 700px;
-        margin-left: auto;
+        margin: 0 auto; /* Центрируем сцену */
         min-height: 300px;
+        padding-top: 20px;
       }
       
-      /* Текстовый пузырь */
+      /* Текстовый пузырь (СЛЕВА) */
       .speech-bubble {
         position: absolute;
-        top: 20px;
-        left: -280px; /* Сдвигаем влево от фигуры */
+        top: 40px;
+        left: 0;
         width: 260px;
         background: #fff;
         border: 2px solid #333;
@@ -67,45 +70,48 @@
         line-height: 1.4;
         z-index: 2;
       }
+      /* Хвостик облачка (указывает ВПРАВО на фигурку) */
       .speech-bubble::after {
         content: '';
         position: absolute;
-        bottom: -10px;
-        right: 20px;
+        top: 50%;
+        right: -12px;
+        transform: translateY(-50%);
         width: 0; height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid #333;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 12px solid #333;
       }
       .speech-bubble::before {
         content: '';
         position: absolute;
-        bottom: -7px;
-        right: 22px;
+        top: 50%;
+        right: -8px;
+        transform: translateY(-50%);
         width: 0; height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-top: 8px solid #fff;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 10px solid #fff;
       }
       .speech-bubble p { margin: 0; }
 
-      /* Твоя фигурка */
+      /* Твоя фигурка (СПРАВА) */
       .me-figure {
         position: absolute;
         bottom: 0;
         right: 0;
-        width: 220px;
+        width: 200px;
         height: auto;
         z-index: 3;
         filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       }
 
-      /* Копилка — КРАСНАЯ */
+      /* Копилка — КРАСНАЯ (под фигуркой) */
       .idea-bank {
         position: absolute;
-        bottom: -50px;
-        right: 10px;
-        background: #d32f2f; /* Красный под цвет митенок */
+        bottom: -40px;
+        right: 20px;
+        background: #d32f2f; 
         color: #fff;
         border: 2px solid #333;
         border-radius: 10px;
@@ -130,7 +136,8 @@
     </style>
   </head>
   <body>
-    <h1>📖 Стихи</h1>
+    <!-- Эмодзи убран -->
+    <h1>Стихи</h1>
     
     <div class="boxes-grid">
       <a href="early-full/" class="box">Ранние полноценки</a>
@@ -151,7 +158,6 @@
       <a href="ideas-bank/" class="idea-bank">Копилка идей</a>
     </div>
 
-    <!-- ИСПРАВЛЕНА ССЫЛКА -->
     <a href="../../" class="back-link">← На главную</a>
   </body>
 </html>
