@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+
+const poems = await getCollection('content', ({ id }) => 
+  id.startsWith('creativity/poems/early-full/')
+);
+
+console.log('Найдено стихов:', poems.length);
+poems.forEach(p => console.log('Slug:', p.id));
+---
+
+<h1>Тест</h1>
+<p>Найдено стихов: {poems.length}</p>
