@@ -4,10 +4,15 @@ import { getCollection } from 'astro:content';
 const poems = await getCollection('content', ({ id }) => 
   id.startsWith('creativity/poems/early-full/')
 );
-
-console.log('Найдено стихов:', poems.length);
-poems.forEach(p => console.log('Slug:', p.id));
 ---
 
-<h1>Тест</h1>
-<p>Найдено стихов: {poems.length}</p>
+<h1>Тест - информация о стихах</h1>
+
+{poems.map(poem => (
+  <div style="margin: 1rem 0; padding: 1rem; border: 1px solid #ccc;">
+    <p><strong>ID:</strong> {poem.id}</p>
+    <p><strong>Slug:</strong> {poem.slug}</p>
+    <p><strong>Заголовок:</strong> {poem.data.title}</p>
+    <p><strong>Ссылка:</strong> <a href={`/Umoral/content/creativity/poems/early-full/${poem.slug}/`}>Открыть стих</a></p>
+  </div>
+))}
