@@ -23,10 +23,13 @@
         padding-bottom: 350px;
       }
 
-      /* Центрированный блок с заголовком и боксами */
+      /* Центрированный блок с отступами */
       .main-content {
         text-align: center;
-        margin-bottom: 3rem;
+        margin: 4rem auto 3rem auto; /* Отступ сверху 4rem */
+        max-width: 800px;
+        padding-left: 3rem; /* Отступ слева */
+        padding-right: 3rem;
       }
 
       h1 {
@@ -159,6 +162,11 @@
 
       /* Адаптивность */
       @media (max-width: 900px) {
+        .main-content {
+          margin: 3rem auto 2rem auto;
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
         .boxes-grid {
           grid-template-columns: repeat(2, 1fr);
           gap: 1.2rem;
@@ -181,6 +189,11 @@
       @media (max-width: 650px) {
         body {
           padding: 1.5rem 1rem;
+        }
+        .main-content {
+          margin: 2rem auto 1.5rem auto;
+          padding-left: 1rem;
+          padding-right: 1rem;
         }
         .boxes-grid {
           grid-template-columns: 1fr;
