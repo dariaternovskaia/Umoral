@@ -27,7 +27,6 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
         padding-bottom: 0.5rem;
       }
       
-      /* Ссылка-строка */
       .poem-link {
         display: block;
         text-decoration: none;
@@ -63,11 +62,15 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
     <h1>Ранние полноценки</h1>
     
     <div>
-      {poems.map((poem) => (
-        <a href={`./${poem.slug}/`} class="poem-link">
-          <span class="poem-title">{poem.data.title}</span>
-        </a>
-      ))}
+      {poems.map((poem) => {
+        // Извлекаем slug из id
+        const slug = poem.id.split('/').pop();
+        return (
+          <a href={`/Umoral/content/creativity/poems/early-full/${slug}/`} class="poem-link">
+            <span class="poem-title">{poem.data.title}</span>
+          </a>
+        );
+      })}
     </div>
   </body>
 </html>
