@@ -10,10 +10,12 @@
         font-family: sans-serif; 
         max-width: 1200px;
         margin: 0 auto; 
-        padding: 15rem 2rem 2rem 2rem; /* Большой отступ сверху */
-        background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('/Umoral/bg-main.jpg');
+        /* Уменьшили отступ сверху до 6rem, чтобы не перекрывать фигуры */
+        padding: 6rem 2rem 2rem 2rem; 
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/Umoral/bg-main.jpg');
         background-size: cover;
-        background-position: center top; /* Фото начинается сверху */
+        /* Сместили фокус чуть ниже центра (60%), чтобы фигуры были в кадре */
+        background-position: center 60%; 
         background-attachment: fixed;
         background-repeat: no-repeat;
         min-height: 100vh;
@@ -28,7 +30,7 @@
         margin: 0 auto;
       }
       
-      /* Стили для боксов */
+      /* Стили для боксов (как на странице стихов) */
       .section { 
         padding: 2rem 1.5rem;
         background: #fff;
@@ -81,23 +83,19 @@
         color: #444;
       }
       
-      /* Адаптивность для планшетов */
+      /* Адаптивность */
       @media (max-width: 900px) {
         .boxes-container {
-          grid-template-columns: repeat(2, 1fr); /* 2 колонки */
-        }
-        body {
-          padding-top: 12rem;
+          grid-template-columns: repeat(2, 1fr);
         }
       }
       
-      /* Адаптивность для мобильных */
       @media (max-width: 650px) {
         .boxes-container {
-          grid-template-columns: 1fr; /* 1 колонка */
+          grid-template-columns: 1fr;
         }
         body {
-          padding-top: 10rem;
+          padding-top: 4rem;
         }
       }
     </style>
