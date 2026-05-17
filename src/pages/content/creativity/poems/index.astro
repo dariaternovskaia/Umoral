@@ -13,20 +13,15 @@
         padding: 2rem;
         background: #fafafa;
         color: #222;
-        padding-bottom: 150px; 
+        padding-bottom: 100px; 
       }
-      h1 { 
-        text-align: center; 
-        margin-bottom: 2rem; 
-        font-size: 1.8rem; 
-      }
+      h1 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; }
       
-      /* Боксы */
       .boxes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 1rem;
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
       }
       .box {
         background: #fff;
@@ -47,21 +42,22 @@
       }
       .box:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-      /* Нижняя сцена */
+      /* Нижняя сцена: привязываем к правому краю */
       .bottom-scene {
         position: relative;
-        max-width: 700px;
-        margin: 0 auto; /* Центрируем сцену */
-        min-height: 300px;
-        padding-top: 20px;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        min-height: 260px;
+        padding-right: 20px;
       }
       
-      /* Текстовый пузырь (СЛЕВА) */
+      /* Облачко: слева от фигурки, хвостик смотрит вправо */
       .speech-bubble {
         position: absolute;
-        top: 40px;
-        left: 0;
-        width: 260px;
+        right: 230px; 
+        bottom: 80px;
+        width: 250px;
         background: #fff;
         border: 2px solid #333;
         border-radius: 12px;
@@ -70,65 +66,61 @@
         line-height: 1.4;
         z-index: 2;
       }
-      /* Хвостик облачка (указывает ВПРАВО на фигурку) */
       .speech-bubble::after {
         content: '';
         position: absolute;
-        top: 50%;
         right: -12px;
+        top: 40%;
         transform: translateY(-50%);
-        width: 0; height: 0;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-left: 12px solid #333;
+        border-left: 12px solid #333; /* Хвостик вправо */
       }
       .speech-bubble::before {
         content: '';
         position: absolute;
-        top: 50%;
         right: -8px;
+        top: 40%;
         transform: translateY(-50%);
-        width: 0; height: 0;
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
-        border-left: 10px solid #fff;
+        border-left: 10px solid #fff; /* Внутренняя часть хвостика */
       }
       .speech-bubble p { margin: 0; }
 
-      /* Твоя фигурка (СПРАВА) */
+      /* Фигурка: справа, сверху кнопки */
       .me-figure {
-        position: absolute;
-        bottom: 0;
-        right: 0;
         width: 200px;
         height: auto;
-        z-index: 3;
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+        z-index: 3; /* Выше кнопки */
         filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       }
 
-      /* Копилка — КРАСНАЯ (под фигуркой) */
+      /* Копилка: красная, под фигуркой */
       .idea-bank {
         position: absolute;
-        bottom: -40px;
-        right: 20px;
-        background: #d32f2f; 
+        right: 15px;
+        bottom: 0;
+        background: #d32f2f;
         color: #fff;
         border: 2px solid #333;
-        border-radius: 10px;
-        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
         font-weight: bold;
         text-decoration: none;
-        cursor: pointer;
-        z-index: 4;
+        z-index: 1; /* Ниже фигурки */
         transition: background 0.2s;
       }
       .idea-bank:hover { background: #b71c1c; }
 
-      /* Ссылка назад */
+      /* Ссылка назад: ИСПРАВЛЕНА */
       .back-link {
         display: block;
         text-align: center;
-        margin-top: 4rem;
+        margin-top: 3rem;
         color: #666;
         text-decoration: none;
       }
@@ -136,7 +128,6 @@
     </style>
   </head>
   <body>
-    <!-- Эмодзи убран -->
     <h1>Стихи</h1>
     
     <div class="boxes-grid">
@@ -149,7 +140,7 @@
     <div class="bottom-scene">
       <div class="speech-bubble">
         <p>
-          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию и организации, открыла такое явление (да-да, именно явление), как мысль творческая. 
+          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию, открыла такое явление (да-да, именно явление), как мысль творческая. 
           Именно поэтому в основу большей части собранных здесь текстов положен принцип от внешнего к внутреннему, что открывает огромные возможности для интерпретаций. Здесь знаки первичны по отношению к смыслу и значению, и, как следствие, читатель волен сам этими смыслами и значениями их наделять.
         </p>
       </div>
@@ -158,6 +149,7 @@
       <a href="ideas-bank/" class="idea-bank">Копилка идей</a>
     </div>
 
-    <a href="../../" class="back-link">← На главную</a>
+    <!-- Ссылка исправлена на 3 уровня вверх -->
+    <a href="../../../" class="back-link">← На главную</a>
   </body>
 </html>
