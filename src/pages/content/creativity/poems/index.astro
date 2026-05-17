@@ -1,351 +1,231 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+---
+---
+
+<html>
+  <head>
     <title>Стихи | Umoral</title>
+    <meta charset="UTF-8">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: #fafafa;
+        color: #222;
+        min-height: 100vh;
+        position: relative;
+        padding-bottom: 350px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+      }
+      
+      /* 4 бокса — как ты хотела */
+      .boxes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin-bottom: 3rem;
+      }
+      .box {
+        background: #fff;
+        border: 2px solid #333;
+        border-radius: 8px;
+        padding: 1.5rem 0.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: #333;
+        transition: transform 0.2s;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 90px;
+      }
+      .box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      /* ФИКСИРОВАННЫЙ БЛОК В ПРАВОМ НИЖНЕМ УГЛУ */
+      .bottom-scene {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        width: 520px;
+        max-width: calc(100vw - 48px);
+        height: 260px;
+        z-index: 1000;
+      }
+      
+      /* Облачко — слева от фигурки */
+      .speech-bubble {
+        position: absolute;
+        left: 0;
+        bottom: 60px;
+        width: 250px;
+        background: #fff;
+        border: 2px solid #333;
+        border-radius: 12px;
+        padding: 1rem;
+        font-size: 0.75rem;
+        line-height: 1.4;
+        z-index: 2;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      /* Хвостик облачка (смотрит вправо) */
+      .speech-bubble::after {
+        content: '';
+        position: absolute;
+        right: -12px;
+        bottom: 30px;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 12px solid #333;
+      }
+      .speech-bubble::before {
+        content: '';
+        position: absolute;
+        right: -8px;
+        bottom: 31px;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        border-left: 10px solid #fff;
+        z-index: 2;
+      }
+      .speech-bubble p {
+        margin: 0;
+      }
+
+      /* Фигурка — справа, наезжает на кнопку */
+      .me-figure {
+        width: 140px;
+        height: auto;
+        position: absolute;
+        right: 10px;
+        bottom: 35px;
+        z-index: 10;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      }
+
+      /* Копилка — КРАСНАЯ (под фигуркой) */
+      .idea-bank {
+        position: absolute;
+        right: 20px;
+        bottom: 8px;
+        background: #d32f2f;
+        color: #fff;
+        border: 2px solid #333;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-decoration: none;
+        z-index: 5;
+        transition: background 0.2s;
+      }
+      .idea-bank:hover {
+        background: #b71c1c;
+      }
+
+      /* Ссылка назад */
+      .back-link {
+        display: inline-block;
+        margin-top: 2rem;
+        color: #666;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #000;
+      }
+
+      /* Адаптивность */
+      @media (max-width: 700px) {
         body {
-            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 2rem 180px 2rem;
-            background: #faf9f8;
-            color: #1e1e2a;
-            min-height: 100vh;
-            position: relative;
+          padding: 1.2rem 1rem 200px 1rem;
         }
-
-        /* Заголовок */
-        h1 {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            font-size: 2.2rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: #2c3e2f;
-            border-bottom: 2px solid #d4d8c9;
-            display: inline-block;
-            width: auto;
-            padding-bottom: 0.4rem;
-        }
-
-        /* Сетка карточек-ссылок */
-        .boxes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.4rem;
-            margin: 2.5rem 0 3rem 0;
-        }
-
-        .box {
-            background: #ffffff;
-            border: 2px solid #2c3e2f;
-            border-radius: 24px;
-            padding: 1.2rem 0.8rem;
-            text-align: center;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            color: #2c3e2f;
-            transition: all 0.25s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100px;
-            backdrop-filter: blur(0px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .box:hover {
-            transform: translateY(-5px);
-            background: #fef7e0;
-            border-color: #1f2e20;
-            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
-        }
-
-        /* === Фиксированный блок в правом нижнем углу === */
         .bottom-scene {
-            position: fixed;
-            right: 24px;
-            bottom: 24px;
-            width: 540px;
-            max-width: calc(100vw - 48px);
-            height: auto;
-            z-index: 1000;
-            pointer-events: none; /* чтобы сквозь пустую область можно было кликать, но внутренние ссылки переопределят */
+          right: 12px;
+          bottom: 12px;
+          width: 440px;
+          height: 240px;
         }
-
-        /* Облачко (речевой пузырь) – слева от фигурки */
         .speech-bubble {
-            position: absolute;
-            left: 0;
-            bottom: 70px;      /* приподнято над кнопкой, чтобы не перекрывало */
-            width: 270px;
-            max-width: 65%;
-            background: #fffef7;
-            border: 2px solid #2c3e2f;
-            border-radius: 28px;
-            padding: 1rem 1.2rem;
-            font-size: 0.78rem;
-            line-height: 1.45;
-            color: #1f2a1b;
-            box-shadow: 0 10px 18px rgba(0,0,0,0.1);
-            pointer-events: auto;
-            transition: all 0.2s;
-            backdrop-filter: blur(2px);
+          width: 200px;
+          font-size: 0.7rem;
+          bottom: 55px;
+          padding: 0.8rem;
         }
-
-        /* Хвостик облачка — направлен вправо (к фигурке) */
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            right: -12px;
-            bottom: 32px;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            border-left: 14px solid #2c3e2f;
-        }
-        .speech-bubble::before {
-            content: '';
-            position: absolute;
-            right: -8px;
-            bottom: 33px;
-            border-top: 9px solid transparent;
-            border-bottom: 9px solid transparent;
-            border-left: 11px solid #fffef7;
-            z-index: 2;
-        }
-
-        .speech-bubble p {
-            margin: 0;
-            font-weight: 450;
-        }
-
-        /* Фигурка — увеличена, опирается на кнопку (стоящая справа) */
         .me-figure {
-            width: 150px;           /* увеличенная фигурка */
-            height: auto;
-            position: absolute;
-            right: 6px;
-            bottom: 42px;           /* визуально «стоит» на уровне кнопки */
-            z-index: 10;
-            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.2));
-            pointer-events: auto;
-            transition: transform 0.2s ease;
-            cursor: pointer;
+          width: 110px;
+          right: 0px;
+          bottom: 30px;
         }
-
-        .me-figure:hover {
-            transform: scale(1.02);
-        }
-
-        /* Кнопка "Копилка идей" — как постамент под фигурку, расположена чуть ниже/сзади */
         .idea-bank {
-            position: absolute;
-            right: 28px;
-            bottom: 8px;
-            background: #b3413a;
-            color: #fff2e0;
-            border: 2px solid #2c2b26;
-            border-radius: 60px;
-            padding: 0.7rem 1.3rem;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-decoration: none;
-            z-index: 5;
-            transition: all 0.2s;
-            pointer-events: auto;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(0px);
-            white-space: nowrap;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          right: 12px;
+          bottom: 6px;
         }
+      }
 
-        .idea-bank:hover {
-            background: #8f2e28;
-            transform: scale(1.02);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-            color: white;
+      @media (max-width: 550px) {
+        .bottom-scene {
+          width: 360px;
+          right: 8px;
+          bottom: 8px;
+          height: 220px;
         }
-
-        /* Ссылка назад на главную */
-        .back-link {
-            display: inline-block;
-            margin-top: 2.8rem;
-            color: #4a5b3e;
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px dashed #b7c0a8;
-            transition: color 0.2s;
+        .speech-bubble {
+          width: 170px;
+          font-size: 0.65rem;
+          bottom: 50px;
         }
-
-        .back-link:hover {
-            color: #1f3320;
-            border-bottom-style: solid;
+        .me-figure {
+          width: 90px;
+          bottom: 28px;
         }
-
-        /* Адаптивность: на узких экранах блок сдвигается и уменьшается */
-        @media (max-width: 700px) {
-            body {
-                padding: 1.2rem 1rem 200px 1rem;
-            }
-            .bottom-scene {
-                right: 12px;
-                bottom: 12px;
-                width: 460px;
-            }
-            .speech-bubble {
-                width: 220px;
-                padding: 0.7rem 1rem;
-                font-size: 0.7rem;
-                bottom: 65px;
-            }
-            .me-figure {
-                width: 120px;
-                right: 0px;
-                bottom: 36px;
-            }
-            .idea-bank {
-                padding: 0.5rem 1rem;
-                font-size: 0.75rem;
-                right: 18px;
-                bottom: 6px;
-                white-space: nowrap;
-            }
-            .speech-bubble::after {
-                bottom: 24px;
-            }
-            .speech-bubble::before {
-                bottom: 25px;
-            }
+        .idea-bank {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
         }
-
-        @media (max-width: 550px) {
-            .bottom-scene {
-                width: 380px;
-                right: 8px;
-                bottom: 8px;
-            }
-            .speech-bubble {
-                width: 190px;
-                font-size: 0.65rem;
-                bottom: 60px;
-                left: -4px;
-            }
-            .me-figure {
-                width: 100px;
-                bottom: 32px;
-            }
-            .idea-bank {
-                font-size: 0.7rem;
-                padding: 0.4rem 0.9rem;
-                right: 12px;
-            }
-        }
-
-        /* дополнительный отступ снизу чтобы при скролле контент не налезал на фиксированный блок */
-        .extra-spacer {
-            height: 20px;
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <h1>Стихи</h1>
     
     <div class="boxes-grid">
-        <a href="early-full/" class="box">Ранние полноценки</a>
-        <a href="current-full/" class="box">Актуальные полноценки</a>
-        <a href="philosophy/" class="box">Философия в стихах</a>
-        <a href="exercises/" class="box">Упражнения</a>
+      <a href="early-full/" class="box">Ранние полноценки</a>
+      <a href="current-full/" class="box">Актуальные полноценки</a>
+      <a href="philosophy/" class="box">Философия в стихах</a>
+      <a href="exercises/" class="box">Упражнения</a>
     </div>
 
-    <!-- Основной текст / вступление, чтобы сохранить контекст страницы -->
-    <div style="max-width: 780px; margin-bottom: 2.5rem; font-size: 1rem; line-height: 1.5; color: #2c2c2c; background: #fefcf5; padding: 1rem 1.5rem; border-radius: 32px; border-left: 6px solid #a8b392;">
-        <p style="margin: 0;">Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию и организации, открыла такое явление, как <strong>мысль творческая</strong>. Именно поэтому в основу большинства собранных здесь текстов положен принцип от внешнего к внутреннему, что открывает огромные возможности для интерпретации. Здесь знаки первичны по отношению к смыслу, и читатель волен сам наделять их смыслами и значениями.</p>
-    </div>
-    
-    <div class="extra-spacer"></div>
-    <a href="https://dariaternovskaia.github.io/Umoral/" class="back-link">← На главную</a>
-
-
-    <!-- ФИКСИРОВАННЫЙ БЛОК: фигурка + пузырь + кнопка "Копилка идей" -->
     <div class="bottom-scene">
-        <!-- Речевое облако с текстом (важный фрагмент из исходного описания) -->
-        <div class="speech-bubble">
-            <p>
-                ✦ Стихотворная форма мысли — это событие.  
-                Принцип «от внешнего к внутреннему» дарит свободу интерпретации.  
-                Читатель наделяет смыслом и значением.
-            </p>
-        </div>
-
-        <!-- Фигурка (увеличенная) – опирается на область кнопки -->
-        <img src="/Umoral/me.png" 
-             alt="Моя фигурка" 
-             class="me-figure"
-             onerror="this.onerror=null; this.src='https://placehold.co/400x600/f2ede4/4a3b2c?text=✨me';">
-
-        <!-- Кнопка-ссылка "Копилка идей" – визуально под фигуркой как опора -->
-        <a href="ideas-bank/" class="idea-bank">📥 Копилка идей</a>
+      <div class="speech-bubble">
+        <p>
+          Это одна из наиболее важных страничек сайта. Стихотворная форма организации мысли впервые побудила меня серьёзнее отнестись к их содержанию и организации, открыла такое явление (да-да, именно явление), как мысль творческая. 
+          Именно поэтому в основу большей части собранных здесь текстов положен принцип от внешнего к внутреннему, что открывает огромные возможности для интерпретаций. Здесь знаки первичны по отношению к смыслу и значению, и, как следствие, читатель волен сам этими смыслами и значениями их наделять.
+        </p>
+      </div>
+      
+      <img src="/Umoral/me.png" alt="Моя фигурка" class="me-figure">
+      <a href="ideas-bank/" class="idea-bank">Копилка идей</a>
     </div>
 
-    <!-- Небольшой скрипт, чтобы фигурка не ломалась при отсутствии изображения,
-         а также для эстетики: если изображение загружено, подстроимся под его пропорции,
-         но основная стилизация уже задана. 
-         Также добавим небольшую анимацию облачка при наведении на фигурку (игровая) -->
-    <script>
-        (function(){
-            // Если картинка me.png не найдётся — заменим на эмодзи-заглушку, но лучше оставим как есть с плейсхолдером
-            const meImg = document.querySelector('.me-figure');
-            if(meImg) {
-                meImg.addEventListener('error', function(e) {
-                    // Тихо подменяем источник на data-url с простым символом, чтобы не было битой иконки
-                    this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='%23efe4d5'/%3E%3Ccircle cx='100' cy='110' r='45' fill='%23c9774b'/%3E%3Cpath d='M55 180 L145 180 L135 240 L65 240 Z' fill='%235a3e2b'/%3E%3Ctext x='100' y='270' font-size='26' text-anchor='middle' fill='%233d2a1a'%3E☺%3C/text%3E%3C/svg%3E";
-                    this.style.filter = "drop-shadow(0 6px 8px rgba(0,0,0,0.15))";
-                });
-            }
-
-            // Дополнительная мелочь: при наведении на фигурку слегка подсвечиваем облачко
-            const figure = document.querySelector('.me-figure');
-            const bubble = document.querySelector('.speech-bubble');
-            if(figure && bubble) {
-                figure.addEventListener('mouseenter', () => {
-                    bubble.style.transform = 'translateX(2px)';
-                    bubble.style.transition = 'transform 0.2s';
-                });
-                figure.addEventListener('mouseleave', () => {
-                    bubble.style.transform = 'translateX(0px)';
-                });
-            }
-
-            // чтобы фигурка и кнопка выглядели монолитно: если кнопка растягивается, фигурка сохраняет позицию
-            // маленькая адаптация для крайне узких экранов: если ширина меньше 450px,
-            // уменьшаем расстояние между фигуркой и краем, но основные стили уже есть.
-            const handleResize = () => {
-                if(window.innerWidth < 460) {
-                    const scene = document.querySelector('.bottom-scene');
-                    if(scene) scene.style.right = '6px';
-                } else {
-                    const scene = document.querySelector('.bottom-scene');
-                    if(scene && window.innerWidth > 700) scene.style.right = '24px';
-                    else if(scene && window.innerWidth <= 700) scene.style.right = '12px';
-                }
-            };
-            window.addEventListener('resize', handleResize);
-            handleResize();
-        })();
-    </script>
-</body>
+    <a href="https://dariaternovskaia.github.io/Umoral/" class="back-link">← На главную</a>
+  </body>
 </html>
