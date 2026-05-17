@@ -17,6 +17,13 @@ notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
         margin: 0 auto; 
         padding: 2rem;
         color: #222;
+        /* ДОБАВЛЕНО: фон с книгами + лёгкое затемнение для читаемости текста */
+        background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('/Umoral/bg-notes.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        min-height: 100vh;
       }
       h1 { 
         font-size: 1.4rem;
