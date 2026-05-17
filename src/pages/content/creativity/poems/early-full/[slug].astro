@@ -41,7 +41,9 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 5rem 5rem 4rem 8rem; /* Увеличила левый отступ до 8rem */
+        
+        /* ВОТ ЭТА СТРОКА: 12rem слева + !important чтобы точно сработало */
+        padding: 5rem 5rem 4rem 12rem !important; 
         min-height: 100vh;
       }
       
