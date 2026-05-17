@@ -8,38 +8,49 @@
     <style>
       body { 
         font-family: sans-serif; 
-        max-width: 800px; 
+        max-width: 1200px;
         margin: 0 auto; 
-        padding: 2rem;
+        padding: 15rem 2rem 2rem 2rem; /* Большой отступ сверху */
         background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('/Umoral/bg-main.jpg');
         background-size: cover;
-        background-position: center;
+        background-position: center top; /* Фото начинается сверху */
         background-attachment: fixed;
         background-repeat: no-repeat;
         min-height: 100vh;
       }
       
-      /* Стили для боксов — как на странице со стихами */
+      /* Контейнер для боксов в ряд */
+      .boxes-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      
+      /* Стили для боксов */
       .section { 
-        margin: 2rem 0; 
-        padding: 2rem 1rem;
+        padding: 2rem 1.5rem;
         background: #fff;
         border: 2.5px solid #333;
         border-radius: 16px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         transition: all 0.2s;
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
       }
       
       .section:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         border-color: #000;
       }
       
       h2 { 
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
+        margin: 0 0 1rem 0;
+        font-size: 1.4rem;
         font-weight: 700;
         color: #222;
         text-align: center;
@@ -49,6 +60,9 @@
         color: #333; 
         text-decoration: none;
         font-weight: 600;
+        font-size: 0.95rem;
+        display: block;
+        margin: 0.4rem 0;
       }
       
       a:hover { 
@@ -58,41 +72,64 @@
       
       ul {
         margin: 0;
-        padding-left: 1.5rem;
+        padding: 0;
+        list-style: none;
       }
       
       li {
-        margin: 0.5rem 0;
+        margin: 0;
         color: #444;
+      }
+      
+      /* Адаптивность для планшетов */
+      @media (max-width: 900px) {
+        .boxes-container {
+          grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+        }
+        body {
+          padding-top: 12rem;
+        }
+      }
+      
+      /* Адаптивность для мобильных */
+      @media (max-width: 650px) {
+        .boxes-container {
+          grid-template-columns: 1fr; /* 1 колонка */
+        }
+        body {
+          padding-top: 10rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="section">
-      <h2>Философия</h2>
-      <ul>
-        <li><a href="content/philosophy/essays/">Эссе и видео-эссе</a></li>
-        <li><a href="content/philosophy/comments/">Комментарии</a></li>
-        <li><a href="content/philosophy/thoughts/">Мысли</a></li>
-      </ul>
-    </div>
+    <div class="boxes-container">
+      <div class="section">
+        <h2>Философия</h2>
+        <ul>
+          <li><a href="content/philosophy/essays/">Эссе и видео-эссе</a></li>
+          <li><a href="content/philosophy/comments/">Комментарии</a></li>
+          <li><a href="content/philosophy/thoughts/">Мысли</a></li>
+        </ul>
+      </div>
 
-    <div class="section">
-      <h2>Творчество</h2>
-      <ul>
-        <li><a href="content/creativity/poems/">Стихи</a></li>
-        <li><a href="content/creativity/prose/">Проза</a></li>
-        <li><a href="content/creativity/drawings/">Рисунки</a></li>
-        <li><a href="content/creativity/notes/">Заметки</a></li>
-      </ul>
-    </div>
+      <div class="section">
+        <h2>Творчество</h2>
+        <ul>
+          <li><a href="content/creativity/poems/">Стихи</a></li>
+          <li><a href="content/creativity/prose/">Проза</a></li>
+          <li><a href="content/creativity/drawings/">Рисунки</a></li>
+          <li><a href="content/creativity/notes/">Заметки</a></li>
+        </ul>
+      </div>
 
-    <div class="section">
-      <h2>Журнал</h2>
-      <ul>
-        <li><a href="content/journal/diary/">Дневник</a></li>
-        <li><a href="content/journal/daily/">Ежедневник</a></li>
-      </ul>
+      <div class="section">
+        <h2>Журнал</h2>
+        <ul>
+          <li><a href="content/journal/diary/">Дневник</a></li>
+          <li><a href="content/journal/daily/">Ежедневник</a></li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>
