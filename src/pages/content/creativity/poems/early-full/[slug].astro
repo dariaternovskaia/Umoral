@@ -1,20 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
 
-// Получаем все стихи из коллекции
-const poems = await getCollection('content', ({ id }) => {
-  return id.startsWith('creativity/poems/early-full/');
-});
-
-// Создаем маршруты для каждого стиха
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const poems = await getCollection('content', ({ id }) => 
+    id.startsWith('creativity/poems/early-full/')
+  );
+  
   return poems.map((poem) => ({
     params: { slug: poem.slug },
     props: { poem },
   }));
 }
 
-// Получаем данные текущего стиха
 const { poem } = Astro.props;
 const { data, body } = poem;
 ---
