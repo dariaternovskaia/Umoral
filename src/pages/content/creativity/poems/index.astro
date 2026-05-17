@@ -179,8 +179,12 @@
 
       @media (max-width: 550px) {
         .boxes-grid {
-          margin: 3rem 0 0 1rem;
-        }
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+           gap: 1rem;
+           margin: 5rem 0 0 4rem; /* Увеличенный сдвиг: 5rem вниз, 4rem вправо */
+           max-width: 750px;
+          }
         .bottom-scene {
           width: 360px;
           right: 8px;
