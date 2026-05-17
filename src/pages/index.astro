@@ -6,8 +6,27 @@
     <title>Umoral</title>
     <meta charset="UTF-8">
     <style>
-      body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; }
-      .section { margin: 2rem 0; padding: 1rem; border-left: 3px solid #2563eb; background: #f9fafb; }
+      body {
+		font-family: sans-serif;
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem;
+		background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('/Umoral/bg-main.jpg');
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+		min-height: 100vh;
+	 }
+	 .section {
+		margin: 2rem 0;
+		padding: 1rem;
+		border-left: 3px solid #2563eb;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(4px);
+		border-radius: 0 8px 8px 0;
+	 }
+      
       h2 { margin-top: 0; }
       a { color: #2563eb; text-decoration: none; }
       a:hover { text-decoration: underline; }
