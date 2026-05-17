@@ -10,16 +10,16 @@ export async function getStaticPaths() {
     const slug = poem.id.split('/').pop();
     return {
       params: { slug },
-      props: { poem },
+      props: { poem, slug }, // Передаём slug в props
     };
   });
 }
 
-const { poem } = Astro.props;
+const { poem, slug } = Astro.props;
 const { data, body } = poem;
 const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
 
-// Пастельные цвета для фона (можно добавлять свои)
+// Пастельные цвета для фона
 const pastelColors = [
   '#FFE5E5', // розовый
   '#E5F3FF', // голубой
@@ -31,17 +31,19 @@ const pastelColors = [
   '#FFE5F0', // нежно-розовый
 ];
 
-// Выбираем цвет на основе slug (чтобы для каждого стиха был свой, но постоянный)
-const getColorForPoem = (slug: string) => {
+// Выбираем цвет на основе slug
+const getColorForPoem = (poemSlug: string) => {
+  if (!poemSlug) return '#FAFAFA'; // запасной цвет
+  
   let hash = 0;
-  for (let i = 0; i < slug.length; i++) {
-    hash = slug.charCodeAt(i) + ((hash << 5) - hash);
+  for (let i = 0; i < poemSlug.length; i++) {
+    hash = poemSlug.charCodeAt(i) + ((hash << 5) - hash);
   }
   const index = Math.abs(hash) % pastelColors.length;
   return pastelColors[index];
 };
 
-const bgColor = getColorForPoem(poem.slug);
+const bgColor = getColorForPoem(slug);
 ---
 
 <html>
