@@ -10,7 +10,7 @@
         font-family: sans-serif; 
         max-width: 1200px;
         margin: 0 auto; 
-        padding: 19rem 2rem 2rem 2rem; /* 👈 Опустили боксы вниз */
+        padding: 2rem;
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/Umoral/bg-main.jpg');
         background-size: cover;
         background-position: center 60%; 
@@ -24,7 +24,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         max-width: 1000px;
-        margin: 0 auto;
+        margin: 12rem auto 0 auto; /* 👈 Сдвиг вниз через margin */
       }
       
       .section { 
@@ -82,15 +82,15 @@
       @media (max-width: 900px) {
         .boxes-container {
           grid-template-columns: repeat(2, 1fr);
+          margin-top: 8rem;
         }
-        body { padding-top: 10rem; }
       }
       
       @media (max-width: 650px) {
         .boxes-container {
           grid-template-columns: 1fr;
+          margin-top: 6rem;
         }
-        body { padding-top: 8rem; }
       }
     </style>
   </head>
