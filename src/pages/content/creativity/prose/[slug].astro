@@ -18,6 +18,9 @@ export async function getStaticPaths() {
 const { entry, slug } = Astro.props;
 const { data, body } = entry;
 const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
+
+// Разбиваем текст на абзацы по двойному переносу строки
+const paragraphs = body.split('\n\n');
 ---
 
 <html>
@@ -62,6 +65,8 @@ const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
     <h1>{data.title}</h1>
     <span class="date">{formattedDate}</span>
     
-    <div class="prose-text" set:html={body} />
+    <div class="prose-text">
+      {paragraphs.map(p => <p>{p}</p>)}
+    </div>
   </body>
 </html>

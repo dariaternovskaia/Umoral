@@ -62,10 +62,11 @@ const proseEntries = await getCollection('content', ({ id }) =>
     <div class="prose-grid">
       {proseEntries.map((entry) => {
         const slug = entry.id.split('/').pop().replace('.md', '');
-        const cover = entry.data.cover || 'default-cover.jpg';
+        // Используем жесткий путь, если cover не задан
+        const cover = entry.data.cover ? `/Umoral/${entry.data.cover}` : '/Umoral/flag-sketch.jpg';
         return (
           <a href={`/Umoral/content/creativity/prose/${slug}/`} class="prose-item">
-            <img src={`/Umoral/${cover}`} alt={entry.data.title} class="prose-image" />
+            <img src={cover} alt={entry.data.title} class="prose-image" />
             <div class="prose-title">{entry.data.title}</div>
           </a>
         );
