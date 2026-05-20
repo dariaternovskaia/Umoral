@@ -1,4 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
+
+const proseEntries = await getCollection('content', ({ id }) => 
+  id.startsWith('creativity/prose/')
+);
 ---
 
 <html>
@@ -6,78 +11,47 @@
     <title>Проза | Umoral</title>
     <meta charset="UTF-8">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
         font-family: 'Segoe UI', sans-serif;
         background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/Umoral/bg-prose.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
+        background-size: cover; background-position: center;
+        background-attachment: fixed; background-repeat: no-repeat;
+        min-height: 100vh; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; padding: 2rem;
       }
       
-      h1 {
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        color: #fff;
-        font-weight: 300;
-        text-align: center;
+      h1 { font-size: 2.5rem; margin-bottom: 3rem; color: #fff; font-weight: 300; text-align: center; }
+
+      .prose-grid {
+        display: flex; flex-wrap: wrap; gap: 3rem;
+        justify-content: center; align-items: flex-start;
+        max-width: 1200px;
       }
 
       .prose-item {
-        display: block;
-        text-decoration: none;
-        transition: transform 0.3s;
+        display: flex; flex-direction: column; align-items: center;
+        text-decoration: none; transition: transform 0.3s;
       }
-      
-      .prose-item:hover {
-        transform: scale(1.05);
-      }
+      .prose-item:hover { transform: scale(1.05); }
 
       .prose-image {
-        width: 7cm;
-        height: 7cm;
-        object-fit: cover;
-        border: 3px solid #fff;
-        border-radius: 12px;
+        width: 7cm; height: 7cm; object-fit: cover;
+        border: 3px solid #fff; border-radius: 12px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       }
 
       .prose-title {
-        text-align: center;
-        color: #fff;
-        margin-top: 1.5rem;
-        font-size: 1.2rem;
-        font-weight: 300;
-        letter-spacing: 1px;
+        text-align: center; color: #fff; margin-top: 1.5rem;
+        font-size: 1.2rem; font-weight: 300; letter-spacing: 1px;
       }
 
       .back-link {
-        position: absolute;
-        top: 2rem;
-        left: 2rem;
-        color: #fff;
-        text-decoration: none;
-        font-size: 0.9rem;
-        opacity: 0.8;
-        transition: opacity 0.2s;
+        position: absolute; top: 2rem; left: 2rem;
+        color: #fff; text-decoration: none; font-size: 0.9rem; opacity: 0.8;
       }
-      
-      .back-link:hover {
-        opacity: 1;
-        text-decoration: underline;
-      }
+      .back-link:hover { opacity: 1; text-decoration: underline; }
     </style>
   </head>
   <body style="background-color: #1E3A5F;">
@@ -85,9 +59,17 @@
     
     <h1>Проза</h1>
     
-    <a href="/Umoral/content/creativity/prose/myth-sketch/" class="prose-item">
-      <img src="/Umoral/flag-sketch.jpg" alt="Набросок мифа" class="prose-image">
-      <div class="prose-title">Набросок мифа</div>
-    </a>
+    <div class="prose-grid">
+      {proseEntries.map((entry) => {
+        const slug = entry.id.split('/').pop().replace('.md', '');
+        const cover = entry.data.cover || 'default-cover.jpg';
+        return (
+          <a href={`/Umoral/content/creativity/prose/${slug}/`} class="prose-item">
+            <img src={`/Umoral/${cover}`} alt={entry.data.title} class="prose-image" />
+            <div class="prose-title">{entry.data.title}</div>
+          </a>
+        );
+      })}
+    </div>
   </body>
 </html>

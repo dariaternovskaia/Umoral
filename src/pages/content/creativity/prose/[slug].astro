@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const proseEntries = await getCollection('content', ({ id }) => 
+    id.startsWith('creativity/prose/')
+  );
+
+  return proseEntries.map((entry) => {
+    const slug = entry.id.split('/').pop().replace('.md', '');
+    return {
+      params: { slug },
+      props: { entry, slug },
+    };
+  });
+}
+
+const { entry, slug } = Astro.props;
+const { data, body } = entry;
+const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{data.title}</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        font-weight: 300;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #f0f0f0;
+        min-height: 100vh;
+        padding: 5rem 15% 4rem 15%;
+      }
+      
+      .nav { display: flex; gap: 1rem; margin-bottom: 2rem; }
+      .nav a {
+        color: #aaa; text-decoration: none; font-size: 0.85rem;
+        padding: 0.3rem 0.8rem; border: 1px solid #444; border-radius: 4px;
+        transition: all 0.2s;
+      }
+      .nav a:hover { color: #fff; border-color: #888; background: rgba(255,255,255,0.1); }
+      
+      h1 { font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; color: #fff; }
+      .date { color: #888; font-size: 0.9rem; font-style: italic; margin-bottom: 3rem; display: block; }
+      
+      .prose-text { max-width: 800px; margin: 0 auto; text-align: justify; hyphens: auto; }
+      .prose-text p { margin-bottom: 1.5rem; text-indent: 2rem; }
+      .prose-text p:first-child { text-indent: 0; }
+    </style>
+  </head>
+  <body style="background-color: #2D1B4E;">
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/content/creativity/prose/">← К прозе</a>
+    </nav>
+    
+    <h1>{data.title}</h1>
+    <span class="date">{formattedDate}</span>
+    
+    <div class="prose-text" set:html={body} />
+  </body>
+</html>
