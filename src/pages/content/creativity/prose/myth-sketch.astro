@@ -22,11 +22,8 @@ const { data, body } = prose;
         font-size: 1.1rem;
         line-height: 1.8;
         color: #f0f0f0;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 5rem 5rem 4rem 8rem;
         min-height: 100vh;
+        padding: 5rem 15% 4rem 15%; /* Одинаковые отступы слева и справа */
       }
       
       .nav {
@@ -55,13 +52,22 @@ const { data, body } = prose;
       h1 {
         font-size: 2rem;
         font-weight: 300;
-        margin-bottom: 2rem;
+        margin-bottom: 0.5rem;
         color: #fff;
         letter-spacing: 0.5px;
       }
       
+      .date {
+        color: #888;
+        font-size: 0.9rem;
+        font-style: italic;
+        margin-bottom: 3rem;
+        display: block;
+      }
+      
       .prose-text {
-        max-width: 700px;
+        max-width: 800px;
+        margin: 0 auto;
         text-align: justify;
         hyphens: auto;
       }
@@ -83,9 +89,8 @@ const { data, body } = prose;
     </nav>
     
     <h1>{data.title}</h1>
+    <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
     
-    <div class="prose-text">
-      {body}
-    </div>
+    <div class="prose-text" set:html={body} />
   </body>
 </html>
