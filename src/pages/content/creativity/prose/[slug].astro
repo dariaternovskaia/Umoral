@@ -19,12 +19,9 @@ const { entry, slug } = Astro.props;
 const { data, body } = entry;
 const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
 
-// Разбиваем текст на абзацы и оборачиваем каждый в <p>
-// replace(/\n/g, ' ') заменяет одиночные переносы внутри абзаца на пробелы
-const htmlContent = body
-  .split('\n\n')
-  .map(p => `<p>${p.replace(/\n/g, ' ').trim()}</p>`)
-  .join('');
+// Жесткий поиск абзацев: ищет два переноса строки с любыми пробелами между ними
+// Это сработает, даже если текст скопирован из Word
+const paragraphs = body ? body.split(/\r?\n\s*\r?\n/) : [];
 ---
 
 <html>
@@ -69,7 +66,10 @@ const htmlContent = body
     <h1>{data.title}</h1>
     <span class="date">{formattedDate}</span>
     
-    <!-- Вставляем HTML с абзацами -->
-    <div class="prose-text" set:html={htmlContent} />
+    <div class="prose-text">
+      {paragraphs.map((paragraph) => (
+        <p>{paragraph.trim()}</p>
+      ))}
+    </div>
   </body>
 </html>
