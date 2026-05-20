@@ -19,8 +19,12 @@ const { entry, slug } = Astro.props;
 const { data, body } = entry;
 const formattedDate = data.date ? data.date.toLocaleDateString('ru-RU') : '';
 
-// Разбиваем текст на абзацы по двойному переносу строки
-const paragraphs = body.split('\n\n');
+// Разбиваем текст на абзацы и оборачиваем каждый в <p>
+// replace(/\n/g, ' ') заменяет одиночные переносы внутри абзаца на пробелы
+const htmlContent = body
+  .split('\n\n')
+  .map(p => `<p>${p.replace(/\n/g, ' ').trim()}</p>`)
+  .join('');
 ---
 
 <html>
@@ -65,8 +69,7 @@ const paragraphs = body.split('\n\n');
     <h1>{data.title}</h1>
     <span class="date">{formattedDate}</span>
     
-    <div class="prose-text">
-      {paragraphs.map(p => <p>{p}</p>)}
-    </div>
+    <!-- Вставляем HTML с абзацами -->
+    <div class="prose-text" set:html={htmlContent} />
   </body>
 </html>
