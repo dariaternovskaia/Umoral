@@ -1,0 +1,91 @@
+---
+import { getEntry } from 'astro:content';
+
+const prose = await getEntry('content', 'creativity/prose/myth-sketch');
+const { data, body } = prose;
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{data.title}</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Georgia', serif;
+        font-weight: 300;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 5rem 4rem 8rem;
+        min-height: 100vh;
+      }
+      
+      .nav {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      
+      .nav a {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 300;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid #444;
+        border-radius: 4px;
+        transition: all 0.2s;
+      }
+      
+      .nav a:hover {
+        color: #fff;
+        border-color: #888;
+        background: rgba(255,255,255,0.1);
+      }
+      
+      h1 {
+        font-size: 2rem;
+        font-weight: 300;
+        margin-bottom: 2rem;
+        color: #fff;
+        letter-spacing: 0.5px;
+      }
+      
+      .prose-text {
+        max-width: 700px;
+        text-align: justify;
+        hyphens: auto;
+      }
+      
+      .prose-text p {
+        margin-bottom: 1.5rem;
+        text-indent: 2rem;
+      }
+      
+      .prose-text p:first-child {
+        text-indent: 0;
+      }
+    </style>
+  </head>
+  <body style="background-color: #2D1B4E;">
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/content/creativity/prose/">← К прозе</a>
+    </nav>
+    
+    <h1>{data.title}</h1>
+    
+    <div class="prose-text">
+      {body}
+    </div>
+  </body>
+</html>
