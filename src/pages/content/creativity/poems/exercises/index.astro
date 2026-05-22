@@ -23,8 +23,8 @@ function formatDate(value) {
       * { margin: 0; padding: 0; box-sizing: border-box; }
       
       body {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Тонкий шрифт без засечек */
-        background-color: #8B2635; /* Сплошной бордовый */
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #8B2635;
         overflow: hidden;
         color: #fff;
         height: 100vh;
@@ -54,21 +54,21 @@ function formatDate(value) {
         font-size: 1rem;
         line-height: 1.6;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-        font-weight: 300; /* Тонкое начертание */
+        font-weight: 300;
         letter-spacing: 0.5px;
-        /* Убираем сжатие в столбик */
-        max-width: 600px; 
-        word-break: keep-all; /* Не разрывать слова */
+        /* Ключевые изменения: */
+        white-space: pre; /* Сохраняет ВСЕ пробелы и переносы как в файле */
+        width: max-content; /* Ширина = длине самой длинной строки */
       }
 
       .poem-date {
-        display: inline-block;
+        display: block;
         margin-top: 0.5rem;
-        margin-left: 1rem;
         font-size: 0.8rem;
         color: rgba(255,255,255,0.6);
         font-style: italic;
         font-weight: 300;
+        text-align: right;
       }
 
       .nav {
@@ -105,25 +105,15 @@ function formatDate(value) {
 
     <div id="canvas">
       <div id="wall">
-        {exercises.map(ex => {
-          // Разбиваем текст на строки вручную, чтобы сохранить структуру 1 в 1
-          const lines = ex.body ? ex.body.split('\n') : [];
-          
-          return (
-            <div 
-              class="poem-text" 
-              style={`left: ${ex.data.x || 0}px; top: ${ex.data.y || 0}px;`}
-            >
-              {lines.map((line, index) => (
-                <>
-                  {line}
-                  <br />
-                </>
-              ))}
-              {ex.data.date && <span class="poem-date">{formatDate(ex.data.date)}</span>}
-            </div>
-          );
-        })}
+        {exercises.map(ex => (
+          <div 
+            class="poem-text" 
+            style={`left: ${ex.data.x || 0}px; top: ${ex.data.y || 0}px;`}
+          >
+            {ex.body}
+            {ex.data.date && <span class="poem-date">{formatDate(ex.data.date)}</span>}
+          </div>
+        ))}
       </div>
     </div>
 
