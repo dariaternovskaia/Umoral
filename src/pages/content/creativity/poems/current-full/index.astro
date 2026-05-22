@@ -38,8 +38,16 @@ for (let i = 0; i < totalCells; i++) {
         background-attachment: fixed;
         background-repeat: no-repeat;
         min-height: 100vh;
-        padding: 3rem 2rem;
+        padding: 5rem 2rem 3rem 2rem;
       }
+
+      .nav { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+      .nav a {
+        color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem;
+        padding: 0.3rem 0.8rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px;
+        transition: all 0.2s; backdrop-filter: blur(5px);
+      }
+      .nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
 
       h1 {
         text-align: center;
@@ -144,6 +152,11 @@ for (let i = 0; i < totalCells; i++) {
     </style>
   </head>
   <body>
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/content/creativity/poems/">← К стихам</a>
+    </nav>
+    
     <h1>Актуальные полноценки</h1>
     
     <div class="grid">
@@ -165,6 +178,6 @@ for (let i = 0; i < totalCells; i++) {
       })}
     </div>
 
-    <a href="/Umoral/content/creativity/poems/" class="back-link">← К стихам</a>
+    <a href="/Umoral/content/creativity/poems/" class="back-link">← К списку стихов</a>
   </body>
 </html>
