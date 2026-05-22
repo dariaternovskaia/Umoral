@@ -7,6 +7,7 @@ const content = defineCollection({
     title: z.string(),
     date: z.date().optional(),
     draft: z.boolean().default(false),
+    cover: z.string().optional(), // ← ДОБАВИЛИ ЭТУ СТРОКУ
   }),
 });
 
