@@ -23,8 +23,8 @@ function formatDate(value) {
       * { margin: 0; padding: 0; box-sizing: border-box; }
       
       body {
-        font-family: 'Georgia', serif;
-        background-color: #8B2635; /* Просто бордовый */
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Тонкий шрифт без засечек */
+        background-color: #8B2635; /* Сплошной бордовый */
         overflow: hidden;
         color: #fff;
         height: 100vh;
@@ -50,26 +50,24 @@ function formatDate(value) {
 
       .poem-text {
         position: absolute;
-        color: #fff;
-        font-size: 0.95rem;
-        line-height: 1.9;
-        white-space: pre-line; /* Сохраняет переносы строк */
-        text-shadow: 
-          1px 1px 2px rgba(0,0,0,0.8),
-          -1px -1px 2px rgba(0,0,0,0.5);
-        max-width: 280px;
-        pointer-events: none;
-        font-weight: 300; /* Тонкий шрифт */
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1rem;
+        line-height: 1.6;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        font-weight: 300; /* Тонкое начертание */
         letter-spacing: 0.5px;
+        /* Убираем сжатие в столбик */
+        max-width: 600px; 
+        word-break: keep-all; /* Не разрывать слова */
       }
 
       .poem-date {
-        display: block;
-        margin-top: 0.8rem;
-        font-size: 0.75rem;
-        color: rgba(255,255,255,0.7);
+        display: inline-block;
+        margin-top: 0.5rem;
+        margin-left: 1rem;
+        font-size: 0.8rem;
+        color: rgba(255,255,255,0.6);
         font-style: italic;
-        text-align: right;
         font-weight: 300;
       }
 
@@ -97,11 +95,6 @@ function formatDate(value) {
         z-index: 50;
         border: 1px solid rgba(255,255,255,0.2);
       }
-
-      @media (max-width: 600px) {
-        .poem-text { font-size: 0.85rem; max-width: 240px; }
-        .hint { font-size: 0.75rem; padding: 6px 12px; }
-      }
     </style>
   </head>
   <body>
@@ -112,18 +105,25 @@ function formatDate(value) {
 
     <div id="canvas">
       <div id="wall">
-        {exercises.map(ex => (
-          <div 
-            class="poem-text" 
-            style={`
-              left: ${ex.data.x || 0}px; 
-              top: ${ex.data.y || 0}px;
-            `}
-          >
-            {ex.body}
-            {ex.data.date && <span class="poem-date">{formatDate(ex.data.date)}</span>}
-          </div>
-        ))}
+        {exercises.map(ex => {
+          // Разбиваем текст на строки вручную, чтобы сохранить структуру 1 в 1
+          const lines = ex.body ? ex.body.split('\n') : [];
+          
+          return (
+            <div 
+              class="poem-text" 
+              style={`left: ${ex.data.x || 0}px; top: ${ex.data.y || 0}px;`}
+            >
+              {lines.map((line, index) => (
+                <>
+                  {line}
+                  <br />
+                </>
+              ))}
+              {ex.data.date && <span class="poem-date">{formatDate(ex.data.date)}</span>}
+            </div>
+          );
+        })}
       </div>
     </div>
 
