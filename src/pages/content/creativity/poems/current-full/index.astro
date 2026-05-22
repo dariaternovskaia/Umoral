@@ -10,7 +10,7 @@ const totalCells = 16;
 const filledCells = poems.map(poem => ({
   slug: poem.id.split('/').pop().replace('.md', ''),
   title: poem.data.title,
-  cover: poem.data.cover || '',
+  cover: poem.data.cover || null, // null вместо пустой строки
   date: poem.data.date,
 }));
 
@@ -90,7 +90,6 @@ for (let i = 0; i < totalCells; i++) {
         background: #fff;
       }
 
-      /* Пустая ячейка */
       .cell.empty {
         background: #f5f5f5;
         cursor: default;
@@ -137,7 +136,8 @@ for (let i = 0; i < totalCells; i++) {
         if (cell.type === 'filled') {
           return (
             <a href={`/Umoral/content/creativity/poems/current-full/${cell.slug}/`} class="cell">
-              <img src={`/Umoral/${cell.cover}`} alt={cell.title} class="cell-image" />
+              {/* Рендерим img только если есть cover */}
+              {cell.cover && <img src={`/Umoral/${cell.cover}`} alt={cell.title} class="cell-image" />}
               <div class="cell-title">{cell.title}</div>
             </a>
           );
