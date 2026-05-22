@@ -1,0 +1,165 @@
+---
+import { getCollection } from 'astro:content';
+
+const poems = await getCollection('content', ({ id }) => 
+  id.startsWith('creativity/poems/current-full/')
+);
+
+// Создаём сетку 4x4 (16 ячеек)
+// Заполненные стихи + пустые ячейки с "?"
+const totalCells = 16;
+const filledCells = poems.map(poem => ({
+  slug: poem.id.split('/').pop().replace('.md', ''),
+  title: poem.data.title,
+  cover: poem.data.cover || '',
+  date: poem.data.date,
+}));
+
+// Заполняем оставшиеся ячейки пустыми
+const cells = [];
+for (let i = 0; i < totalCells; i++) {
+  if (i < filledCells.length) {
+    cells.push({ type: 'filled', ...filledCells[i] });
+  } else {
+    cells.push({ type: 'empty' });
+  }
+}
+---
+
+<html>
+  <head>
+    <title>Актуальные полноценки | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/Umoral/bg-concert.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        padding: 3rem 2rem;
+      }
+
+      h1 {
+        text-align: center;
+        color: #fff;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        font-weight: 300;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .cell {
+        aspect-ratio: 1;
+        background: rgba(255, 255, 255, 0.95);
+        border: 3px solid #333;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      .cell:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        border-color: #000;
+      }
+
+      .cell-image {
+        width: 100%;
+        height: 70%;
+        object-fit: cover;
+        border-bottom: 2px solid #333;
+      }
+
+      .cell-title {
+        height: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #222;
+        background: #fff;
+      }
+
+      /* Пустая ячейка */
+      .cell.empty {
+        background: rgba(200, 200, 200, 0.3);
+        border: 2px dashed rgba(255, 255, 255, 0.5);
+        cursor: default;
+      }
+
+      .cell.empty:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .question-mark {
+        font-size: 4rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 300;
+      }
+
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 3rem;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+      .back-link:hover { opacity: 1; text-decoration: underline; }
+
+      @media (max-width: 900px) {
+        .grid { grid-template-columns: repeat(3, 1fr); }
+      }
+
+      @media (max-width: 650px) {
+        .grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        h1 { font-size: 1.8rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Актуальные полноценки</h1>
+    
+    <div class="grid">
+      {cells.map((cell) => {
+        if (cell.type === 'filled') {
+          return (
+            <a href={`/Umoral/content/creativity/poems/current-full/${cell.slug}/`} class="cell">
+              <img src={`/Umoral/${cell.cover}`} alt={cell.title} class="cell-image" />
+              <div class="cell-title">{cell.title}</div>
+            </a>
+          );
+        } else {
+          return (
+            <div class="cell empty">
+              <div class="question-mark">?</div>
+            </div>
+          );
+        }
+      })}
+    </div>
+
+    <a href="/Umoral/content/creativity/poems/" class="back-link">← К стихам</a>
+  </body>
+</html>
