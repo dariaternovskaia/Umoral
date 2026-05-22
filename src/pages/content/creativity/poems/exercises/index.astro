@@ -24,10 +24,7 @@ function formatDate(value) {
       
       body {
         font-family: 'Georgia', serif;
-        background-color: #8B2635; /* Бордовый/кирпичный */
-        background-image: 
-          repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,0,0,0.1) 50px, rgba(0,0,0,0.1) 53px),
-          repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(0,0,0,0.15) 25px, rgba(0,0,0,0.15) 28px);
+        background-color: #8B2635; /* Просто бордовый */
         overflow: hidden;
         color: #fff;
         height: 100vh;
@@ -56,14 +53,14 @@ function formatDate(value) {
         color: #fff;
         font-size: 0.95rem;
         line-height: 1.9;
-        white-space: pre-wrap;
+        white-space: pre-line; /* Сохраняет переносы строк */
         text-shadow: 
           1px 1px 2px rgba(0,0,0,0.8),
           -1px -1px 2px rgba(0,0,0,0.5);
         max-width: 280px;
         pointer-events: none;
-        font-weight: 400;
-        letter-spacing: 0.3px;
+        font-weight: 300; /* Тонкий шрифт */
+        letter-spacing: 0.5px;
       }
 
       .poem-date {
@@ -73,6 +70,7 @@ function formatDate(value) {
         color: rgba(255,255,255,0.7);
         font-style: italic;
         text-align: right;
+        font-weight: 300;
       }
 
       .nav {
@@ -114,23 +112,18 @@ function formatDate(value) {
 
     <div id="canvas">
       <div id="wall">
-        {exercises.map(ex => {
-          // Генерируем небольшой случайный поворот для каждого стиха (-5 до +5 градусов)
-          const rotation = (ex.data.x + ex.data.y) % 11 - 5;
-          return (
-            <div 
-              class="poem-text" 
-              style={`
-                left: ${ex.data.x || 0}px; 
-                top: ${ex.data.y || 0}px;
-                transform: rotate(${rotation}deg);
-              `}
-            >
-              {ex.body}
-              {ex.data.date && <span class="poem-date">{formatDate(ex.data.date)}</span>}
-            </div>
-          );
-        })}
+        {exercises.map(ex => (
+          <div 
+            class="poem-text" 
+            style={`
+              left: ${ex.data.x || 0}px; 
+              top: ${ex.data.y || 0}px;
+            `}
+          >
+            {ex.body}
+            {ex.data.date && <span class="poem-date">{formatDate(ex.data.date)}</span>}
+          </div>
+        ))}
       </div>
     </div>
 
