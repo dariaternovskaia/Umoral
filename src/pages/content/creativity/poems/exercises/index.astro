@@ -5,6 +5,15 @@ import { getCollection } from 'astro:content';
 const exercises = await getCollection('content', ({ id }) => 
   id.startsWith('creativity/poems/exercises/')
 );
+
+// Функция для форматирования даты (принимает и строку, и Date)
+function formatDate(value) {
+  if (!value) return '';
+  if (value instanceof Date) {
+    return value.toLocaleDateString('ru-RU');
+  }
+  return String(value);
+}
 ---
 
 <html>
@@ -17,7 +26,7 @@ const exercises = await getCollection('content', ({ id }) =>
       
       body {
         font-family: 'Georgia', serif;
-        background-color: #c4a484; /* Крафтовая бумага */
+        background-color: #c4a484;
         overflow: hidden;
         color: #fff;
         height: 100vh;
@@ -116,7 +125,7 @@ const exercises = await getCollection('content', ({ id }) =>
         {exercises.map(ex => (
           <article class="poem-card" style={`left: ${ex.data.x || 0}px; top: ${ex.data.y || 0}px;`}>
             <div class="poem-text">{ex.body}</div>
-            {ex.data.date && <div class="poem-date">{ex.data.date}</div>}
+            {ex.data.date && <div class="poem-date">{formatDate(ex.data.date)}</div>}
           </article>
         ))}
       </div>
@@ -139,7 +148,6 @@ const exercises = await getCollection('content', ({ id }) =>
         wall.style.transform = `translate(${pX}px, ${pY}px) scale(${scale})`;
       }
 
-      // Мышь: начало перетаскивания
       canvas.addEventListener('mousedown', (e) => {
         if (e.target.closest('.poem-card')) return;
         isPanning = true;
@@ -148,7 +156,6 @@ const exercises = await getCollection('content', ({ id }) =>
         canvas.style.cursor = 'grabbing';
       });
 
-      // Мышь: перемещение
       window.addEventListener('mousemove', (e) => {
         if (!isPanning) return;
         pX = e.clientX - startX;
@@ -156,20 +163,17 @@ const exercises = await getCollection('content', ({ id }) =>
         updateTransform();
       });
 
-      // Мышь: конец перетаскивания
       window.addEventListener('mouseup', () => {
         isPanning = false;
         canvas.style.cursor = 'grab';
       });
 
-      // Мышь: зум колёсиком
       canvas.addEventListener('wheel', (e) => {
         e.preventDefault();
         const zoomSpeed = 0.1;
         const delta = e.deltaY < 0 ? zoomSpeed : -zoomSpeed;
         const newScale = Math.min(Math.max(scale + delta, 0.3), 4);
         
-        // Зум к точке курсора
         const rect = canvas.getBoundingClientRect();
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
@@ -180,7 +184,6 @@ const exercises = await getCollection('content', ({ id }) =>
         updateTransform();
       }, { passive: false });
 
-      // Тач: начало
       canvas.addEventListener('touchstart', (e) => {
         if (e.touches.length === 1) {
           isPanning = true;
@@ -195,7 +198,6 @@ const exercises = await getCollection('content', ({ id }) =>
         }
       }, { passive: false });
 
-      // Тач: движение
       canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         if (e.touches.length === 1 && isPanning) {
@@ -214,12 +216,10 @@ const exercises = await getCollection('content', ({ id }) =>
         }
       }, { passive: false });
 
-      // Тач: конец
       canvas.addEventListener('touchend', () => {
         isPanning = false;
       });
 
-      // Инициализация
       updateTransform();
     </script>
   </body>

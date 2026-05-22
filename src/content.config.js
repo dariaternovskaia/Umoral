@@ -4,8 +4,8 @@ import { glob } from 'astro/loaders';
 const content = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content' }),
   schema: z.object({
-    title: z.string().optional(), // ← Теперь не обязательно
-    date: z.string().optional(),
+    title: z.string().optional(),
+    date: z.union([z.string(), z.date()]).optional(),
     draft: z.boolean().default(false),
     cover: z.string().optional(),
     x: z.number().optional().default(0),
