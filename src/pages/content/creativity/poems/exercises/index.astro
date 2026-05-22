@@ -26,7 +26,7 @@ function formatDate(value) {
       
       body {
         font-family: 'Cormorant Garamond', serif;
-        background-color: #5C1A23; /* Тёмно-бордовый */
+        background-color: #3D1017; /* Ещё темнее */
         overflow: hidden;
         color: #fff;
         height: 100vh;
@@ -52,29 +52,27 @@ function formatDate(value) {
 
       .poem-text {
         position: absolute;
-        color: rgba(255, 255, 255, 0.92);
+        color: rgba(255, 255, 255, 0.95); /* Чуть ярче */
         font-size: 1.15rem;
         line-height: 1.7;
         font-weight: 300;
         letter-spacing: 0.3px;
         white-space: pre;
         width: max-content;
-        text-indent: 0; /* Убираем отступ первой строки */
-        /* Эффект "не в резкости" */
-        filter: blur(0.3px);
-        text-shadow: 0 0 1px rgba(255,255,255,0.3);
+        text-indent: 0;
+        /* Убрала размытие — текст в резкости */
       }
 
       .poem-date {
         display: block;
         margin-top: 0.6rem;
         font-size: 0.9rem;
-        color: rgba(255,255,255,0.55);
+        color: rgba(255,255,255,0.6); /* Чуть ярче */
         font-style: italic;
         font-weight: 300;
         text-align: right;
         text-indent: 0;
-        filter: blur(0.2px);
+        /* Убрала размытие */
       }
 
       .nav {
