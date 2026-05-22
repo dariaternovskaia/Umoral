@@ -4,10 +4,12 @@ import { glob } from 'astro/loaders';
 const content = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content' }),
   schema: z.object({
-    title: z.string(),
-    date: z.date().optional(),
+    title: z.string().optional(), // ← Теперь не обязательно
+    date: z.string().optional(),
     draft: z.boolean().default(false),
-    cover: z.string().optional(), // ← ДОБАВИЛИ ЭТУ СТРОКУ
+    cover: z.string().optional(),
+    x: z.number().optional().default(0),
+    y: z.number().optional().default(0),
   }),
 });
 
