@@ -9,12 +9,10 @@ const { data, body } = prose;
   <head>
     <meta charset="UTF-8">
     <title>{data.title}</title>
+    <!-- Подключаем рукописный шрифт с поддержкой кириллицы -->
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&display=swap" rel="stylesheet">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       
       body {
         font-family: 'Georgia', serif;
@@ -23,62 +21,91 @@ const { data, body } = prose;
         line-height: 1.8;
         color: #f0f0f0;
         min-height: 100vh;
-        padding: 5rem 15% 4rem 15%; /* Одинаковые отступы слева и справа */
+        padding: 5rem 15% 4rem 15%;
+        position: relative;
       }
       
-      .nav {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
-      }
-      
+      .nav { display: flex; gap: 1rem; margin-bottom: 2rem; }
       .nav a {
-        color: #aaa;
-        text-decoration: none;
-        font-size: 0.85rem;
-        font-weight: 300;
-        padding: 0.3rem 0.8rem;
-        border: 1px solid #444;
-        border-radius: 4px;
+        color: #aaa; text-decoration: none; font-size: 0.85rem;
+        padding: 0.3rem 0.8rem; border: 1px solid #444; border-radius: 4px;
         transition: all 0.2s;
       }
+      .nav a:hover { color: #fff; border-color: #888; background: rgba(255,255,255,0.1); }
       
-      .nav a:hover {
-        color: #fff;
-        border-color: #888;
-        background: rgba(255,255,255,0.1);
-      }
-      
-      h1 {
-        font-size: 2rem;
-        font-weight: 300;
-        margin-bottom: 0.5rem;
-        color: #fff;
-        letter-spacing: 0.5px;
-      }
-      
-      .date {
-        color: #888;
-        font-size: 0.9rem;
-        font-style: italic;
-        margin-bottom: 3rem;
-        display: block;
-      }
+      h1 { font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; color: #fff; letter-spacing: 0.5px; }
+      .date { color: #888; font-size: 0.9rem; font-style: italic; margin-bottom: 3rem; display: block; }
       
       .prose-text {
         max-width: 800px;
         margin: 0 auto;
         text-align: justify;
         hyphens: auto;
+        position: relative;
       }
       
       .prose-text p {
         margin-bottom: 1.5rem;
         text-indent: 2rem;
+        position: relative;
       }
-      
-      .prose-text p:first-child {
-        text-indent: 0;
+      .prose-text p:first-child { text-indent: 0; }
+
+      /* === СТИЛИ ДЛЯ РУКОПИСНЫХ ЗАМЕТОК === */
+      .marginalia {
+        font-family: 'Kalam', cursive;
+        font-weight: 300;
+        font-size: 0.9rem;
+        color: rgba(255, 215, 180, 0.85); /* Тёплый "чернильный" оттенок */
+        position: absolute;
+        line-height: 1.4;
+        pointer-events: none;
+        user-select: none;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        white-space: nowrap;
+      }
+
+      /* 1. Заметка в правом верхнем углу (диагонально) */
+      .corner-note {
+        position: fixed;
+        top: 4rem;
+        right: 3rem;
+        transform: rotate(12deg);
+        font-size: 1rem;
+        color: rgba(255, 220, 190, 0.9);
+        z-index: 10;
+        max-width: 220px;
+        text-align: right;
+      }
+
+      /* 2. Заметка на полях: "использовать в качестве аргумента..." */
+      .margin-note-1 {
+        right: -280px;
+        top: 50%;
+        transform: translateY(-50%) rotate(-3deg);
+        max-width: 240px;
+        text-align: left;
+      }
+
+      /* 3. Заметка со стрелочкой: "любителям русского Бога..." */
+      .margin-note-2 {
+        right: -260px;
+        top: 30%;
+        transform: translateY(-50%) rotate(2deg);
+        max-width: 220px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Стрелочка, ведущая к тексту */
+      .arrow {
+        display: inline-block;
+        color: rgba(255, 215, 180, 0.7);
+        font-size: 1.2rem;
+        transform: rotate(-90deg);
+        margin-right: 4px;
       }
     </style>
   </head>
@@ -91,6 +118,35 @@ const { data, body } = prose;
     <h1>{data.title}</h1>
     <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
     
+    <!-- Заметка в углу -->
+    <div class="marginalia corner-note">в копилку историй<br/>о безымянных Богах</div>
+    
     <div class="prose-text" set:html={body} />
+    
+    <!-- Скрипт для точного позиционирования заметок -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const paragraphs = document.querySelectorAll('.prose-text p');
+        
+        // 1. Ищем абзац, начинающийся с "однако наказания..."
+        paragraphs.forEach(p => {
+          const text = p.textContent.trim();
+          if (text.toLowerCase().startsWith('однако наказания')) {
+            const note = document.createElement('div');
+            note.className = 'marginalia margin-note-1';
+            note.textContent = 'использовать в качестве аргумента\nв споре о наличие души\nу аборигенов';
+            note.style.whiteSpace = 'pre-line';
+            p.appendChild(note);
+          }
+          // 2. Ищем упоминание "европейского бога"
+          if (text.toLowerCase().includes('европейского бога') || text.toLowerCase().includes('европейский бог')) {
+            const note = document.createElement('div');
+            note.className = 'marginalia margin-note-2';
+            note.innerHTML = '<span class="arrow">→</span><span>любителям русского<br/>Бога посвящается</span>';
+            p.appendChild(note);
+          }
+        });
+      });
+    </script>
   </body>
 </html>
