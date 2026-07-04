@@ -9,8 +9,8 @@ const { data, body } = prose;
   <head>
     <meta charset="UTF-8">
     <title>{data.title}</title>
-    <!-- Подключаем рукописный шрифт с поддержкой кириллицы -->
-    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Более рукописный шрифт с поддержкой кириллицы -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       
@@ -23,6 +23,7 @@ const { data, body } = prose;
         min-height: 100vh;
         padding: 5rem 15% 4rem 15%;
         position: relative;
+        background-color: #2D1B4E;
       }
       
       .nav { display: flex; gap: 1rem; margin-bottom: 2rem; }
@@ -53,63 +54,114 @@ const { data, body } = prose;
 
       /* === СТИЛИ ДЛЯ РУКОПИСНЫХ ЗАМЕТОК === */
       .marginalia {
-        font-family: 'Kalam', cursive;
-        font-weight: 300;
-        font-size: 0.9rem;
-        color: rgba(255, 215, 180, 0.85); /* Тёплый "чернильный" оттенок */
+        font-family: 'Caveat', cursive;
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: #fff; /* Белый как основной текст */
         position: absolute;
-        line-height: 1.4;
+        line-height: 1.3;
         pointer-events: none;
         user-select: none;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        white-space: nowrap;
+        white-space: pre-line;
+        /* Эффект "чернил" */
+        text-shadow: 
+          0 0 1px rgba(255,255,255,0.5),
+          0.5px 0.5px 1px rgba(0,0,0,0.4);
+        /* Лёгкая неровность */
+        transform: rotate(var(--rotation, 0deg));
+        opacity: 0.92;
       }
 
-      /* 1. Заметка в правом верхнем углу (диагонально) */
+      /* Кляксы и чернильные пятна */
+      .marginalia::before,
+      .marginalia::after {
+        content: '';
+        position: absolute;
+        background: radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+      .marginalia::before {
+        width: 8px; height: 8px;
+        top: -3px; right: -5px;
+      }
+      .marginalia::after {
+        width: 5px; height: 5px;
+        bottom: 2px; left: -8px;
+      }
+
+      /* 1. Заметка в правом верхнем углу */
       .corner-note {
         position: fixed;
-        top: 4rem;
-        right: 3rem;
-        transform: rotate(12deg);
-        font-size: 1rem;
-        color: rgba(255, 220, 190, 0.9);
+        top: 5rem;
+        right: 2.5rem;
+        --rotation: 14deg;
+        font-size: 1.05rem;
         z-index: 10;
-        max-width: 220px;
+        max-width: 240px;
         text-align: right;
       }
 
-      /* 2. Заметка на полях: "использовать в качестве аргумента..." */
+      /* 2. Заметка: "использовать в качестве аргумента..." */
       .margin-note-1 {
-        right: -280px;
+        right: -290px;
         top: 50%;
-        transform: translateY(-50%) rotate(-3deg);
-        max-width: 240px;
+        transform: translateY(-50%) rotate(-4deg);
+        max-width: 260px;
         text-align: left;
+        --rotation: -4deg;
       }
 
       /* 3. Заметка со стрелочкой: "любителям русского Бога..." */
       .margin-note-2 {
-        right: -260px;
-        top: 30%;
-        transform: translateY(-50%) rotate(2deg);
-        max-width: 220px;
+        right: -270px;
+        top: 35%;
+        transform: translateY(-50%) rotate(3deg);
+        max-width: 240px;
         text-align: left;
         display: flex;
-        align-items: center;
-        gap: 8px;
+        align-items: flex-start;
+        gap: 6px;
+        --rotation: 3deg;
       }
 
-      /* Стрелочка, ведущая к тексту */
-      .arrow {
+      /* Стрелочка-чернильная */
+      .ink-arrow {
         display: inline-block;
-        color: rgba(255, 215, 180, 0.7);
-        font-size: 1.2rem;
-        transform: rotate(-90deg);
-        margin-right: 4px;
+        color: #fff;
+        font-size: 1.1rem;
+        transform: rotate(-90deg) scaleX(1.3);
+        opacity: 0.85;
+        margin-top: 2px;
+        text-shadow: 0 0 1px rgba(255,255,255,0.4);
+      }
+
+      /* Дополнительные случайные кляксы */
+      .ink-blot {
+        position: absolute;
+        background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, transparent 80%);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0.4;
+      }
+      .ink-blot.small { width: 4px; height: 4px; }
+      .ink-blot.medium { width: 7px; height: 7px; }
+      .ink-blot.large { width: 12px; height: 12px; }
+
+      @media (max-width: 1100px) {
+        .margin-note-1, .margin-note-2 {
+          right: -240px;
+          font-size: 0.85rem;
+        }
+      }
+      @media (max-width: 900px) {
+        .corner-note { font-size: 0.9rem; top: 4rem; right: 1.5rem; }
+        .margin-note-1, .margin-note-2 { display: none; }
       }
     </style>
   </head>
-  <body style="background-color: #2D1B4E;">
+  <body>
     <nav class="nav">
       <a href="/Umoral/">← На главную</a>
       <a href="/Umoral/content/creativity/prose/">← К прозе</a>
@@ -119,7 +171,10 @@ const { data, body } = prose;
     <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
     
     <!-- Заметка в углу -->
-    <div class="marginalia corner-note">в копилку историй<br/>о безымянных Богах</div>
+    <div class="marginalia corner-note">
+      в копилку историй<br/>о безымянных Богах
+      <span class="ink-blot small" style="top:10px; left:-15px;"></span>
+    </div>
     
     <div class="prose-text" set:html={body} />
     
@@ -128,21 +183,25 @@ const { data, body } = prose;
       document.addEventListener('DOMContentLoaded', () => {
         const paragraphs = document.querySelectorAll('.prose-text p');
         
-        // 1. Ищем абзац, начинающийся с "однако наказания..."
         paragraphs.forEach(p => {
-          const text = p.textContent.trim();
-          if (text.toLowerCase().startsWith('однако наказания')) {
+          const text = p.textContent || '';
+          const lower = text.toLowerCase();
+          
+          // 1. Ищем абзац про "однако наказания" (более гибкий поиск)
+          if (lower.includes('однако наказ') || lower.includes('однако наказания')) {
             const note = document.createElement('div');
             note.className = 'marginalia margin-note-1';
-            note.textContent = 'использовать в качестве аргумента\nв споре о наличие души\nу аборигенов';
-            note.style.whiteSpace = 'pre-line';
+            note.innerHTML = 'использовать в качестве аргумента<br/>в споре о наличие души<br/>у аборигенов<span class="ink-blot medium" style="top:-5px; right:-10px;"></span>';
+            p.style.position = 'relative';
             p.appendChild(note);
           }
-          // 2. Ищем упоминание "европейского бога"
-          if (text.toLowerCase().includes('европейского бога') || text.toLowerCase().includes('европейский бог')) {
+          
+          // 2. Ищем упоминание "европейского бога" (гибкий поиск)
+          if (lower.includes('европейск') && lower.includes('бог')) {
             const note = document.createElement('div');
             note.className = 'marginalia margin-note-2';
-            note.innerHTML = '<span class="arrow">→</span><span>любителям русского<br/>Бога посвящается</span>';
+            note.innerHTML = '<span class="ink-arrow">→</span><span>любителям русского<br/>Бога посвящается<span class="ink-blot small" style="bottom:-3px; left:-8px;"></span></span>';
+            p.style.position = 'relative';
             p.appendChild(note);
           }
         });
