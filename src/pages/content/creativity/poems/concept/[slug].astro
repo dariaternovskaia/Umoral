@@ -1,4 +1,4 @@
-<!-- FORCE UPDATE v4 -->
+<!-- DEBUG VERSION v1 -->
 ---
 import { getCollection } from 'astro:content';
 
@@ -22,6 +22,13 @@ const { data, body } = entry;
 const parts = body.split('---');
 const original = parts[0]?.replace(/##\s*Original/i, '').trim();
 const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body;
+
+// DEBUG: выводим данные в консоль браузера
+console.log('=== DEBUG DATA ===');
+console.log('Title:', data.title);
+console.log('Audio:', data.audio);
+console.log('Author:', data.author);
+console.log('Full data:', JSON.stringify(data, null, 2));
 ---
 
 <html>
@@ -53,10 +60,7 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         border: 1px solid rgba(255,255,255,0.3);
         border-radius: 4px;
       }
-      .nav a:hover {
-        color: #fff;
-        border-color: #fff;
-      }
+      .nav a:hover { color: #fff; border-color: #fff; }
 
       .paper-sheet {
         max-width: 1000px;
@@ -77,19 +81,12 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         to { opacity: 1; transform: translateY(0) rotate(0); }
       }
 
-      .page {
-        padding: 3rem 2.5rem;
-        position: relative;
-      }
-
+      .page { padding: 3rem 2.5rem; position: relative; }
       .page.left {
         border-right: 2px solid #e0e0e0;
         background: linear-gradient(to right, #fafafa, #fff);
       }
-
-      .page.right {
-        background: #fff;
-      }
+      .page.right { background: #fff; }
 
       .page-label {
         position: absolute;
@@ -100,7 +97,6 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         color: #999;
         font-weight: 600;
       }
-
       .page.left .page-label { left: 2.5rem; }
       .page.right .page-label { right: 2.5rem; }
 
@@ -122,10 +118,7 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         text-decoration: none;
         border-bottom: 1px dotted #2a5298;
       }
-      .original-link a:hover {
-        color: #1e3c72;
-        border-bottom-style: solid;
-      }
+      .original-link a:hover { color: #1e3c72; border-bottom-style: solid; }
 
       .translator-info {
         position: absolute;
@@ -143,18 +136,30 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         border-top: 2px solid #e0e0e0;
         text-align: center;
       }
-
       .audio-section h3 {
         color: #333;
         font-size: 1.1rem;
         margin-bottom: 1rem;
         font-weight: 400;
       }
-
       .audio-section audio {
         width: 100%;
         max-width: 500px;
         height: 40px;
+      }
+
+      /* DEBUG BOX */
+      .debug-box {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #ff0;
+        color: #000;
+        padding: 1rem;
+        font-size: 0.8rem;
+        font-family: monospace;
+        z-index: 9999;
       }
 
       @media (max-width: 900px) {
@@ -193,15 +198,26 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         )}
       </div>
 
-      {data.audio && (
-        <div class="audio-section">
-          <h3>🎧 Аудиоверсия перевода</h3>
+      <!-- Аудио БЕЗ условия - всегда показываем для теста -->
+      <div class="audio-section">
+        <h3>🎧 Аудиоверсия перевода</h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
+          Путь к аудио: <strong>{data.audio || 'НЕ НАЙДЕН'}</strong>
+        </p>
+        {data.audio ? (
           <audio controls>
-            <source src={`${data.audio}?v=4`} type="audio/mp4" />
+            <source src={`${data.audio}?v=5`} type="audio/mp4" />
             Ваш браузер не поддерживает аудио.
           </audio>
-        </div>
-      )}
+        ) : (
+          <p style="color: red;">⚠️ Поле audio не найдено в frontmatter!</p>
+        )}
+      </div>
+    </div>
+
+    <!-- DEBUG INFO -->
+    <div class="debug-box">
+      <strong>DEBUG:</strong> audio = "{data.audio}" | author = "{data.author}"
     </div>
   </body>
 </html>
