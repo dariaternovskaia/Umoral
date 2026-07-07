@@ -9,10 +9,8 @@ const { data, body } = prose;
   <head>
     <meta charset="UTF-8">
     <title>{data.title}</title>
-    <!-- Подключаем рукописный шрифт -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Шрифт Caveat (рукописный) -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       
@@ -23,7 +21,7 @@ const { data, body } = prose;
         line-height: 1.8;
         color: #f0f0f0;
         min-height: 100vh;
-        padding: 5rem 18% 4rem 18%; /* Больше места для полей */
+        padding: 5rem 2rem 4rem 2rem;
         background-color: #2D1B4E;
       }
       
@@ -31,176 +29,141 @@ const { data, body } = prose;
       .nav a {
         color: #aaa; text-decoration: none; font-size: 0.85rem;
         padding: 0.3rem 0.8rem; border: 1px solid #444; border-radius: 4px;
-        transition: all 0.2s;
       }
-      .nav a:hover { color: #fff; border-color: #888; background: rgba(255,255,255,0.1); }
+      .nav a:hover { color: #fff; border-color: #888; }
       
-      h1 { font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; color: #fff; letter-spacing: 0.5px; }
-      .date { color: #888; font-size: 0.9rem; font-style: italic; margin-bottom: 3rem; display: block; }
-      
-      .prose-text {
-        max-width: 800px;
+      h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
+      .date { text-align: center; color: #888; margin-bottom: 3rem; display: block; }
+
+      /* === КОНТЕЙНЕР ДЛЯ ТЕКСТА === */
+      /* Делаем его узким (650px), чтобы слева и справа было пустое место для заметок */
+      #prose-container {
+        max-width: 650px;
         margin: 0 auto;
+        position: relative; /* Важно! Заметки позиционируются относительно этого блока */
+      }
+
+      .prose-text {
         text-align: justify;
         hyphens: auto;
       }
       
-      .prose-text p {
-        margin-bottom: 1.5rem;
-        text-indent: 2rem;
-        position: relative;
-      }
+      .prose-text p { margin-bottom: 1.5rem; text-indent: 2rem; }
       .prose-text p:first-child { text-indent: 0; }
 
-      /* === СТИЛИ ДЛЯ ЗАМЕТОК === */
-      .handwritten {
-        font-family: 'Caveat', cursive;
-        font-weight: 500;
-        font-size: 1.5rem; /* Крупный рукописный текст */
-        color: #fff;
-        line-height: 1.3;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-      }
-
-      /* Контейнер для абзаца с заметкой */
-      .paragraph-with-note {
-        position: relative;
-        padding-right: 320px; /* Место для заметки справа */
-      }
-
-      /* Фигурная скобка */
-      .brace {
+      /* === СТИЛИ ЗАМЕТОК === */
+      .handwritten-note {
         position: absolute;
-        left: -40px;
-        top: 50%;
-        transform: translateY(-50%);
         font-family: 'Caveat', cursive;
-        font-size: 12rem;
-        color: rgba(255,255,255,0.5);
-        line-height: 1;
+        font-weight: 600;
+        font-size: 1.6rem; /* Крупно */
+        color: #ffffff;
+        line-height: 1.2;
         pointer-events: none;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        white-space: nowrap;
       }
 
-      /* Заметка на полях */
-      .margin-note {
-        position: absolute;
-        right: 0;
+      /* 1. Заметка "В копилку..." в правом верхнем углу */
+      .note-corner {
         top: 0;
-        width: 280px;
-        transform: rotate(-5deg);
-        transform-origin: top left;
-      }
-
-      /* Стрелка */
-      .arrow-to-text {
-        display: inline-block;
-        width: 40px;
-        height: 2px;
-        background: #fff;
-        transform: rotate(-90deg);
-        margin-right: 10px;
-        vertical-align: middle;
-        box-shadow: 0 0 3px rgba(255,255,255,0.6);
-      }
-
-      /* Заметка в углу */
-      .corner-note {
-        position: fixed;
-        top: 6rem;
-        right: 3rem;
+        right: -260px; /* Висит справа от узкого текста */
         transform: rotate(15deg);
         text-align: right;
-        z-index: 10;
       }
 
-      /* Выделение строки с европейским богом */
-      .highlight-target {
-        position: relative;
-        display: inline-block;
+      /* 2. Заметка про душу (напротив первого абзаца) */
+      .note-soul {
+        top: 150px; /* Приблизительно напротив начала длинного абзаца */
+        right: -350px; /* Сдвигаем вправо, в поля */
+        transform: rotate(-5deg);
+        text-align: left;
       }
-      
-      .highlight-target::after {
+
+      /* 3. Заметка про русского бога (со стрелкой) */
+      .note-god {
+        top: 380px; /* Чуть ниже предыдущей */
+        right: -320px; /* В полях */
+        transform: rotate(3deg);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Стрелочка */
+      .hand-arrow {
+        width: 40px;
+        height: 2px;
+        background: white;
+        position: relative;
+        transform: rotate(180deg); /* Стрелка смотрит влево к тексту */
+        box-shadow: 0 0 3px rgba(255,255,255,0.5);
+      }
+      .hand-arrow::after {
         content: '';
         position: absolute;
-        bottom: -2px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: rgba(255,255,255,0.4);
+        left: 0; top: -4px;
+        border-left: 8px solid white;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
       }
 
-      @media (max-width: 1100px) {
-        body { padding: 5rem 5% 4rem 5%; }
-        .paragraph-with-note { padding-right: 0; }
-        .margin-note, .brace { display: none; }
-        .corner-note { right: 1rem; top: 5rem; font-size: 1.2rem; }
+      /* Фигурная скобка (рисуем через border или символ) */
+      .brace {
+        position: absolute;
+        left: -30px;
+        top: 120px;
+        font-family: 'Caveat', cursive;
+        font-size: 8rem;
+        color: rgba(255,255,255,0.6);
+        transform: rotate(90deg);
+        line-height: 1;
+      }
+
+      /* Адаптив для телефонов (убираем поля) */
+      @media (max-width: 1000px) {
+        .handwritten-note { display: none; } /* Скрываем заметки на мелких экранах */
+        .brace { display: none; }
+        #prose-container { max-width: 100%; }
       }
     </style>
   </head>
   <body>
-    <nav class="nav">
+    <nav class="nav" style="justify-content: center;">
       <a href="/Umoral/">← На главную</a>
       <a href="/Umoral/content/creativity/prose/">← К прозе</a>
     </nav>
     
     <h1>{data.title}</h1>
     <span class="date">{data.date.toLocaleDateString('ru-RU')}</span>
-    
-    <!-- Заметка в углу -->
-    <div class="handwritten corner-note">
-      в копилку историй<br/>о безымянных Богах
-    </div>
-    
-    <div class="prose-text">
-      <!-- Вставляем текст с обработкой -->
-      {
-        body.split(/\r?\n\s*\r?\n/).map((paragraph, index) => {
-          const trimmed = paragraph.trim();
-          const lower = trimmed.toLowerCase();
-          
-          // Проверяем, это ли нужный абзац
-          if (lower.startsWith('однако наказ')) {
-            return (
-              <div class="paragraph-with-note">
-                <div class="brace">{'{'}</div>
-                <p>{trimmed}</p>
-                <div class="handwritten margin-note">
-                  использовать в качестве аргумента<br/>
-                  в споре о наличие души<br/>
-                  у аборигенов
-                </div>
-              </div>
-            );
-          }
-          
-          // Для остальных абзацев ищем "европейский бог"
-          if (lower.includes('европейский бог')) {
-            // Разбиваем абзац на части до и после "европейский бог"
-            const parts = trimmed.split(/(европейский бог)/i);
-            return (
-              <p>
-                {parts.map(part => {
-                  if (part.toLowerCase() === 'европейский бог') {
-                    return (
-                      <span class="highlight-target">
-                        {part}
-                        <span class="handwritten" style="position: absolute; right: -290px; top: -60px; transform: rotate(8deg); white-space: nowrap;">
-                          <span class="arrow-to-text"></span>
-                          любителям русского<br/>Бога посвящается
-                        </span>
-                      </span>
-                    );
-                  }
-                  return part;
-                })}
-              </p>
-            );
-          }
-          
-          // Обычный абзац
-          return <p>{trimmed}</p>;
-        })
-      }
+
+    <div id="prose-container">
+      <!-- Фигурная скобка -->
+      <div class="brace">{'{'}</div>
+
+      <!-- Текст -->
+      <div class="prose-text" set:html={body} />
+
+      <!-- Заметка 1: Угол -->
+      <div class="handwritten-note note-corner">
+        в копилку историй<br/>о безымянных Богах
+      </div>
+
+      <!-- Заметка 2: Про душу -->
+      <div class="handwritten-note note-soul">
+        использовать в качестве аргумента<br/>
+        в споре о наличие души<br/>
+        у аборигенов
+      </div>
+
+      <!-- Заметка 3: Про Бога со стрелкой -->
+      <div class="handwritten-note note-god">
+        <div class="hand-arrow"></div>
+        <span>
+          любителям русского<br/>
+          Бога посвящается
+        </span>
+      </div>
     </div>
   </body>
 </html>
