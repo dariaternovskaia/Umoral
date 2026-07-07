@@ -112,6 +112,15 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
       }
       .original-link a:hover { color: #1e3c72; border-bottom-style: solid; }
 
+      .translator-info {
+        position: absolute;
+        bottom: 2rem;
+        right: 2.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        text-align: right;
+      }
+
       .audio-section {
         grid-column: 1 / -1;
         padding: 2rem 2.5rem;
@@ -159,15 +168,23 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
       <div class="page right">
         <div class="page-label">Перевод</div>
         <div class="poem-content">{translation}</div>
+        {data.date && (
+          <div class="translator-info">
+            {data.date}
+          </div>
+        )}
       </div>
 
       {data.audio && (
         <div class="audio-section">
           <h3>🎧 Аудиоверсия перевода</h3>
-          <audio controls>
-            <source src={data.audio} type="audio/mp4" />
+          <audio controls preload="metadata">
+            <source src={`${data.audio}?t=${Date.now()}`} type="audio/mp4" />
             Ваш браузер не поддерживает аудио.
           </audio>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+            Формат: .m4a | Если не играет — скачай файл
+          </p>
         </div>
       )}
     </div>
