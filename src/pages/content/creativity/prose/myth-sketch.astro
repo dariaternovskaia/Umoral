@@ -55,19 +55,45 @@ const { data, body } = prose;
       .text-content p { margin-bottom: 1.5rem; text-indent: 2rem; }
       .text-content p:first-child { text-indent: 0; }
 
-      /* Стили заметок */
+      /* Общие стили заметок */
       .handwritten {
-        position: absolute;
         font-family: 'Caveat', cursive;
         font-weight: 600;
         font-size: 1.6rem;
         color: #fff;
-        line-height: 1.2;
+        line-height: 1.15; /* Сделали строчки ближе друг к другу */
         pointer-events: none;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         white-space: pre-wrap;
         max-width: 250px;
         z-index: 10;
+      }
+
+      /* 1. Заметка в углу (всегда видна в углу экрана) */
+      .note-corner {
+        position: fixed; /* Фиксируем относительно экрана */
+        top: 50px;
+        right: 30px;
+        transform: rotate(12deg);
+        text-align: right;
+      }
+
+      /* 2. Заметка справа (Использовать...) */
+      .note-soul {
+        position: absolute;
+        top: 1280px; /* Опустили ниже (было 1120) */
+        right: -100px; /* Отодвинули вправо от текста */
+        transform: rotate(-4deg);
+        text-align: left;
+      }
+
+      /* 3. Заметка слева (Любителям...) */
+      .note-god {
+        position: absolute;
+        top: 1980px; /* Подняли выше (было 2050) */
+        left: 30px;
+        transform: rotate(3deg);
+        text-align: left;
       }
 
       @media (max-width: 1000px) {
@@ -90,21 +116,20 @@ const { data, body } = prose;
       <!-- Текст по центру -->
       <div class="text-content" set:html={body} />
 
-      <!-- 1. Заметка "В копилку..." (Правый верхний угол, сдвинута вправо и вверх) -->
-      <div class="handwritten" style="top: 20px; right: 100px; transform: rotate(12deg);">
+      <!-- Заметка 1: В углу -->
+      <div class="handwritten note-corner">
         в копилку историй<br/>о безымянных Богах
       </div>
 
-      <!-- 2. Заметка "Использовать..." (Справа, опущена в 2.5 раза ниже) -->
-      <div class="handwritten" style="top: 1120px; right: 10px; transform: rotate(-4deg);">
+      <!-- Заметка 2: Справа -->
+      <div class="handwritten note-soul">
         использовать в качестве аргумента<br/>
         в споре о наличие души<br/>
         у аборигенов
       </div>
 
-      <!-- 3. Заметка "Любителям..." (Слева, опущена в 3 раза ниже) -->
-      <!-- Используем left вместо right, чтобы прижать к левому краю -->
-      <div class="handwritten" style="top: 2050px; left: 20px; transform: rotate(3deg);">
+      <!-- Заметка 3: Слева -->
+      <div class="handwritten note-god">
         любителям русского<br/>
         Бога посвящается
       </div>
