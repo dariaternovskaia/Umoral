@@ -64,14 +64,16 @@ const { data, body } = prose;
         z-index: 10;
       }
 
+      /* 1. Заметка в углу (теперь absolute, уезжает с текстом) */
       .note-corner {
-        position: fixed;
-        top: 50px;
-        right: 30px;
+        position: absolute;
+        top: 10px;
+        right: -120px;
         transform: rotate(12deg);
         white-space: nowrap;
       }
 
+      /* 2. Правая заметка (Использовать...) */
       .note-soul {
         position: absolute;
         text-align: right;
@@ -83,6 +85,7 @@ const { data, body } = prose;
         white-space: nowrap;
       }
 
+      /* 3. Левая заметка (Любителям...) */
       .note-god {
         position: absolute;
         white-space: nowrap;
@@ -107,12 +110,12 @@ const { data, body } = prose;
       
       <div class="text-content" set:html={body} />
 
-      <!-- Заметка 1: В углу -->
+      <!-- Заметка 1: В правом верхнем поле (теперь скроллится с текстом) -->
       <div class="handwritten note-corner">
         в копилку историй о безымянных Богах
       </div>
 
-      <!-- Заметка 2: Справа (Опущена в 1.5 раза ниже: 1430 * 1.5 = 2145px) -->
+      <!-- Заметка 2: Справа -->
       <div class="handwritten note-soul" 
            style="top: 2145px; right: -220px; transform: rotate(-4deg);">
         <span class="note-line">использовать в качестве аргумента</span>
