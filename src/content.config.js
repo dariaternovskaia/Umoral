@@ -5,6 +5,10 @@ const content = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content' }),
   schema: z.object({
     title: z.string().optional(),
+    author: z.string().optional(),
+    translator: z.string().optional(),
+    original_title: z.string().optional(),
+    audio: z.string().optional(),
     date: z.union([z.string(), z.date()]).optional(),
     draft: z.boolean().default(false),
     cover: z.string().optional(),
