@@ -9,7 +9,6 @@ const { data, body } = prose;
   <head>
     <meta charset="UTF-8">
     <title>{data.title}</title>
-    <!-- Шрифт Caveat -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,13 +20,13 @@ const { data, body } = prose;
         line-height: 1.8;
         color: #f0f0f0;
         min-height: 100vh;
-        padding: 5rem 0 4rem 0; /* Убрали боковые поля, чтобы контролировать ширину внутри */
+        padding: 5rem 0 4rem 0;
         background-color: #2D1B4E;
       }
       
       .nav { 
         display: flex; gap: 1rem; margin-bottom: 2rem; 
-        justify-content: center; /* Центрируем меню */
+        justify-content: center;
       }
       .nav a {
         color: #aaa; text-decoration: none; font-size: 0.85rem;
@@ -38,17 +37,13 @@ const { data, body } = prose;
       h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
       .date { text-align: center; color: #888; font-size: 0.9rem; margin-bottom: 3rem; display: block; }
 
-      /* === ГЛАВНАЯ ОБЕРТКА === */
-      /* Этот блок задает границы страницы */
       .page-layout {
         position: relative;
-        max-width: 1100px; /* Широкий контейнер (чтобы влезли заметки) */
+        max-width: 1100px;
         margin: 0 auto;
         padding: 0 2rem;
       }
 
-      /* === КОЛОНКА С ТЕКСТОМ === */
-      /* Текст узкий и по центру */
       .text-content {
         max-width: 650px;
         margin: 0 auto;
@@ -60,22 +55,21 @@ const { data, body } = prose;
       .text-content p { margin-bottom: 1.5rem; text-indent: 2rem; }
       .text-content p:first-child { text-indent: 0; }
 
-      /* === СТИЛИ ДЛЯ ЗАМЕТОК === */
+      /* Стили заметок */
       .handwritten {
-        position: absolute; /* Позиционируем по пикселям от верха страницы */
+        position: absolute;
         font-family: 'Caveat', cursive;
         font-weight: 600;
         font-size: 1.6rem;
         color: #fff;
         line-height: 1.2;
-        pointer-events: none; /* Чтобы заметки не мешали выделять текст */
+        pointer-events: none;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        white-space: pre-wrap; /* Разрешаем перенос строк внутри заметки */
+        white-space: pre-wrap;
         max-width: 250px;
         z-index: 10;
       }
 
-      /* Адаптив: на телефонах скрываем заметки, чтобы не перекрывали текст */
       @media (max-width: 1000px) {
         .handwritten { display: none; }
         .page-layout { padding: 0 1rem; }
@@ -96,23 +90,21 @@ const { data, body } = prose;
       <!-- Текст по центру -->
       <div class="text-content" set:html={body} />
 
-      <!-- Заметка 1: В правом верхнем углу -->
-      <!-- top: расстояние от самого верха экрана -->
-      <!-- right: расстояние от правого края текста -->
-      <div class="handwritten" style="top: 80px; right: 20px; transform: rotate(12deg);">
+      <!-- 1. Заметка "В копилку..." (Правый верхний угол, сдвинута вправо и вверх) -->
+      <div class="handwritten" style="top: 20px; right: 100px; transform: rotate(12deg);">
         в копилку историй<br/>о безымянных Богах
       </div>
 
-      <!-- Заметка 2: "использовать в качестве..." -->
-      <!-- Смотри на экран: если заметка высоко - увеличивай число top -->
-      <div class="handwritten" style="top: 450px; right: -20px; transform: rotate(-4deg);">
+      <!-- 2. Заметка "Использовать..." (Справа, опущена в 2.5 раза ниже) -->
+      <div class="handwritten" style="top: 1120px; right: 10px; transform: rotate(-4deg);">
         использовать в качестве аргумента<br/>
         в споре о наличие души<br/>
         у аборигенов
       </div>
 
-      <!-- Заметка 3: "любителям русского..." -->
-      <div class="handwritten" style="top: 680px; right: 120px; transform: rotate(2deg);">
+      <!-- 3. Заметка "Любителям..." (Слева, опущена в 3 раза ниже) -->
+      <!-- Используем left вместо right, чтобы прижать к левому краю -->
+      <div class="handwritten" style="top: 2050px; left: 20px; transform: rotate(3deg);">
         любителям русского<br/>
         Бога посвящается
       </div>
