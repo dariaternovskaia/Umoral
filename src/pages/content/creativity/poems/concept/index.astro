@@ -1,15 +1,150 @@
 ---
-// Простая тестовая страница
+import { getCollection } from 'astro:content';
+export const prerender = true;
+
+// Получаем все файлы из коллекции
+const allEntries = await getCollection('content');
+
+// Фильтруем только файлы из папки concept
+const conceptFiles = allEntries.filter(entry => 
+  entry.id.startsWith('creativity/poems/concept/') && 
+  !entry.id.includes('_index')
+);
 ---
 
 <html>
   <head>
     <title>Переводы и интерпретации | Umoral</title>
     <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/Umoral/bg-notes.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 5rem 2rem 3rem;
+        color: #fff;
+      }
+
+      .nav {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+        transition: all 0.2s;
+      }
+      .nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      .folder-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(200, 180, 140, 0.15);
+        border-radius: 12px;
+        padding: 3rem 2rem;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .folder-label {
+        text-align: center;
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .files-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .file-item {
+        background: rgba(255,255,255,0.95);
+        color: #2a2a2a;
+        padding: 1.5rem 2rem;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: grab;
+        position: relative;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .file-item::before { content: '📄'; font-size: 1.8rem; }
+      .file-item:hover { transform: translateY(-3px) rotate(1deg); box-shadow: 0 8px 25px rgba(0,0,0,0.3); background: #fff; }
+      .file-item:active { cursor: grabbing; }
+
+      .file-info h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem; color: #1a1a1a; }
+      .file-info .meta { font-size: 0.85rem; color: #666; }
+      .file-info .has-audio {
+        display: inline-block; margin-top: 0.5rem; font-size: 0.8rem; color: #8B4513;
+        background: rgba(139, 69, 19, 0.1); padding: 0.2rem 0.6rem; border-radius: 12px;
+      }
+
+      @media (max-width: 600px) { .folder-container { padding: 2rem 1rem; } h1 { font-size: 1.8rem; } }
+    </style>
   </head>
-  <body style="background: #1a1a2e; color: #fff; padding: 3rem; font-family: Georgia, serif;">
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/content/creativity/poems/">← К стихам</a>
+    </nav>
+    
     <h1>📁 Переводы и интерпретации</h1>
-    <p>Страница работает!</p>
-    <a href="/Umoral/content/creativity/poems/" style="color: #fff;">← Назад к стихам</a>
+    
+    <div class="folder-container">
+      <div class="folder-label">Concept</div>
+      
+      <div class="files-list">
+        {conceptFiles.map(file => {
+          const slug = file.id.split('/').pop();
+          const hasAudio = !!file.data.audio;
+          
+          return (
+            <a href={`/Umoral/content/creativity/poems/concept/${slug}/`} class="file-item">
+              <div class="file-info">
+                <h2>{file.data.title}</h2>
+                <div class="meta">
+                  {file.data.author && <span>Автор: {file.data.author} • </span>}
+                  {file.data.date && <span>{file.data.date}</span>}
+                </div>
+                {hasAudio && <span class="has-audio">🎧 Есть аудиоверсия</span>}
+              </div>
+            </a>
+          );
+        })}
+        
+        {conceptFiles.length === 0 && (
+          <div style="text-align: center; color: rgba(255,255,255,0.6); padding: 2rem;">
+            Папка пуста. Добавь файлы с переводами.
+          </div>
+        )}
+      </div>
+    </div>
   </body>
 </html>
