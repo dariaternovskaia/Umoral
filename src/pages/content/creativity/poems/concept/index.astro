@@ -2,10 +2,8 @@
 import { getCollection } from 'astro:content';
 export const prerender = true;
 
-// Получаем все файлы из коллекции
 const allEntries = await getCollection('content');
 
-// Фильтруем только файлы из папки concept
 const conceptFiles = allEntries.filter(entry => 
   entry.id.startsWith('creativity/poems/concept/') && 
   !entry.id.includes('_index')
@@ -115,10 +113,10 @@ const conceptFiles = allEntries.filter(entry =>
       <a href="/Umoral/content/creativity/poems/">← К стихам</a>
     </nav>
     
-    <h1>📁 Переводы и интерпретации</h1>
+    <h1>Переводы и интерпретации</h1>
     
     <div class="folder-container">
-      <div class="folder-label">Concept</div>
+      <div class="folder-label">DYLAN THOMAS</div>
       
       <div class="files-list">
         {conceptFiles.map(file => {
