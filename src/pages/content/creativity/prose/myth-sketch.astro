@@ -64,16 +64,14 @@ const { data, body } = prose;
         z-index: 10;
       }
 
-      /* 1. Заметка в углу (теперь absolute, уезжает с текстом) */
       .note-corner {
         position: absolute;
-        top: 10px;
-        right: -120px;
+        top: -130px; /* Выше на 7 строк (было 10px) */
+        right: -320px; /* Правее на половину строки (было -120px) */
         transform: rotate(12deg);
         white-space: nowrap;
       }
 
-      /* 2. Правая заметка (Использовать...) */
       .note-soul {
         position: absolute;
         text-align: right;
@@ -85,7 +83,6 @@ const { data, body } = prose;
         white-space: nowrap;
       }
 
-      /* 3. Левая заметка (Любителям...) */
       .note-god {
         position: absolute;
         white-space: nowrap;
@@ -110,7 +107,7 @@ const { data, body } = prose;
       
       <div class="text-content" set:html={body} />
 
-      <!-- Заметка 1: В правом верхнем поле (теперь скроллится с текстом) -->
+      <!-- Заметка 1: В правом верхнем поле -->
       <div class="handwritten note-corner">
         в копилку историй о безымянных Богах
       </div>
