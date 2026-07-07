@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   );
 
   return conceptFiles.map((entry) => {
-    const slug = entry.id.split('/').pop().replace('.md', '');
+    const slug = entry.id.split('/').pop();
     return {
       params: { slug },
       props: { entry },
@@ -138,6 +138,23 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         text-align: right;
       }
 
+      /* Ссылка на оригинал */
+      .original-link {
+        position: absolute;
+        bottom: 2rem;
+        left: 2.5rem;
+        font-size: 0.85rem;
+      }
+      .original-link a {
+        color: #2a5298;
+        text-decoration: none;
+        border-bottom: 1px dotted #2a5298;
+      }
+      .original-link a:hover {
+        color: #1e3c72;
+        border-bottom-style: solid;
+      }
+
       /* Аудиоплеер */
       .audio-section {
         grid-column: 1 / -1;
@@ -168,6 +185,10 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
           border-right: none;
           border-bottom: 2px solid #e0e0e0;
         }
+        .original-link {
+          position: static;
+          margin-top: 1rem;
+        }
       }
     </style>
   </head>
@@ -182,9 +203,10 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         <div class="page-label">Original</div>
         <div class="poem-content">{original}</div>
         {data.author && (
-          <div class="author-info">
-            {data.author}<br/>
-            {data.original_title}
+          <div class="original-link">
+            <a href="https://voetica.com/poem/4423" target="_blank" rel="noopener noreferrer">
+              Оригинал на Voetica.com →
+            </a>
           </div>
         )}
       </div>
@@ -206,7 +228,7 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         <div class="audio-section">
           <h3>🎧 Аудиоверсия перевода</h3>
           <audio controls>
-            <source src={data.audio} type="audio/mpeg" />
+            <source src={data.audio} type="audio/mp4" />
             Ваш браузер не поддерживает аудио.
           </audio>
         </div>
