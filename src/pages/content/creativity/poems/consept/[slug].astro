@@ -1,0 +1,216 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const conceptFiles = await getCollection('content', ({ id }) => 
+    id.startsWith('creativity/poems/concept/') && !id.includes('_index')
+  );
+
+  return conceptFiles.map((entry) => {
+    const slug = entry.id.split('/').pop().replace('.md', '');
+    return {
+      params: { slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+const { data, body } = entry;
+
+// Разделяем текст на оригинал и перевод (по разделителю ---)
+const parts = body.split('---');
+const original = parts[0]?.replace(/##\s*Original/i, '').trim();
+const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body;
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{data.title} | Umoral</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        min-height: 100vh;
+        padding: 3rem 2rem;
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      .nav {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+      }
+      .nav a:hover {
+        color: #fff;
+        border-color: #fff;
+      }
+
+      /* Эффект листа бумаги */
+      .paper-sheet {
+        max-width: 1000px;
+        margin: 2rem auto;
+        background: #fff;
+        color: #2a2a2a;
+        border-radius: 4px;
+        box-shadow: 
+          0 10px 40px rgba(0,0,0,0.4),
+          0 0 0 1px rgba(0,0,0,0.1);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 700px;
+        position: relative;
+        animation: slideIn 0.6s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px) rotate(2deg);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) rotate(0);
+        }
+      }
+
+      .page {
+        padding: 3rem 2.5rem;
+        position: relative;
+      }
+
+      .page.left {
+        border-right: 2px solid #e0e0e0;
+        background: linear-gradient(to right, #fafafa, #fff);
+      }
+
+      .page.right {
+        background: #fff;
+      }
+
+      .page-label {
+        position: absolute;
+        top: 1.5rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #999;
+        font-weight: 600;
+      }
+
+      .page.left .page-label { left: 2.5rem; }
+      .page.right .page-label { right: 2.5rem; }
+
+      .poem-content {
+        margin-top: 3rem;
+        font-size: 1.05rem;
+        line-height: 2;
+        white-space: pre-wrap;
+      }
+
+      .author-info {
+        position: absolute;
+        bottom: 2rem;
+        left: 2.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        font-style: italic;
+      }
+
+      .translator-info {
+        position: absolute;
+        bottom: 2rem;
+        right: 2.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        text-align: right;
+      }
+
+      /* Аудиоплеер */
+      .audio-section {
+        grid-column: 1 / -1;
+        padding: 2rem 2.5rem;
+        background: linear-gradient(to bottom, #f5f5f5, #fff);
+        border-top: 2px solid #e0e0e0;
+        text-align: center;
+      }
+
+      .audio-section h3 {
+        color: #333;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        font-weight: 400;
+      }
+
+      .audio-section audio {
+        width: 100%;
+        max-width: 500px;
+        height: 40px;
+      }
+
+      @media (max-width: 900px) {
+        .paper-sheet {
+          grid-template-columns: 1fr;
+        }
+        .page.left {
+          border-right: none;
+          border-bottom: 2px solid #e0e0e0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/content/creativity/poems/concept/">← К папке</a>
+    </nav>
+
+    <div class="paper-sheet">
+      <!-- Левая сторона: Оригинал -->
+      <div class="page left">
+        <div class="page-label">Original</div>
+        <div class="poem-content">{original}</div>
+        {data.author && (
+          <div class="author-info">
+            {data.author}<br/>
+            {data.original_title}
+          </div>
+        )}
+      </div>
+
+      <!-- Правая сторона: Перевод -->
+      <div class="page right">
+        <div class="page-label">Перевод</div>
+        <div class="poem-content">{translation}</div>
+        {data.translator && (
+          <div class="translator-info">
+            Перевод: {data.translator}<br/>
+            {data.date}
+          </div>
+        )}
+      </div>
+
+      <!-- Аудио -->
+      {data.audio && (
+        <div class="audio-section">
+          <h3>🎧 Аудиоверсия перевода</h3>
+          <audio controls>
+            <source src={data.audio} type="audio/mpeg" />
+            Ваш браузер не поддерживает аудио.
+          </audio>
+        </div>
+      )}
+    </div>
+  </body>
+</html>
