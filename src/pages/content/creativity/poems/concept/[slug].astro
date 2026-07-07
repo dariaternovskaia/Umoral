@@ -18,7 +18,6 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { data, body } = entry;
 
-// Разделяем текст на оригинал и перевод (по разделителю ---)
 const parts = body.split('---');
 const original = parts[0]?.replace(/##\s*Original/i, '').trim();
 const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body;
@@ -58,16 +57,13 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         border-color: #fff;
       }
 
-      /* Эффект листа бумаги */
       .paper-sheet {
         max-width: 1000px;
         margin: 2rem auto;
         background: #fff;
         color: #2a2a2a;
         border-radius: 4px;
-        box-shadow: 
-          0 10px 40px rgba(0,0,0,0.4),
-          0 0 0 1px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,0,0,0.1);
         display: grid;
         grid-template-columns: 1fr 1fr;
         min-height: 700px;
@@ -76,14 +72,8 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
       }
 
       @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px) rotate(2deg);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) rotate(0);
-        }
+        from { opacity: 0; transform: translateY(-20px) rotate(2deg); }
+        to { opacity: 1; transform: translateY(0) rotate(0); }
       }
 
       .page {
@@ -120,25 +110,6 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         white-space: pre-wrap;
       }
 
-      .author-info {
-        position: absolute;
-        bottom: 2rem;
-        left: 2.5rem;
-        font-size: 0.9rem;
-        color: #666;
-        font-style: italic;
-      }
-
-      .translator-info {
-        position: absolute;
-        bottom: 2rem;
-        right: 2.5rem;
-        font-size: 0.9rem;
-        color: #666;
-        text-align: right;
-      }
-
-      /* Ссылка на оригинал */
       .original-link {
         position: absolute;
         bottom: 2rem;
@@ -155,7 +126,15 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         border-bottom-style: solid;
       }
 
-      /* Аудиоплеер */
+      .translator-info {
+        position: absolute;
+        bottom: 2rem;
+        right: 2.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        text-align: right;
+      }
+
       .audio-section {
         grid-column: 1 / -1;
         padding: 2rem 2.5rem;
@@ -178,17 +157,9 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
       }
 
       @media (max-width: 900px) {
-        .paper-sheet {
-          grid-template-columns: 1fr;
-        }
-        .page.left {
-          border-right: none;
-          border-bottom: 2px solid #e0e0e0;
-        }
-        .original-link {
-          position: static;
-          margin-top: 1rem;
-        }
+        .paper-sheet { grid-template-columns: 1fr; }
+        .page.left { border-right: none; border-bottom: 2px solid #e0e0e0; }
+        .original-link { position: static; margin-top: 1rem; }
       }
     </style>
   </head>
@@ -198,7 +169,6 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
     </nav>
 
     <div class="paper-sheet">
-      <!-- Левая сторона: Оригинал -->
       <div class="page left">
         <div class="page-label">Original</div>
         <div class="poem-content">{original}</div>
@@ -211,7 +181,6 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         )}
       </div>
 
-      <!-- Правая сторона: Перевод -->
       <div class="page right">
         <div class="page-label">Перевод</div>
         <div class="poem-content">{translation}</div>
@@ -223,7 +192,6 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         )}
       </div>
 
-      <!-- Аудио -->
       {data.audio && (
         <div class="audio-section">
           <h3>🎧 Аудиоверсия перевода</h3>
