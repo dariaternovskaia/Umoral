@@ -1,3 +1,4 @@
+<!-- FORCE UPDATE v4 -->
 ---
 import { getCollection } from 'astro:content';
 
@@ -196,7 +197,7 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         <div class="audio-section">
           <h3>🎧 Аудиоверсия перевода</h3>
           <audio controls>
-            <source src={data.audio} type="audio/mp4" />
+            <source src={`${data.audio}?v=4`} type="audio/mp4" />
             Ваш браузер не поддерживает аудио.
           </audio>
         </div>
