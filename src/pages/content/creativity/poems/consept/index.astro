@@ -1,8 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
+export const prerender = true; // Гарантируем статическую сборку
 
-const conceptFiles = await getCollection('content', ({ id }) => 
-  id.startsWith('creativity/poems/concept/') && !id.includes('_index')
+// 1. Сначала получаем ВСЕ записи
+const allEntries = await getCollection('content');
+
+// 2. Потом фильтруем в JS (это безопаснее для сборщика)
+const conceptFiles = allEntries.filter(entry => 
+  entry.id.startsWith('creativity/poems/concept/') && 
+  !entry.id.includes('_index')
 );
 ---
 
@@ -39,11 +45,7 @@ const conceptFiles = await getCollection('content', ({ id }) =>
         border-radius: 4px;
         transition: all 0.2s;
       }
-      .nav a:hover {
-        color: #fff;
-        border-color: #fff;
-        background: rgba(255,255,255,0.1);
-      }
+      .nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
 
       h1 {
         text-align: center;
@@ -53,7 +55,6 @@ const conceptFiles = await getCollection('content', ({ id }) =>
         letter-spacing: 1px;
       }
 
-      /* Стиль папки с файлами */
       .folder-container {
         max-width: 800px;
         margin: 0 auto;
@@ -73,7 +74,6 @@ const conceptFiles = await getCollection('content', ({ id }) =>
         letter-spacing: 2px;
       }
 
-      /* Файлы в папке */
       .files-list {
         display: flex;
         flex-direction: column;
@@ -95,47 +95,18 @@ const conceptFiles = await getCollection('content', ({ id }) =>
         gap: 1rem;
       }
 
-      .file-item::before {
-        content: '📄';
-        font-size: 1.8rem;
-      }
+      .file-item::before { content: '📄'; font-size: 1.8rem; }
+      .file-item:hover { transform: translateY(-3px) rotate(1deg); box-shadow: 0 8px 25px rgba(0,0,0,0.3); background: #fff; }
+      .file-item:active { cursor: grabbing; }
 
-      .file-item:hover {
-        transform: translateY(-3px) rotate(1deg);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        background: #fff;
-      }
-
-      .file-item:active {
-        cursor: grabbing;
-      }
-
-      .file-info h2 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 0.3rem;
-        color: #1a1a1a;
-      }
-
-      .file-info .meta {
-        font-size: 0.85rem;
-        color: #666;
-      }
-
+      .file-info h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem; color: #1a1a1a; }
+      .file-info .meta { font-size: 0.85rem; color: #666; }
       .file-info .has-audio {
-        display: inline-block;
-        margin-top: 0.5rem;
-        font-size: 0.8rem;
-        color: #8B4513;
-        background: rgba(139, 69, 19, 0.1);
-        padding: 0.2rem 0.6rem;
-        border-radius: 12px;
+        display: inline-block; margin-top: 0.5rem; font-size: 0.8rem; color: #8B4513;
+        background: rgba(139, 69, 19, 0.1); padding: 0.2rem 0.6rem; border-radius: 12px;
       }
 
-      @media (max-width: 600px) {
-        .folder-container { padding: 2rem 1rem; }
-        h1 { font-size: 1.8rem; }
-      }
+      @media (max-width: 600px) { .folder-container { padding: 2rem 1rem; } h1 { font-size: 1.8rem; } }
     </style>
   </head>
   <body>
@@ -151,8 +122,8 @@ const conceptFiles = await getCollection('content', ({ id }) =>
       
       <div class="files-list">
         {conceptFiles.map(file => {
-          const slug = file.id.split('/').pop().replace('.md', '');
-          const hasAudio = file.data.audio ? true : false;
+          const slug = file.id.split('/').pop(); // Расширение .md уже убрано в id
+          const hasAudio = !!file.data.audio;
           
           return (
             <a href={`/Umoral/content/creativity/poems/concept/${slug}/`} class="file-item">
@@ -162,7 +133,7 @@ const conceptFiles = await getCollection('content', ({ id }) =>
                   {file.data.author && <span>Автор: {file.data.author} • </span>}
                   {file.data.date && <span>{file.data.date}</span>}
                 </div>
-                {hasAudio && <span class="has-audio">🎧 Есть аудиоверсия</span>}
+                {hasAudio && <span class="has-audio"> Есть аудиоверсия</span>}
               </div>
             </a>
           );
