@@ -21,6 +21,11 @@ const { data, body } = entry;
 const parts = body.split('---');
 const original = parts[0]?.replace(/##\s*Original/i, '').trim();
 const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body;
+
+// Конвертируем путь GitHub Pages в raw GitHub URL
+const audioUrl = data.audio 
+  ? data.audio.replace('/Umoral/', 'https://raw.githubusercontent.com/dariaternovskaia/Umoral/main/public/')
+  : null;
 ---
 
 <html>
@@ -140,18 +145,8 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         height: 50px;
         margin: 0 auto;
         display: block;
-      }
-      .audio-note {
-        margin-top: 1rem;
-        font-size: 0.85rem;
-        color: #666;
-      }
-      .audio-note a {
-        color: #2a5298;
-        text-decoration: none;
-      }
-      .audio-note a:hover {
-        text-decoration: underline;
+        background: #fff;
+        border-radius: 25px;
       }
 
       @media (max-width: 900px) {
@@ -189,35 +184,34 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
         )}
       </div>
 
-      {data.audio && (
+      {audioUrl && (
         <div class="audio-section">
           <h3>🎧 Аудиоверсия перевода</h3>
-          <audio controls preload="metadata" crossorigin="anonymous">
-            <source src={data.audio} type="audio/mp4" />
-            <source src={data.audio} type="audio/aac" />
-            <source src={data.audio} type="audio/x-m4a" />
+          <audio controls preload="auto">
+            <source src={audioUrl} type="audio/mp4" />
+            <source src={audioUrl} type="audio/mpeg" />
             Ваш браузер не поддерживает аудио.
-            <a href={data.audio} download>Скачать файл</a>
           </audio>
-          <p class="audio-note">
-            Не воспроизводится? <a href={data.audio} target="_blank" rel="noopener noreferrer">Открыть в новой вкладке</a> или <a href={data.audio} download>скачать</a>
-          </p>
         </div>
       )}
     </div>
 
     <script>
-      // Обработка ошибок воспроизведения
+      // Логирование для отладки
+      console.log('Audio URL:', document.querySelector('audio source')?.src);
+      
       document.addEventListener('DOMContentLoaded', () => {
         const audio = document.querySelector('audio');
         if (audio) {
           audio.addEventListener('error', (e) => {
             console.error('Audio error:', e);
-            console.log('Audio source:', audio.querySelector('source')?.src);
+            console.log('Current src:', audio.currentSrc);
+            console.log('Network state:', audio.networkState);
           });
           
-          audio.addEventListener('loadedmetadata', () => {
-            console.log('Audio duration:', audio.duration);
+          audio.addEventListener('loadeddata', () => {
+            console.log('Audio loaded successfully!');
+            console.log('Duration:', audio.duration);
           });
         }
       });
