@@ -4,7 +4,7 @@ author: "Dylan Thomas"
 translator: "Твоё Имя"
 date: "Июнь 2026"
 original_title: "Before we mothernaked fall"
-audio: "/Umoral/audio/dylan-thomas-before-we-fall.mp3"
+audio: "https://ia903201.us.archive.org/13/items/dylan-thomas-before-we-fall/dylan-thomas-before-we-fall.m4a"
 ---
 
 ## Original
