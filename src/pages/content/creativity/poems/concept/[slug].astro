@@ -136,8 +136,22 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
       }
       .audio-section audio {
         width: 100%;
-        max-width: 500px;
-        height: 40px;
+        max-width: 600px;
+        height: 50px;
+        margin: 0 auto;
+        display: block;
+      }
+      .audio-note {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: #666;
+      }
+      .audio-note a {
+        color: #2a5298;
+        text-decoration: none;
+      }
+      .audio-note a:hover {
+        text-decoration: underline;
       }
 
       @media (max-width: 900px) {
@@ -178,15 +192,35 @@ const translation = parts[1]?.replace(/##\s*Перевод/i, '').trim() || body
       {data.audio && (
         <div class="audio-section">
           <h3>🎧 Аудиоверсия перевода</h3>
-          <audio controls preload="metadata">
-            <source src={`${data.audio}?t=${Date.now()}`} type="audio/mp4" />
+          <audio controls preload="metadata" crossorigin="anonymous">
+            <source src={data.audio} type="audio/mp4" />
+            <source src={data.audio} type="audio/aac" />
+            <source src={data.audio} type="audio/x-m4a" />
             Ваш браузер не поддерживает аудио.
+            <a href={data.audio} download>Скачать файл</a>
           </audio>
-          <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
-            Формат: .m4a | Если не играет — скачай файл
+          <p class="audio-note">
+            Не воспроизводится? <a href={data.audio} target="_blank" rel="noopener noreferrer">Открыть в новой вкладке</a> или <a href={data.audio} download>скачать</a>
           </p>
         </div>
       )}
     </div>
+
+    <script>
+      // Обработка ошибок воспроизведения
+      document.addEventListener('DOMContentLoaded', () => {
+        const audio = document.querySelector('audio');
+        if (audio) {
+          audio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            console.log('Audio source:', audio.querySelector('source')?.src);
+          });
+          
+          audio.addEventListener('loadedmetadata', () => {
+            console.log('Audio duration:', audio.duration);
+          });
+        }
+      });
+    </script>
   </body>
 </html>
