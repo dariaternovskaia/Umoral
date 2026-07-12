@@ -1,0 +1,88 @@
+---
+export const prerender = true;
+---
+
+<html>
+  <head>
+    <title>Arduino | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/Umoral/bg-main.jpg');
+        background-size: cover;
+        background-position: center 50%;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 5rem 2rem 3rem;
+        color: #fff;
+      }
+
+      .nav {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.9);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+      }
+      .nav a:hover {
+        color: #fff;
+        border-color: #fff;
+        background: rgba(255,255,255,0.1);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+
+      .content {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(255,255,255,0.95);
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        color: #2a2a2a;
+      }
+
+      .content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      @media (max-width: 600px) {
+        .content { padding: 2rem 1.5rem; }
+        h1 { font-size: 1.8rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/content/creativity/poems/">← К творчеству</a>
+    </nav>
+    
+    <h1>Arduino</h1>
+    
+    <div class="content">
+      <p>Здесь будут проекты, схемы и заметки о Arduino.</p>
+      <p>Раздел в разработке...</p>
+    </div>
+  </body>
+</html>
