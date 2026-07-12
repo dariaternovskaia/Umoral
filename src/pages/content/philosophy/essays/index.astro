@@ -11,7 +11,7 @@ export const prerender = true;
 
       body {
         font-family: 'Georgia', serif;
-        background: #121212;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
         min-height: 100vh;
         color: #fff;
         padding: 5rem 2rem 3rem;
@@ -35,7 +35,6 @@ export const prerender = true;
       .nav a:hover {
         color: #fff;
         border-color: #fff;
-        background: rgba(255,255,255,0.1);
       }
 
       h1 {
@@ -44,53 +43,79 @@ export const prerender = true;
         margin-bottom: 4rem;
         font-weight: 300;
         letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
       }
 
       .folders-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 3rem;
-        max-width: 900px;
+        max-width: 1000px;
         margin: 0 auto;
       }
 
       .folder-card {
-        background: rgba(255,255,255,0.05);
-        border: 2px solid rgba(255,255,255,0.2);
-        border-radius: 12px;
-        padding: 3rem 2rem;
-        text-align: center;
-        transition: all 0.3s;
+        position: relative;
+        height: 400px;
+        border-radius: 16px;
+        overflow: hidden;
         text-decoration: none;
         color: #fff;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        transition: transform 0.3s, box-shadow 0.3s;
       }
 
       .folder-card:hover {
-        background: rgba(255,255,255,0.1);
-        border-color: rgba(255,255,255,0.5);
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
       }
 
-      .folder-icon {
-        font-size: 4rem;
-        margin-bottom: 1.5rem;
+      .folder-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.3s;
+      }
+
+      .folder-card:hover .folder-bg {
+        transform: scale(1.05);
+      }
+
+      .folder-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 3rem 2rem 2rem;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
       }
 
       .folder-title {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 600;
-        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       }
 
-      .folder-desc {
-        font-size: 0.9rem;
-        color: rgba(255,255,255,0.6);
+      /* Первая карточка - Читательский дневник */
+      .folder-card:nth-child(1) .folder-bg {
+        background-image: url('/Umoral/bg-reading.jpg');
+      }
+
+      /* Вторая карточка - Работы для универа */
+      .folder-card:nth-child(2) .folder-bg {
+        background-image: url('/Umoral/bg-university.jpg');
       }
 
       @media (max-width: 700px) {
         .folders-container {
           grid-template-columns: 1fr;
+        }
+        .folder-card {
+          height: 300px;
         }
       }
     </style>
@@ -105,15 +130,17 @@ export const prerender = true;
 
     <div class="folders-container">
       <a href="/Umoral/content/philosophy/essays/reading-diary/" class="folder-card">
-        <div class="folder-icon">📚</div>
-        <div class="folder-title">Читательский дневник</div>
-        <div class="folder-desc">Заметки о прочитанных книгах и статьях</div>
+        <div class="folder-bg"></div>
+        <div class="folder-overlay">
+          <div class="folder-title">Читательский дневник</div>
+        </div>
       </a>
 
       <a href="/Umoral/content/philosophy/essays/university/" class="folder-card">
-        <div class="folder-icon"></div>
-        <div class="folder-title">Работы для универа</div>
-        <div class="folder-desc">Академические работы и исследования</div>
+        <div class="folder-bg"></div>
+        <div class="folder-overlay">
+          <div class="folder-title">Работы для универа</div>
+        </div>
       </a>
     </div>
   </body>
