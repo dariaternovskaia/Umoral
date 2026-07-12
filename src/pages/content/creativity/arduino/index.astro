@@ -14,6 +14,7 @@ export const prerender = true;
         background: #1a3d1a;
         min-height: 100vh;
         color: #fff;
+        overflow-x: hidden;
       }
 
       .nav {
@@ -23,25 +24,126 @@ export const prerender = true;
         z-index: 1000;
       }
       .nav a {
-        color: #fff;
+        color: rgba(255,255,255,0.9);
         text-decoration: none;
-        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
         border: 1px solid rgba(255,255,255,0.4);
         border-radius: 4px;
+        background: rgba(0,0,0,0.3);
+      }
+      .nav a:hover {
+        color: #fff;
+        border-color: #fff;
+        background: rgba(0,0,0,0.5);
       }
 
-      h1 {
-        text-align: center;
-        padding: 5rem 2rem 2rem;
-        font-size: 2.5rem;
+      .projects-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .project-split {
+        display: flex;
+        min-height: 100vh;
+        border-bottom: 3px dotted rgba(255,255,255,0.5);
+      }
+
+      .left-panel, .right-panel {
+        flex: 1;
+        padding: 4rem 3rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .left-panel {
+        border-right: 3px dotted rgba(255,255,255,0.5);
+        background: rgba(0,0,0,0.2);
+      }
+
+      .panel-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
         color: #90EE90;
       }
 
-      .content {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem;
-        text-align: center;
+      .video-container {
+        width: 100%;
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .images-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .project-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 6px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        transition: transform 0.3s;
+        cursor: pointer;
+      }
+
+      .project-image:hover {
+        transform: scale(1.02);
+      }
+
+      .project-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: rgba(255,255,255,0.9);
+        padding: 1.5rem;
+        background: rgba(0,0,0,0.3);
+        border-radius: 8px;
+        border-left: 4px solid #90EE90;
+      }
+
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0d260d;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2d5a2d;
+        border-radius: 6px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #3d7a3d;
+      }
+
+      @media (max-width: 900px) {
+        .project-split {
+          flex-direction: column;
+        }
+        .left-panel, .right-panel {
+          border: none;
+          border-bottom: 2px dotted rgba(255,255,255,0.3);
+        }
+        .images-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -49,11 +151,43 @@ export const prerender = true;
     <nav class="nav">
       <a href="/Umoral/">← На главную</a>
     </nav>
-    
-    <h1>Arduino</h1>
-    
-    <div class="content">
-      <p>Страница в разработке...</p>
+
+    <div class="projects-container">
+      <!-- Проект 1 -->
+      <div class="project-split">
+        <!-- Левая панель -->
+        <div class="left-panel">
+          <h2 class="panel-title">Древнегреческие Боги</h2>
+          <div class="video-container">
+            <iframe 
+              src="https://www.youtube.com/embed/xaVzylUuMSI"
+              title="Древнегреческие Боги"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Правая панель -->
+        <div class="right-panel">
+          <h2 class="panel-title">Противостояние попа и Александра Невзорова</h2>
+          
+          <div class="images-grid">
+            <img src="/Umoral/arduino/project1/photo-001.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-002.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-003.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-004.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-005.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-006.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-007.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+            <img src="/Umoral/arduino/project1/photo-008.jpg" alt="Проект 1" class="project-image" loading="lazy" />
+          </div>
+          
+          <p class="project-text">
+            Инсталляция вдохновлена передачей А. Невзорова "600 секунд", смысл которой в том, чтобы за 600 секунд успеть рассказать весь материал. В данном случае в качестве "материала" выступает текст закольцованной песенки "У попа была собака..." (его можно увидеть на экране телесуфлёра), из-за чего задача становится невыполнимой.
+          </p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
