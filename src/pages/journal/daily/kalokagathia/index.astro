@@ -48,26 +48,12 @@ const totalPages = 28;
         align-items: center;
         justify-content: center;
         position: relative;
-        overflow: hidden;
       }
 
       .page-image {
         width: 100%;
         height: auto;
         display: block;
-      }
-
-      .debug-info {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0,0,0,0.8);
-        color: #0f0;
-        padding: 10px;
-        font-family: monospace;
-        font-size: 12px;
-        word-break: break-all;
       }
 
       .controls {
@@ -100,25 +86,25 @@ const totalPages = 28;
     <div class="viewer-area">
       <div class="image-wrapper">
         <img id="notebookImg" class="page-image" src="" alt="Page" />
-        <div class="debug-info" id="debugInfo">Загрузка...</div>
       </div>
 
       <div class="controls">
         <button class="btn" id="prevBtn" onclick="changePage(-1)">← Пред.</button>
-        <span class="page-counter" id="counter">1 / {totalPages}</span>
+        <span class="page-counter" id="counter">1 / <span id="totalPagesSpan">{totalPages}</span></span>
         <button class="btn" id="nextBtn" onclick="changePage(1)">След. →</button>
       </div>
     </div>
 
     <script>
-      const totalPages = {totalPages};
+      // Получаем totalPages из HTML
+      const totalPages = parseInt(document.getElementById('totalPagesSpan').textContent);
       let currentPage = 1;
-      
-      // ВАЖНО: Пробуем разные варианты путей
       const baseUrl = '/Umoral/notebooks/kalokagathia/';
       
       const imgElement = document.getElementById('notebookImg');
-      const debugElement = document.getElementById('debugInfo');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const counterElement = document.getElementById('counter');
 
       function padNum(num) {
         return String(num).padStart(3, '0');
@@ -128,37 +114,15 @@ const totalPages = 28;
         const fileName = `page-${padNum(currentPage)}.jpg`;
         const fullUrl = baseUrl + fileName;
         
-        // Показываем отладку
-        debugElement.innerHTML = `Trying: ${fullUrl}<br>Status: Loading...`;
-        debugElement.style.color = '#ff0';
-
-        // Пробуем загрузить
         const testImg = new Image();
         testImg.onload = function() {
           imgElement.src = fullUrl;
-          debugElement.innerHTML = `OK: ${fullUrl}`;
-          debugElement.style.color = '#0f0';
         };
-        testImg.onerror = function() {
-          debugElement.innerHTML = `ERROR 404: ${fullUrl}<br>Check if file exists!`;
-          debugElement.style.color = '#f00';
-          // Попробуем без /Umoral
-          const altUrl = `/notebooks/kalokagathia/${fileName}`;
-          debugElement.innerHTML += `<br>Trying alt: ${altUrl}`;
-          
-          const testImg2 = new Image();
-          testImg2.onload = function() {
-             imgElement.src = altUrl;
-             debugElement.innerHTML += `<br>ALT OK!`;
-          }
-          testImg2.src = altUrl;
-        };
-        
         testImg.src = fullUrl;
 
-        document.getElementById('counter').textContent = `${currentPage} / ${totalPages}`;
-        document.getElementById('prevBtn').disabled = (currentPage === 1);
-        document.getElementById('nextBtn').disabled = (currentPage === totalPages);
+        counterElement.innerHTML = `${currentPage} / <span id="totalPagesSpan">${totalPages}</span>`;
+        prevBtn.disabled = (currentPage === 1);
+        nextBtn.disabled = (currentPage === totalPages);
       }
 
       window.changePage = function(delta) {
@@ -169,6 +133,7 @@ const totalPages = 28;
         }
       };
 
+      // Инициализация
       updateViewer();
     </script>
   </body>
