@@ -1,7 +1,6 @@
 ---
 export const prerender = true;
 
-// Здесь мы вручную задаем блокноты. Если их станет много, можно будет автоматизировать.
 const notebooks = [
   {
     id: 'kalokagathia',
@@ -22,9 +21,7 @@ const notebooks = [
       
       body {
         font-family: 'Georgia', serif;
-        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('/Umoral/bg-concert.jpg');
-        background-size: cover;
-        background-attachment: fixed;
+        background: #1a1a1a;  /* Однотонный тёмно-серый фон */
         min-height: 100vh;
         padding: 5rem 2rem 3rem;
         color: #fff;
@@ -34,8 +31,6 @@ const notebooks = [
         position: absolute;
         top: 2rem;
         left: 2rem;
-        display: flex;
-        gap: 1rem;
       }
       .nav a {
         color: rgba(255,255,255,0.8);
@@ -59,7 +54,7 @@ const notebooks = [
         max-width: 1000px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 3rem;
         padding: 1rem;
       }
@@ -83,10 +78,12 @@ const notebooks = [
 
       .notebook-cover {
         width: 100%;
+        max-width: 300px;  /* Ограничиваем ширину */
         aspect-ratio: 3/4;
         object-fit: cover;
         display: block;
         border-bottom: 2px solid #ddd;
+        margin: 0 auto;  /* Центрируем */
       }
 
       .notebook-info {
@@ -115,7 +112,6 @@ const notebooks = [
   <body>
     <nav class="nav">
       <a href="/Umoral/">← На главную</a>
-      <a href="/Umoral/journal/">← К журналу</a>
     </nav>
     
     <h1>Блокноты</h1>
