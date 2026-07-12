@@ -20,21 +20,20 @@ const notebooks = [
       
       body {
         font-family: 'Georgia', serif;
-        background: #1a1a1a; /* Тёмный однотонный фон */
+        background: #1a1a1a;
         min-height: 100vh;
         color: #fff;
-        padding: 2rem;
+        padding: 2rem 3rem; /* Отступы от краёв */
       }
 
       .nav {
-        position: absolute;
-        top: 2rem;
-        left: 2rem;
+        margin-bottom: 2rem; /* Отступ от кнопки до заголовка */
       }
       .nav a {
         color: rgba(255,255,255,0.6);
         text-decoration: none;
         font-size: 0.9rem;
+        display: inline-block;
       }
       .nav a:hover { color: #fff; }
 
@@ -42,22 +41,19 @@ const notebooks = [
         font-size: 2rem;
         font-weight: 300;
         margin-bottom: 2rem;
-        margin-top: 1rem;
         color: rgba(255,255,255,0.8);
       }
 
-      /* Сетка для блокнотов */
       .notebooks-container {
         display: flex;
         flex-wrap: wrap;
         gap: 3rem;
-        align-content: flex-start;
       }
 
       .notebook-item {
         text-decoration: none;
         color: #fff;
-        width: 200px; /* Фиксированная ширина для маленьких превью */
+        width: 200px;
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -89,6 +85,7 @@ const notebooks = [
       }
 
       @media (max-width: 600px) {
+        body { padding: 1.5rem; }
         .notebooks-container { gap: 2rem; }
         .notebook-item { width: 150px; }
       }
