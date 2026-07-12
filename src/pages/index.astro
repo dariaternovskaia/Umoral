@@ -6,17 +6,14 @@
     <title>Umoral</title>
     <meta charset="UTF-8">
     <style>
-      body { 
-        font-family: sans-serif; 
-        max-width: 1200px;
-        margin: 0 auto; 
-        padding: 2rem;
-        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/Umoral/bg-main.jpg');
-        background-size: cover;
-        background-position: center 60%; 
-        background-attachment: fixed;
-        background-repeat: no-repeat;
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        background: #1a1a1a;  /* Тёмно-серый однотонный фон */
         min-height: 100vh;
+        padding: 5rem 2rem 3rem;
+        color: #fff;
       }
       
       .boxes-container {
@@ -24,7 +21,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         max-width: 1000px;
-        margin: 35rem auto 0 auto; /* 👈 Сдвиг вниз через margin */
+        margin: 35rem auto 0 auto;
       }
       
       .section { 
