@@ -19,12 +19,17 @@ const conceptFiles = allEntries.filter(entry =>
       
       body {
         font-family: 'Georgia', serif;
-        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/Umoral/bg-notes.jpg');
+        /* Убрали затемняющий градиент, теперь чистое фото */
+        background: url('/Umoral/bg-notes.jpg');
         background-size: cover;
+        /* Сдвигаем фото вниз, чтобы показать здания и траву */
+        background-position: bottom center; 
         background-attachment: fixed;
         min-height: 100vh;
         padding: 5rem 2rem 3rem;
         color: #fff;
+        /* Добавляем тень тексту, чтобы он читался на фоне облаков */
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
       }
 
       .nav {
