@@ -16,6 +16,7 @@ const notebooks = [
     <title>Блокноты | Umoral</title>
     <meta charset="UTF-8">
     <style>
+      /* Полный сброс отступов браузера */
       * { margin: 0; padding: 0; box-sizing: border-box; }
       
       body {
@@ -23,17 +24,17 @@ const notebooks = [
         background: #1a1a1a;
         min-height: 100vh;
         color: #fff;
-        padding: 2rem 3rem; /* Отступы от краёв */
+        /* ЯВНЫЕ ОТСТУПЫ: верх, право, низ, ЛЕВО */
+        padding: 3rem 2rem 2rem 4rem;
       }
 
       .nav {
-        margin-bottom: 2rem; /* Отступ от кнопки до заголовка */
+        margin-bottom: 2rem;
       }
       .nav a {
         color: rgba(255,255,255,0.6);
         text-decoration: none;
         font-size: 0.9rem;
-        display: inline-block;
       }
       .nav a:hover { color: #fff; }
 
@@ -60,9 +61,7 @@ const notebooks = [
         transition: transform 0.2s;
       }
 
-      .notebook-item:hover {
-        transform: translateY(-5px);
-      }
+      .notebook-item:hover { transform: translateY(-5px); }
 
       .notebook-cover {
         width: 100%;
