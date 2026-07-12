@@ -23,11 +23,19 @@ const notebooks = [
         background: #1a1a1a;
         min-height: 100vh;
         color: #ffffff;
-        padding: 40px 30px 30px 60px; /* Чёткие отступы в пикселях */
+        /* Убрали padding отсюда, он ненадёжен */
+      }
+
+      /* НОВАЯ ОБЁРТКА С ОТСТУПАМИ */
+      .wrapper {
+        padding: 40px 30px 30px 80px; /* 80px слева — это мощный отступ! */
+        width: 100%;
+        min-height: 100vh;
       }
 
       .nav {
         margin-bottom: 30px;
+        display: block;
       }
       .nav a {
         color: #999999;
@@ -82,22 +90,25 @@ const notebooks = [
     </style>
   </head>
   <body>
-    <nav class="nav">
-      <a href="/Umoral/">← На главную</a>
-    </nav>
+    <!-- ВСЁ ВНУТРИ WRAPPER -->
+    <div class="wrapper">
+      <nav class="nav">
+        <a href="/Umoral/">← На главную</a>
+      </nav>
 
-    <h1>Блокноты</h1>
+      <h1>Блокноты</h1>
 
-    <div class="notebooks-container">
-      {notebooks.map(notebook => (
-        <a href={`/Umoral/journal/daily/${notebook.id}/`} class="notebook-item">
-          <img src={notebook.cover} alt={notebook.title} class="notebook-cover" />
-          <div class="notebook-info">
-            <h2>{notebook.title}</h2>
-            <p>{notebook.date}</p>
-          </div>
-        </a>
-      ))}
+      <div class="notebooks-container">
+        {notebooks.map(notebook => (
+          <a href={`/Umoral/journal/daily/${notebook.id}/`} class="notebook-item">
+            <img src={notebook.cover} alt={notebook.title} class="notebook-cover" />
+            <div class="notebook-info">
+              <h2>{notebook.title}</h2>
+              <p>{notebook.date}</p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </body>
 </html>
