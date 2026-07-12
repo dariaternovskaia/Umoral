@@ -1,27 +1,5 @@
 ---
 export const prerender = true;
-
-// Массив проектов - можно добавлять новые
-const projects = [
-  {
-    id: 1,
-    leftTitle: "Древнегреческие Боги",
-    youtubeId: "xaVzylUuMSI",
-    rightTitle: "Противостояние попа и Александра Невзорова",
-    rightImages: [
-      "/Umoral/arduino/project1/photo-001.jpg",
-      "/Umoral/arduino/project1/photo-002.jpg",
-      "/Umoral/arduino/project1/photo-003.jpg",
-      "/Umoral/arduino/project1/photo-004.jpg",
-      "/Umoral/arduino/project1/photo-005.jpg",
-      "/Umoral/arduino/project1/photo-006.jpg",
-      "/Umoral/arduino/project1/photo-007.jpg",
-      "/Umoral/arduino/project1/photo-008.jpg"
-    ],
-    rightText: "Инсталляция вдохновлена передачей А. Невзорова \"600 секунд\", смысл которой в том, чтобы за 600 секунд успеть рассказать весь материал. В данном случае в качестве \"материала\" выступает текст закольцованной песенки \"У попа была собака...\" (его можно увидеть на экране телесуфлёра), из-за чего задача становится невыполнимой."
-  }
-  // Чтобы добавить новый проект, просто скопируй блок выше и измени данные
-];
 ---
 
 <html>
@@ -33,10 +11,9 @@ const projects = [
       
       body {
         font-family: 'Georgia', serif;
-        background: #1a3d1a; /* Тёмно-зелёный фон */
+        background: #1a3d1a;
         min-height: 100vh;
         color: #fff;
-        overflow-x: hidden;
       }
 
       .nav {
@@ -46,180 +23,37 @@ const projects = [
         z-index: 1000;
       }
       .nav a {
-        color: rgba(255,255,255,0.9);
+        color: #fff;
         text-decoration: none;
-        font-size: 0.9rem;
-        padding: 0.3rem 0.8rem;
+        padding: 0.5rem 1rem;
         border: 1px solid rgba(255,255,255,0.4);
         border-radius: 4px;
-        background: rgba(0,0,0,0.3);
-      }
-      .nav a:hover {
-        color: #fff;
-        border-color: #fff;
-        background: rgba(0,0,0,0.5);
       }
 
-      .projects-container {
-        display: flex;
-        flex-direction: column;
+      h1 {
+        text-align: center;
+        padding: 5rem 2rem 2rem;
+        font-size: 2.5rem;
+        color: #90EE90;
       }
 
-      .project-split {
-        display: flex;
-        min-height: 100vh;
-        border-bottom: 3px dotted rgba(255,255,255,0.5);
-        position: relative;
-      }
-
-      .project-split:last-child {
-        border-bottom: none;
-      }
-
-      .left-panel, .right-panel {
-        flex: 1;
-        padding: 4rem 3rem;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .left-panel {
-        border-right: 3px dotted rgba(255,255,255,0.5);
-        background: rgba(0,0,0,0.2);
-      }
-
-      .right-panel {
-        background: rgba(0,0,0,0.1);
-      }
-
-      .panel-title {
-        font-size: 2rem;
-        font-weight: 600;
-        margin-bottom: 2rem;
-        color: #90EE90; /* Светло-зелёный для заголовков */
-        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      }
-
-      .video-container {
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 ratio */
-        height: 0;
-        background: #000;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      }
-
-      .video-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      .images-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      .project-image {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 6px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        transition: transform 0.3s;
-      }
-
-      .project-image:hover {
-        transform: scale(1.02);
-      }
-
-      .project-text {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: rgba(255,255,255,0.9);
-        padding: 1.5rem;
-        background: rgba(0,0,0,0.3);
-        border-radius: 8px;
-        border-left: 4px solid #90EE90;
-      }
-
-      /* Скроллбар */
-      ::-webkit-scrollbar {
-        width: 12px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0d260d;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #2d5a2d;
-        border-radius: 6px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #3d7a3d;
-      }
-
-      @media (max-width: 900px) {
-        .project-split {
-          flex-direction: column;
-        }
-        .left-panel, .right-panel {
-          border: none;
-          border-bottom: 2px dotted rgba(255,255,255,0.3);
-        }
-        .images-grid {
-          grid-template-columns: 1fr;
-        }
+      .content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        text-align: center;
       }
     </style>
   </head>
   <body>
     <nav class="nav">
       <a href="/Umoral/">← На главную</a>
-      <a href="/Umoral/content/creativity/poems/">← К творчеству</a>
     </nav>
-
-    <div class="projects-container">
-      {projects.map((project, index) => (
-        <div class="project-split" key={index}>
-          {/* Левая панель */}
-          <div class="left-panel">
-            <h2 class="panel-title">{project.leftTitle}</h2>
-            <div class="video-container">
-              <iframe 
-                src={`https://www.youtube.com/embed/${project.youtubeId}`}
-                title={project.leftTitle}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-
-          {/* Правая панель */}
-          <div class="right-panel">
-            <h2 class="panel-title">{project.rightTitle}</h2>
-            
-            <div class="images-grid">
-              {project.rightImages.map((img, i) => (
-                <img 
-                  src={img} 
-                  alt={`Project ${index + 1} - Image ${i + 1}`}
-                  class="project-image"
-                  loading="lazy"
-                />
-              ))}
-            </div>
-            
-            <p class="project-text">{project.rightText}</p>
-          </div>
-        </div>
-      ))}
+    
+    <h1>Arduino</h1>
+    
+    <div class="content">
+      <p>Страница в разработке...</p>
     </div>
   </body>
 </html>
