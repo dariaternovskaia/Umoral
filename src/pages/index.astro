@@ -10,14 +10,15 @@
       
       body {
         font-family: 'Georgia', serif;
-        /* Затемнение 0.0 - фото будет максимально ярким */
-        /* 85% - это позиция по вертикали. Сдвигает фокус вниз к фигурам */
-        background: linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)), url('/Umoral/bg-main.jpg');
+        /* Затемнение 0.1 (еле заметно) */
+        background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('/Umoral/bg-main.jpg');
         background-size: cover;
-        background-position: center 85%; 
+        /* 75% показывает больше верха, чем 85% */
+        background-position: center 75%; 
         background-attachment: fixed;
         min-height: 100vh;
-        padding: 5rem 2rem 3rem;
+        /* Увеличил отступы сверху и снизу, чтобы карточки не мешали */
+        padding: 40vh 2rem 10vh; 
         color: #fff;
       }
       
@@ -26,7 +27,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         max-width: 1000px;
-        margin: 25rem auto 0 auto; /* Поднял карточки выше (было 35rem) */
+        margin: 0 auto; /* Центрируем контейнер */
       }
       
       .section { 
@@ -84,15 +85,15 @@
       @media (max-width: 900px) {
         .boxes-container {
           grid-template-columns: repeat(2, 1fr);
-          margin-top: 8rem;
         }
+        body { padding: 30vh 2rem 10vh; }
       }
       
       @media (max-width: 650px) {
         .boxes-container {
           grid-template-columns: 1fr;
-          margin-top: 6rem;
         }
+        body { padding: 20vh 2rem 10vh; }
       }
     </style>
   </head>
