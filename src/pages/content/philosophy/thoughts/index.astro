@@ -31,7 +31,11 @@ P.S. выбор идти / не идти к психологу для филос
 
       body {
         font-family: 'Georgia', serif;
-        background: #121212; /* Очень тёмный фон */
+        /* Фон с затемнением 0.6 */
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Umoral/bg-street.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         color: #e0e0e0;
         line-height: 1.6;
         min-height: 100vh;
@@ -55,7 +59,7 @@ P.S. выбор идти / не идти к психологу для филос
       .thought-entry {
         margin-bottom: 5rem;
         padding-bottom: 3rem;
-        border-bottom: 1px solid #333;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
       }
 
       .thought-entry:last-child {
@@ -66,12 +70,12 @@ P.S. выбор идти / не идти к психологу для филос
         font-size: 1.1rem;
         text-align: justify;
         margin-bottom: 1.5rem;
-        white-space: pre-line; /* Сохраняет переносы строк */
+        white-space: pre-line;
       }
 
       .thought-date {
         font-size: 0.9rem;
-        color: #666;
+        color: #aaa;
         text-align: right;
         font-style: italic;
       }
@@ -82,7 +86,7 @@ P.S. выбор идти / не идти к психологу для филос
         left: 2rem;
       }
       .nav a {
-        color: #666;
+        color: #aaa;
         text-decoration: none;
         font-size: 0.9rem;
       }
