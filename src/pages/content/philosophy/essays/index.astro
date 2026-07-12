@@ -1,0 +1,120 @@
+---
+export const prerender = true;
+---
+
+<html>
+  <head>
+    <title>Эссе и видео-эссе | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: 'Georgia', serif;
+        background: #121212;
+        min-height: 100vh;
+        color: #fff;
+        padding: 5rem 2rem 3rem;
+      }
+
+      .nav {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+      }
+      .nav a:hover {
+        color: #fff;
+        border-color: #fff;
+        background: rgba(255,255,255,0.1);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 4rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+      }
+
+      .folders-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .folder-card {
+        background: rgba(255,255,255,0.05);
+        border: 2px solid rgba(255,255,255,0.2);
+        border-radius: 12px;
+        padding: 3rem 2rem;
+        text-align: center;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .folder-card:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.5);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+
+      .folder-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .folder-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .folder-desc {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.6);
+      }
+
+      @media (max-width: 700px) {
+        .folders-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/content/philosophy/thoughts/">← К мыслям</a>
+    </nav>
+
+    <h1>Эссе и видео-эссе</h1>
+
+    <div class="folders-container">
+      <a href="/Umoral/content/philosophy/essays/reading-diary/" class="folder-card">
+        <div class="folder-icon">📚</div>
+        <div class="folder-title">Читательский дневник</div>
+        <div class="folder-desc">Заметки о прочитанных книгах и статьях</div>
+      </a>
+
+      <a href="/Umoral/content/philosophy/essays/university/" class="folder-card">
+        <div class="folder-icon"></div>
+        <div class="folder-title">Работы для универа</div>
+        <div class="folder-desc">Академические работы и исследования</div>
+      </a>
+    </div>
+  </body>
+</html>
