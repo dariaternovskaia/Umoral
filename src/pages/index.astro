@@ -10,10 +10,11 @@
       
       body {
         font-family: 'Georgia', serif;
-        /* Уменьшил затемнение до 0.3 и сдвинул фокус вниз, чтобы были видны фигуры */
-        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/Umoral/bg-main.jpg');
+        /* Затемнение 0.4 (чтобы не было темно, но текст читался) */
+        /* Позиция center top (чтобы видеть верхнюю часть фото с головами) */
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/Umoral/bg-main.jpg');
         background-size: cover;
-        background-position: center bottom; /* Показываем нижнюю часть фото */
+        background-position: center top; 
         background-attachment: fixed;
         min-height: 100vh;
         padding: 5rem 2rem 3rem;
@@ -25,7 +26,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         max-width: 1000px;
-        margin: 35rem auto 0 auto;
+        margin: 35rem auto 0 auto; /* Карточки остаются внизу */
       }
       
       .section { 
