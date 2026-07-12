@@ -1,0 +1,227 @@
+---
+export const prerender = true;
+
+const title = "Калокагатия и дурдом бытия";
+const notebookId = "kalokagathia";
+---
+
+<html>
+  <head>
+    <title>{title} | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        background: #1a1a1a;
+        min-height: 100vh;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .nav {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 1000;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
+      }
+      .nav a:hover { color: #fff; border-color: #fff; }
+
+      .header {
+        text-align: center;
+        padding: 4rem 2rem 2rem;
+        background: linear-gradient(to bottom, #000, transparent);
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+        color: #ddd;
+      }
+
+      .viewer-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .page-image-wrapper {
+        width: 100%;
+        max-width: 800px;
+        background: #fff;
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        border-radius: 4px;
+        overflow: hidden;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .page-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .loader {
+        padding: 2rem;
+        color: #666;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 2rem;
+        padding-bottom: 2rem;
+      }
+
+      .btn {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.2s;
+        font-family: 'Georgia', serif;
+      }
+
+      .btn:hover:not(:disabled) {
+        background: rgba(255,255,255,0.2);
+        border-color: #fff;
+      }
+
+      .btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .page-indicator {
+        font-size: 1.1rem;
+        color: #aaa;
+        min-width: 100px;
+        text-align: center;
+      }
+
+      @media (max-width: 600px) {
+        .controls { gap: 1rem; }
+        .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+        .header { padding: 5rem 1rem 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/journal/daily/">← К блокнотам</a>
+    </nav>
+
+    <div class="header">
+      <h1>{title}</h1>
+    </div>
+
+    <div class="viewer-container">
+      <div class="page-image-wrapper" id="imageWrapper">
+        <div class="loader">Загрузка страницы...</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtn" onclick="changePage(-1)">← Пред.</button>
+        <span class="page-indicator" id="pageIndicator">1 / 10</span>
+        <button class="btn" id="nextBtn" onclick="changePage(1)">След. →</button>
+      </div>
+    </div>
+
+    <script>
+      // Настройки блокнота
+      const config = {
+        baseUrl: `/Umoral/notebooks/{notebookId}/`,
+        startPage: 1,
+        // Если ты знаешь точное кол-во страниц, впиши сюда. 
+        // Если нет — скрипт будет пытаться грузить пока не получит ошибку.
+        maxPages: 50 
+      };
+
+      let currentPage = 1;
+      let totalPages = 0; // Будет определено динамически или можно задать вручную
+
+      // Функция для получения номера с ведущими нулями (001, 002...)
+      function padNum(num) {
+        return String(num).padStart(3, '0');
+      }
+
+      function updateUI() {
+        const imgUrl = `${config.baseUrl}page-${padNum(currentPage)}.jpg`;
+        const wrapper = document.getElementById('imageWrapper');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicator = document.getElementById('pageIndicator');
+
+        // Обновляем индикатор
+        indicator.textContent = `${currentPage} / ${config.maxPages}`;
+        
+        // Блокируем кнопки если нужно
+        prevBtn.disabled = currentPage === 1;
+        // nextBtn.disabled = currentPage === config.maxPages; // Раскомментируй, если знаешь точно кол-во
+
+        // Загружаем картинку
+        wrapper.innerHTML = `<img src="${imgUrl}" class="page-image" alt="Page ${currentPage}" 
+                            onload="onImageLoad(this)" 
+                            onerror="onImageError()" />`;
+        
+        // Скролл к центру изображения (для мобилок удобно)
+        // window.scrollTo({ top: 0, behavior: 'smooth' }); 
+      }
+
+      function changePage(delta) {
+        const newPage = currentPage + delta;
+        if (newPage >= 1) {
+          currentPage = newPage;
+          updateUI();
+        }
+      }
+
+      function onImageLoad(img) {
+        // Картинка загрузилась успешно
+      }
+
+      function onImageError() {
+        // Если картинка не загрузилась (файл не найден)
+        // Можно остановить листание дальше
+        document.getElementById('nextBtn').disabled = true;
+        document.getElementById('imageWrapper').innerHTML = `<div class="loader">Конец блокнота</div>`;
+      }
+
+      // Навигация с клавиатуры
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') changePage(-1);
+        if (e.key === 'ArrowRight') changePage(1);
+      });
+
+      // Инициализация
+      updateUI();
+    </script>
+  </body>
+</html>

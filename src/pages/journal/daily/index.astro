@@ -1,0 +1,143 @@
+---
+export const prerender = true;
+
+// Здесь мы вручную задаем блокноты. Если их станет много, можно будет автоматизировать.
+const notebooks = [
+  {
+    id: 'kalokagathia',
+    title: 'Калокагатия и дурдом бытия',
+    description: 'Заметки, идеи, дудлы',
+    const notebooks = [
+     {
+       id: 'kalokagathia',
+       title: 'Калокагатия и дурдом бытия',
+       description: 'Заметки, идеи, дудлы',
+       cover: '/Umoral/notebooks/kalokagathia/cover.jpg',  // <-- Заменили на обложку
+       date: '2026'
+     }
+    ];
+    date: '2026'
+  }
+];
+---
+
+<html>
+  <head>
+    <title>Блокноты | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('/Umoral/bg-concert.jpg'); /* Фон можно поменять */
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 5rem 2rem 3rem;
+        color: #fff;
+      }
+
+      .nav {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+      }
+      .nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+      }
+
+      .notebooks-grid {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        padding: 1rem;
+      }
+
+      .notebook-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .notebook-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      }
+
+      .notebook-cover {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        display: block;
+        border-bottom: 2px solid #ddd;
+      }
+
+      .notebook-info {
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .notebook-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #1a1a1a;
+      }
+
+      .notebook-date {
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      @media (max-width: 600px) {
+        .notebooks-grid { grid-template-columns: 1fr; }
+        h1 { font-size: 1.8rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/">← На главную</a>
+      <a href="/Umoral/journal/">← К журналу</a>
+    </nav>
+    
+    <h1>Блокноты</h1>
+    
+    <div class="notebooks-grid">
+      {notebooks.map(notebook => (
+        <a href={`/Umoral/journal/daily/${notebook.id}/`} class="notebook-card">
+          <img src={notebook.cover} alt={notebook.title} class="notebook-cover" />
+          <div class="notebook-info">
+            <h2 class="notebook-title">{notebook.title}</h2>
+            <p class="notebook-date">{notebook.date}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </body>
+</html>
