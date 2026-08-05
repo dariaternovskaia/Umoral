@@ -2,7 +2,6 @@
 export const prerender = true;
 
 const title = "Голдобина (потерянные страницы)";
-const totalPages = 13;
 ---
 
 <html>
@@ -89,15 +88,13 @@ const totalPages = 13;
       </div>
 
       <div class="controls">
-        <button class="btn" id="prevBtn" onclick="changePage(-1)">← Пред.</button>
-        <span class="page-counter" id="counter">1 / <span id="totalPagesSpan">{totalPages}</span></span>
-        <button class="btn" id="nextBtn" onclick="changePage(1)">След. →</button>
+        <button class="btn" id="prevBtn">← Пред.</button>
+        <span class="page-counter" id="counter">загрузка…</span>
+        <button class="btn" id="nextBtn">След. →</button>
       </div>
     </div>
 
     <script>
-      const totalPages = parseInt(document.getElementById('totalPagesSpan').textContent);
-      let currentPage = 1;
       const baseUrl = '/Umoral/notebooks/goldobina/';
 
       const imgElement = document.getElementById('notebookImg');
@@ -105,34 +102,63 @@ const totalPages = 13;
       const nextBtn = document.getElementById('nextBtn');
       const counterElement = document.getElementById('counter');
 
+      let totalPages = 0;
+      let currentPage = 1;
+
       function padNum(num) {
         return String(num).padStart(3, '0');
       }
 
-      function updateViewer() {
-        const fileName = `page-${padNum(currentPage)}.jpg`;
-        const fullUrl = baseUrl + fileName;
+      function pageUrl(num) {
+        return baseUrl + 'page-' + padNum(num) + '.jpg';
+      }
 
+      // Сам считаем, сколько страниц лежит в папке:
+      // проверяем page-001, page-002... пока не наткнёмся на отсутствующий файл.
+      // Чтобы дополнить блокнот, просто добавь файлы — код трогать не надо.
+      function detectTotalPages(callback) {
+        let count = 0;
+        function check(n) {
+          const probe = new Image();
+          probe.onload = () => { count = n; check(n + 1); };
+          probe.onerror = () => callback(count);
+          probe.src = pageUrl(n);
+        }
+        check(1);
+      }
+
+      function updateViewer() {
+        const fullUrl = pageUrl(currentPage);
         const testImg = new Image();
-        testImg.onload = function() {
-          imgElement.src = fullUrl;
-        };
+        testImg.onload = () => { imgElement.src = fullUrl; };
         testImg.src = fullUrl;
 
-        counterElement.innerHTML = `${currentPage} / <span id="totalPagesSpan">${totalPages}</span>`;
+        counterElement.textContent = currentPage + ' / ' + totalPages;
         prevBtn.disabled = (currentPage === 1);
         nextBtn.disabled = (currentPage === totalPages);
       }
 
-      window.changePage = function(delta) {
+      function changePage(delta) {
         const newPage = currentPage + delta;
         if (newPage >= 1 && newPage <= totalPages) {
           currentPage = newPage;
           updateViewer();
         }
-      };
+      }
 
-      updateViewer();
+      prevBtn.onclick = () => changePage(-1);
+      nextBtn.onclick = () => changePage(1);
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+
+      detectTotalPages((found) => {
+        totalPages = found;
+        if (totalPages > 0) {
+          updateViewer();
+        } else {
+          counterElement.textContent = 'нет страниц';
+        }
+      });
     </script>
   </body>
 </html>
