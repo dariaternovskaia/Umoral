@@ -1,6 +1,8 @@
 ---
 export const prerender = true;
 
+// Обычные блокноты — новые добавляй сюда,
+// они всегда будут стоять ДО «Голдобины»
 const notebooks = [
   {
     id: 'kalokagathia',
@@ -9,6 +11,19 @@ const notebooks = [
     cover: '/Umoral/notebooks/kalokagathia/cover.jpg'
   }
 ];
+
+// «Голдобина» — сборная солянка потерянных страниц,
+// поэтому жёстко закреплена последней в списке
+const alwaysLast = [
+  {
+    id: 'goldobina',
+    title: 'Голдобина (потерянные страницы)',
+    date: 'разные годы',
+    cover: '/Umoral/notebooks/goldobina/cover.jpg'
+  }
+];
+
+const allNotebooks = [...notebooks, ...alwaysLast];
 ---
 
 <html>
@@ -17,18 +32,16 @@ const notebooks = [
     <meta charset="UTF-8">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      
+
       body {
         font-family: 'Georgia', serif;
         background: #1a1a1a;
         min-height: 100vh;
         color: #ffffff;
-        /* Убрали padding отсюда, он ненадёжен */
       }
 
-      /* НОВАЯ ОБЁРТКА С ОТСТУПАМИ */
       .wrapper {
-        padding: 40px 30px 30px 80px; /* 80px слева — это мощный отступ! */
+        padding: 40px 30px 30px 80px;
         width: 100%;
         min-height: 100vh;
       }
@@ -90,7 +103,6 @@ const notebooks = [
     </style>
   </head>
   <body>
-    <!-- ВСЁ ВНУТРИ WRAPPER -->
     <div class="wrapper">
       <nav class="nav">
         <a href="/Umoral/">← На главную</a>
@@ -99,7 +111,7 @@ const notebooks = [
       <h1>Блокноты</h1>
 
       <div class="notebooks-container">
-        {notebooks.map(notebook => (
+        {allNotebooks.map(notebook => (
           <a href={`/Umoral/journal/daily/${notebook.id}/`} class="notebook-item">
             <img src={notebook.cover} alt={notebook.title} class="notebook-cover" />
             <div class="notebook-info">

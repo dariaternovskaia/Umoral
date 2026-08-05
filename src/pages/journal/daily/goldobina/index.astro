@@ -1,0 +1,138 @@
+---
+export const prerender = true;
+
+const title = "Голдобина (потерянные страницы)";
+const totalPages = 13;
+---
+
+<html>
+  <head>
+    <title>{title} | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Georgia', serif;
+        background: #1a1a1a;
+        min-height: 100vh;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+      }
+      .nav { padding: 2rem 3rem; }
+      .nav a {
+        color: rgba(255,255,255,0.6);
+        text-decoration: none;
+        border: 1px solid rgba(255,255,255,0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+      .header { text-align: center; padding: 1rem 2rem 2rem; }
+      .header h1 { font-size: 2rem; font-weight: 300; color: #ddd; }
+
+      .viewer-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 2rem 2rem;
+      }
+
+      .image-wrapper {
+        width: 100%;
+        max-width: 800px;
+        background: #fff;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .page-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .controls {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+        align-items: center;
+      }
+      .btn {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+      .page-counter { font-size: 1.1rem; color: #aaa; }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/journal/daily/">← К блокнотам</a>
+    </nav>
+
+    <div class="header">
+      <h1>{title}</h1>
+    </div>
+
+    <div class="viewer-area">
+      <div class="image-wrapper">
+        <img id="notebookImg" class="page-image" src="" alt="Page" />
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtn" onclick="changePage(-1)">← Пред.</button>
+        <span class="page-counter" id="counter">1 / <span id="totalPagesSpan">{totalPages}</span></span>
+        <button class="btn" id="nextBtn" onclick="changePage(1)">След. →</button>
+      </div>
+    </div>
+
+    <script>
+      const totalPages = parseInt(document.getElementById('totalPagesSpan').textContent);
+      let currentPage = 1;
+      const baseUrl = '/Umoral/notebooks/goldobina/';
+
+      const imgElement = document.getElementById('notebookImg');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const counterElement = document.getElementById('counter');
+
+      function padNum(num) {
+        return String(num).padStart(3, '0');
+      }
+
+      function updateViewer() {
+        const fileName = `page-${padNum(currentPage)}.jpg`;
+        const fullUrl = baseUrl + fileName;
+
+        const testImg = new Image();
+        testImg.onload = function() {
+          imgElement.src = fullUrl;
+        };
+        testImg.src = fullUrl;
+
+        counterElement.innerHTML = `${currentPage} / <span id="totalPagesSpan">${totalPages}</span>`;
+        prevBtn.disabled = (currentPage === 1);
+        nextBtn.disabled = (currentPage === totalPages);
+      }
+
+      window.changePage = function(delta) {
+        const newPage = currentPage + delta;
+        if (newPage >= 1 && newPage <= totalPages) {
+          currentPage = newPage;
+          updateViewer();
+        }
+      };
+
+      updateViewer();
+    </script>
+  </body>
+</html>
