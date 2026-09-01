@@ -4,17 +4,21 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/full/'));
   return poems.map((poem) => ({
-    params: { slug: poem.id.split('/').pop().replace('.md', '') },
-    props: { poem }
+    params: { slug: poem.slug },
+    props: { 
+      title: poem.data.title,
+      Content: poem.Content,
+      date: poem.data.date
+    }
   }));
 }
 
-const { poem } = Astro.props;
+const { title, Content, date } = Astro.props;
 ---
 
 <html>
   <head>
-    <title>{poem.data.title} | Umoral</title>
+    <title>{title} | Umoral</title>
     <meta charset="UTF-8">
     <style>
       body { 
@@ -63,8 +67,8 @@ const { poem } = Astro.props;
     <nav>
       <a href="/Umoral/content/creativity/poems/full/">← К списку</a>
     </nav>
-    <h1>{poem.data.title}</h1>
-    <poem.Content />
-    {poem.data.date && <div class="date">{poem.data.date}</div>}
+    <h1>{title}</h1>
+    <Content />
+    {date && <div class="date">{date}</div>}
   </body>
 </html>
