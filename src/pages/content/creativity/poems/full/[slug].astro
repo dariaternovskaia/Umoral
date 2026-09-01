@@ -10,7 +10,8 @@ export async function getStaticPaths() {
 }
 
 const { poem } = Astro.props;
-const Content = poem.Content; // ← Важно!
+// Рендерим контент правильно для Astro 4+
+const { Content } = await poem.render();
 ---
 
 <html>
