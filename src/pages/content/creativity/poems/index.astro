@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 ---
 
 <html>
@@ -6,11 +7,7 @@
     <title>Стихи | Umoral</title>
     <meta charset="UTF-8">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
         font-family: 'Segoe UI', sans-serif;
@@ -24,7 +21,6 @@
         padding: 2rem;
       }
 
-      /* Простое центрирование через margin */
       .main-content {
         max-width: 1000px;
         margin: 6rem auto 0 auto;
@@ -39,9 +35,10 @@
         color: #fff;
       }
       
+      /* Теперь 3 колонки */
       .boxes-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 1.5rem;
         margin-bottom: 3rem;
       }
@@ -80,32 +77,15 @@
         text-decoration: none;
         font-size: 1.1rem;
       }
-      .back-link:hover {
-        color: #fff;
-        text-decoration: underline;
-      }
+      .back-link:hover { color: #fff; text-decoration: underline; }
 
       @media (max-width: 1000px) {
-        .boxes-grid {
-          grid-template-columns: repeat(2, 1fr);
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
+        .boxes-grid { grid-template-columns: repeat(2, 1fr); max-width: 600px; margin-left: auto; margin-right: auto; }
       }
-
       @media (max-width: 650px) {
-        .main-content {
-          margin-top: 3rem;
-        }
-        h1 {
-          font-size: 2rem;
-        }
-        .box {
-          padding: 1.5rem 0.5rem;
-          min-height: 100px;
-          font-size: 0.9rem;
-        }
+        .main-content { margin-top: 3rem; }
+        h1 { font-size: 2rem; }
+        .box { padding: 1.5rem 0.5rem; min-height: 100px; font-size: 0.9rem; }
       }
     </style>
   </head>
@@ -114,8 +94,7 @@
       <h1>Стихи</h1>
       
       <div class="boxes-grid">
-        <a href="/Umoral/content/creativity/poems/early-full/" class="box">Ранние полноценки</a>
-        <a href="/Umoral/content/creativity/poems/current-full/" class="box">Актуальные полноценки</a>
+        <a href="/Umoral/content/creativity/poems/full/" class="box">Полноценки</a>
         <a href="/Umoral/content/creativity/poems/concept/" class="box">Переводы и интерпретации</a>
         <a href="/Umoral/content/creativity/poems/exercises/" class="box">Упражнения</a>
       </div>
