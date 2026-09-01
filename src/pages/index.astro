@@ -4,181 +4,125 @@ export const prerender = true;
 
 <html>
   <head>
-    <title>Упражнения | Umoral</title>
+    <title>Umoral</title>
     <meta charset="UTF-8">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       
       body {
         font-family: 'Georgia', serif;
-        background: #8b0a1a; /* Тёмно-красный фон */
-        color: #fff;
+        background: linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)), url('/Umoral/bg-main.jpg');
+        background-size: cover;
+        background-position: center 50%; 
+        background-attachment: fixed;
         min-height: 100vh;
-        padding: 3rem 2rem;
-      }
-      
-      .nav {
-        margin-bottom: 2rem;
-      }
-      .nav a {
+        padding: 5rem 2rem 3rem;
         color: #fff;
-        text-decoration: none;
-        padding: 0.5rem 1rem;
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 4px;
-        margin-right: 1rem;
-        font-size: 0.9rem;
-      }
-      .nav a:hover {
-        background: rgba(255,255,255,0.1);
       }
       
-      .poems-grid {
+      .boxes-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 3rem;
-        max-width: 1200px;
-        margin: 0 auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 35rem auto 0 auto; 
       }
       
-      .poem-block {
-        background: rgba(255,255,255,0.05);
-        padding: 2rem;
-        border-radius: 8px;
-        border: 1px solid rgba(255,255,255,0.1);
+      .section { 
+        padding: 2rem 1.5rem;
+        background: #fff;
+        border: 2.5px solid #333;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: all 0.2s;
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
       }
       
-      .poem-text {
+      .section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        border-color: #000;
+      }
+      
+      h2 { 
+        margin: 0 0 1rem 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #222;
+        text-align: center;
+      }
+      
+      a { 
+        color: #333; 
+        text-decoration: none;
+        font-weight: 600;
         font-size: 0.95rem;
-        line-height: 1.6;
-        white-space: pre-line;
-        margin-bottom: 1rem;
+        display: block;
+        margin: 0.4rem 0;
       }
       
-      .poem-date {
-        font-size: 0.8rem;
-        color: rgba(255,255,255,0.6);
-        text-align: right;
+      a:hover { 
+        color: #000;
+        text-decoration: underline; 
       }
       
-      @media (max-width: 768px) {
-        .poems-grid {
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      
+      li {
+        margin: 0;
+        color: #444;
+      }
+      
+      @media (max-width: 900px) {
+        .boxes-container {
+          grid-template-columns: repeat(2, 1fr);
+          margin-top: 8rem;
+        }
+      }
+      
+      @media (max-width: 650px) {
+        .boxes-container {
           grid-template-columns: 1fr;
-          gap: 2rem;
+          margin-top: 6rem;
         }
       }
     </style>
   </head>
   <body>
-    <nav class="nav">
-      <a href="/Umoral/">← На главную</a>
-      <a href="/Umoral/content/creativity/poems/">← К стихам</a>
-    </nav>
-    
-    <div class="poems-grid">
-      <!-- Если луна в форме диска -->
-      <div class="poem-block">
-        <div class="poem-text">Если луна в форме диска,
-Значит где-то внутри неё дырка,
-Сквозь которую
-Быть может кто-нибудь
-Пристально смотрит на мир...</div>
-        <div class="poem-date">18.12.2019</div>
+    <div class="boxes-container">
+      <!-- Философия -->
+      <div class="section">
+        <h2>Философия</h2>
+        <ul>
+          <li><a href="/Umoral/content/philosophy/essays/">Эссе и видео-эссе</a></li>
+          <li><a href="/Umoral/content/philosophy/thoughts/">Мысли</a></li>
+        </ul>
       </div>
 
-      <!-- Кольца тоже, бывало -->
-      <div class="poem-block">
-        <div class="poem-text">Кольца тоже, бывало, успехом не увенчалось.
-Особенно если очень уж сильно
-начать всё сначала
-Но Вы не бойтесь, не лезьте в бойню:
-«Обручальный» в «ручной» легко превращается.</div>
-        <div class="poem-date">25.02.2020</div>
+      <!-- Творчество -->
+      <div class="section">
+        <h2>Творчество</h2>
+        <ul>
+          <li><a href="/Umoral/content/creativity/poems/">Стихи</a></li>
+          <li><a href="/Umoral/content/creativity/prose/">Проза</a></li>
+          <li><a href="/Umoral/content/creativity/arduino/">Arduino</a></li>
+          <li><a href="/Umoral/content/creativity/notes/">Заметки</a></li>
+        </ul>
       </div>
 
-      <!-- После каждого спора -->
-      <div class="poem-block">
-        <div class="poem-text">После каждого спора
-Обязательна порка,
-После скандала
-Нужны кандалы...</div>
-        <div class="poem-date">09.06.2020</div>
-      </div>
-
-      <!-- Сначала сверкают глаза -->
-      <div class="poem-block">
-        <div class="poem-text">Сначала сверкают глаза,
-После сверкают пятки.
-Понимаешь: бежать пора
-И, желательно, без оглядки.</div>
-        <div class="poem-date">12.04.2020</div>
-      </div>
-
-      <!-- Если ты хочешь понять кого-то -->
-      <div class="poem-block">
-        <div class="poem-text">Если ты хочешь понять кого-то,
-Поставь себя на его место,
-Но что, если хочешь понять Бога?
-Ответ очевиден. Действуй!</div>
-        <div class="poem-date">20.09.2022</div>
-      </div>
-
-      <!-- Для души -->
-      <div class="poem-block">
-        <div class="poem-text">Для души.
-Он восхищается этой прелестной душой,
-Ненавидит бессмертную и обожает чистую,
-Родственную всегда и везде с собой
-Зовёт в паре с душой бескорыстной,
-Грешную может часами слушать,
-Но уж много лет до сих пор
-Без волнений (,) за милую душу (,)
-Он живёт со спокойной душой.</div>
-        <div class="poem-date">11.08.2022</div>
-      </div>
-
-      <!-- Нет ни минуты покоя -->
-      <div class="poem-block">
-        <div class="poem-text">Нет ни минуты покоя,
-Но зато есть минута молчания.
-Звук шагов слышен тяжёлых,
-Стратегических, не случайный удар, звёздная болезнь –
-Это людям небо посылает весть.</div>
-        <div class="poem-date">25.03.2023</div>
-      </div>
-
-      <!-- Если и быть куклой -->
-      <div class="poem-block">
-        <div class="poem-text">Если и быть куклой в чужих руках,
-То желательно неваляшкой,
-Если кусочек неба развеять в прах,
-То желательно без Урана</div>
-        <div class="poem-date">15.09.2022</div>
-      </div>
-
-      <!-- Я ценю тебя больше -->
-      <div class="poem-block">
-        <div class="poem-text">Я ценю тебя больше во сто крат
-Или во сто карат
-Бриллиантов и изумрудов,
-Я не знаю пока, чудо.</div>
-        <div class="poem-date">08.03.2023</div>
-      </div>
-
-      <!-- Обезьяна с гранатой (НОВОЕ) -->
-      <div class="poem-block">
-        <div class="poem-text">Обезьяна с гранатой --
-Символ плоской, нет, не Земли -- онтологии,
-Где животные
-Наконец восстали против человека
-И под блеклым
-Солнцем пустыни начинают поход за предел Африки
-Вопреки
-Явлению резонанса в обществе
-(Отче наш)
-Проходят парадом!
-Рядом!</div>
-        <div class="poem-date">весна 2026</div>
+      <!-- Журнал (без Дневника) -->
+      <div class="section">
+        <h2>Журнал</h2>
+        <ul>
+          <li><a href="/Umoral/journal/daily/">Блокноты</a></li>
+        </ul>
       </div>
     </div>
   </body>
