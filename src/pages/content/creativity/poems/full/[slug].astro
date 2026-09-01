@@ -1,5 +1,5 @@
 ---
-import { getEntry } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const slugs = [
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const entry = await getEntry('content', `creativity/poems/full/${slug}`);
-const { Content } = await entry.render(); // ← ВОТ ЭТО НУЖНО!
+const { Content } = await render(entry); // ← ИМПОРТИРОВАТЬ render ИЗ astro:content!
 ---
 
 <html>
