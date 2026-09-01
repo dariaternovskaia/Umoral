@@ -2,14 +2,11 @@
 import { getCollection, getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  // Получаем все записи из коллекции
   const allEntries = await getCollection('content');
   
-  // Фильтруем только наши стихи и извлекаем slug из id
   return allEntries
     .filter(entry => entry.id.startsWith('creativity/poems/full/'))
     .map(entry => {
-      // Извлекаем slug из id: "creativity/poems/full/banquet" → "banquet"
       const slug = entry.id.split('/').pop()!;
       return {
         params: { slug },
@@ -18,9 +15,8 @@ export async function getStaticPaths() {
     });
 }
 
-// Загружаем конкретную запись по ID
 const { entryId } = Astro.props;
-const entry = await getEntry(entryId);
+const entry = await getEntry('content', entryId);
 ---
 
 <html>
