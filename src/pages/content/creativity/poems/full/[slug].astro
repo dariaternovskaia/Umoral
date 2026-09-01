@@ -2,31 +2,15 @@
 import { getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  // Жёстко прописываем slug'и — 100% надёжно
   const slugs = [
-    'banquet',
-    'beyond-grey-buildings', 
-    'childrens-poem-butterfly',
-    'chto-esli-kladbishcha',
-    'ghosting-god',
-    'gipoteticheskiy-sluchay',
-    'kamennye-serdca',
-    'milaya-pytochnaya',
-    'most-mezhdu-raem-i-adom',
-    'obyazatelstva',
-    'rukopozhatie',
-    'rusalka',
-    'slozhnosti-resheniya',
-    'spirit-of-city',
-    'stena-placha',
-    'utro-kazhdoe',
-    'ya-obrashchayus-k-bogu',
-    'zakon-merfi'
+    'banquet', 'beyond-grey-buildings', 'childrens-poem-butterfly',
+    'chto-esli-kladbishcha', 'ghosting-god', 'gipoteticheskiy-sluchay',
+    'kamennye-serdca', 'milaya-pytochnaya', 'most-mezhdu-raem-i-adom',
+    'obyazatelstva', 'rukopozhatie', 'rusalka', 'slozhnosti-resheniya',
+    'spirit-of-city', 'stena-placha', 'utro-kazhdoe',
+    'ya-obrashchayus-k-bogu', 'zakon-merfi'
   ];
-  
-  return slugs.map((slug) => ({
-    params: { slug }
-  }));
+  return slugs.map((slug) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;
@@ -38,26 +22,8 @@ const entry = await getEntry('content', `creativity/poems/full/${slug}`);
     <title>{entry?.data?.title || 'Стих'} | Umoral</title>
     <meta charset="UTF-8">
     <style>
-      body { 
-        font-family: 'Georgia', serif; 
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Umoral/bg-early-poems.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        color: #f0f0f0; 
-        padding: 3rem 2rem; 
-        max-width: 700px; 
-        margin: 0 auto; 
-        line-height: 1.8;
-        min-height: 100vh;
-      }
-      h1 { 
-        border-bottom: 1px solid rgba(255,255,255,0.3); 
-        padding-bottom: 0.5rem; 
-        margin-bottom: 1.5rem;
-        font-size: 2rem;
-        text-align: center;
-      }
+      body { font-family: 'Georgia', serif; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Umoral/bg-early-poems.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: #f0f0f0; padding: 3rem 2rem; max-width: 700px; margin: 0 auto; line-height: 1.8; min-height: 100vh; }
+      h1 { border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 2rem; text-align: center; }
       .poem { white-space: pre-line; font-size: 1.1rem; margin: 2rem 0; }
       .date { text-align: right; color: rgba(255,255,255,0.6); margin-top: 2rem; font-size: 0.9rem; }
       nav { margin-bottom: 2rem; }
