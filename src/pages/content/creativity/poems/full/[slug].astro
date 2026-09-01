@@ -1,20 +1,26 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  const poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/full/'));
+  // Получаем все записи из коллекции
+  const allEntries = await getCollection('content');
   
-  return poems.map((poem) => ({
-    params: { 
-      slug: poem.slug // ← Просто slug, без split и replace!
-    },
-    props: {
-      entry: poem
-    }
-  }));
+  // Фильтруем только наши стихи и извлекаем slug из id
+  return allEntries
+    .filter(entry => entry.id.startsWith('creativity/poems/full/'))
+    .map(entry => {
+      // Извлекаем slug из id: "creativity/poems/full/banquet" → "banquet"
+      const slug = entry.id.split('/').pop()!;
+      return {
+        params: { slug },
+        props: { entryId: entry.id }
+      };
+    });
 }
 
-const { entry } = Astro.props;
+// Загружаем конкретную запись по ID
+const { entryId } = Astro.props;
+const entry = await getEntry(entryId);
 ---
 
 <html>
@@ -57,17 +63,11 @@ const { entry } = Astro.props;
         border-radius: 4px;
         font-size: 0.9rem;
       }
-      nav a:hover { 
-        color: #fff; 
-        border-color: #fff; 
-        background: rgba(255,255,255,0.1);
-      }
+      nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
     </style>
   </head>
   <body>
-    <nav>
-      <a href="/Umoral/content/creativity/poems/full/">← К списку</a>
-    </nav>
+    <nav><a href="/Umoral/content/creativity/poems/full/">← К списку</a></nav>
     <h1>{entry.data.title}</h1>
     <entry.Content />
     {entry.data.date && <div class="date">{entry.data.date}</div>}
