@@ -1,23 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 
-// 1. Собираем пути для всех стихов из папки full
 export async function getStaticPaths() {
   const poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/full/'));
   return poems.map((poem) => ({
-    params: { slug: poem.slug },
-    props: poem,
+    // Slug берём прямо из имени файла → всегда строка, никогда не undefined
+    params: { slug: poem.id.split('/').pop().replace('.md', '') },
+    props: { poem }
   }));
 }
 
-// 2. Получаем текущий стих
-const { slug } = Astro.params;
-const posts = await getCollection('content', ({ id }) => id === `creativity/poems/full/${slug}`);
-const poem = posts[0];
-
-if (!poem) {
-  throw new Error(`Поэма ${slug} не найдена`);
-}
+const { poem } = Astro.props;
 ---
 
 <html>
@@ -25,58 +18,18 @@ if (!poem) {
     <title>{poem.data.title} | Umoral</title>
     <meta charset="UTF-8">
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body {
-        font-family: 'Georgia', serif;
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Umoral/bg-early-poems.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        color: #f0f0f0;
-        min-height: 100vh;
-        padding: 3rem 2rem;
-      }
-      .nav { display: flex; gap: 1rem; margin-bottom: 3rem; }
-      .nav a {
-        color: #bbb; text-decoration: none; font-size: 0.9rem;
-        padding: 0.3rem 0.8rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px;
-        transition: all 0.2s;
-      }
-      .nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
-      
-      .poem-content {
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.8;
-        font-size: 1.1rem;
-        white-space: pre-line;
-      }
-      .poem-content h1 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        border-bottom: 1px solid rgba(255,255,255,0.3);
-        padding-bottom: 1rem;
-      }
-      .poem-date {
-        display: block;
-        text-align: right;
-        margin-top: 2rem;
-        color: rgba(255,255,255,0.6);
-        font-size: 0.9rem;
-      }
+      body { font-family: sans-serif; background: #1a1a1a; color: #f0f0f0; padding: 2rem; max-width: 700px; margin: 0 auto; line-height: 1.8; }
+      h1 { border-bottom: 1px solid #444; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+      .content { white-space: pre-line; font-size: 1.1rem; }
+      .date { text-align: right; color: #888; margin-top: 2rem; font-size: 0.9rem; }
+      nav a { color: #aaa; text-decoration: none; }
+      nav a:hover { color: #fff; }
     </style>
   </head>
   <body>
-    <nav class="nav">
-      <a href="/Umoral/content/creativity/poems/full/">← К списку</a>
-      <a href="/Umoral/">← На главную</a>
-    </nav>
-
-    <article class="poem-content">
-      <h1>{poem.data.title}</h1>
-      <Content />
-      {poem.data.date && <span class="poem-date">{poem.data.date}</span>}
-    </article>
+    <nav><a href="/Umoral/content/creativity/poems/full/">← К списку</a></nav>
+    <h1>{poem.data.title}</h1>
+    <div class="content"><Content /></div>
+    {poem.data.date && <div class="date">{poem.data.date}</div>}
   </body>
 </html>
