@@ -1,27 +1,41 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  const allEntries = await getCollection('content');
+  // Жёстко прописываем slug'и — 100% надёжно
+  const slugs = [
+    'banquet',
+    'beyond-grey-buildings', 
+    'childrens-poem-butterfly',
+    'chto-esli-kladbishcha',
+    'ghosting-god',
+    'gipoteticheskiy-sluchay',
+    'kamennye-serdca',
+    'milaya-pytochnaya',
+    'most-mezhdu-raem-i-adom',
+    'obyazatelstva',
+    'rukopozhatie',
+    'rusalka',
+    'slozhnosti-resheniya',
+    'spirit-of-city',
+    'stena-placha',
+    'utro-kazhdoe',
+    'ya-obrashchayus-k-bogu',
+    'zakon-merfi'
+  ];
   
-  return allEntries
-    .filter(entry => entry.id.startsWith('creativity/poems/full/'))
-    .map(entry => {
-      const slug = entry.id.split('/').pop()!;
-      return {
-        params: { slug },
-        props: { entryId: entry.id }
-      };
-    });
+  return slugs.map((slug) => ({
+    params: { slug }
+  }));
 }
 
-const { entryId } = Astro.props;
-const entry = await getEntry('content', entryId);
+const { slug } = Astro.params;
+const entry = await getEntry('content', `creativity/poems/full/${slug}`);
 ---
 
 <html>
   <head>
-    <title>{entry.data.title} | Umoral</title>
+    <title>{entry?.data?.title || 'Стих'} | Umoral</title>
     <meta charset="UTF-8">
     <style>
       body { 
@@ -44,28 +58,17 @@ const entry = await getEntry('content', entryId);
         font-size: 2rem;
         text-align: center;
       }
-      .date { 
-        text-align: right; 
-        color: rgba(255,255,255,0.6); 
-        margin-top: 2rem; 
-        font-size: 0.9rem;
-      }
+      .poem { white-space: pre-line; font-size: 1.1rem; margin: 2rem 0; }
+      .date { text-align: right; color: rgba(255,255,255,0.6); margin-top: 2rem; font-size: 0.9rem; }
       nav { margin-bottom: 2rem; }
-      nav a { 
-        color: #bbb; 
-        text-decoration: none;
-        padding: 0.3rem 0.8rem; 
-        border: 1px solid rgba(255,255,255,0.3); 
-        border-radius: 4px;
-        font-size: 0.9rem;
-      }
+      nav a { color: #bbb; text-decoration: none; padding: 0.3rem 0.8rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; }
       nav a:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
     </style>
   </head>
   <body>
     <nav><a href="/Umoral/content/creativity/poems/full/">← К списку</a></nav>
-    <h1>{entry.data.title}</h1>
-    <entry.Content />
-    {entry.data.date && <div class="date">{entry.data.date}</div>}
+    <h1>{entry?.data?.title}</h1>
+    <div class="poem"><entry.Content /></div>
+    {entry?.data?.date && <div class="date">{entry.data.date}</div>}
   </body>
 </html>
