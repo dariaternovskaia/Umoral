@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 
+// Ищем стихи в папке full
 let poems = await getCollection('content', ({ id }) => id.startsWith('creativity/poems/full/'));
 poems = poems.filter(note => !note.data.draft);
 poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
@@ -57,7 +58,8 @@ poems.sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0));
     
     <div>
       {poems.map((poem) => {
-        const slug = poem.id.split('/').pop();
+        // Берем имя файла и убираем .md если оно есть
+        const slug = poem.id.split('/').pop().replace('.md', '');
         return (
           <a href={`/Umoral/content/creativity/poems/full/${slug}/`} class="poem-link">
             <span class="poem-title">{poem.data.title}</span>
