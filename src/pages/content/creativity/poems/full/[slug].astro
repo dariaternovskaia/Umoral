@@ -15,11 +15,12 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const entry = await getEntry('content', `creativity/poems/full/${slug}`);
+const { Content } = await entry.render(); // ← ВОТ ЭТО НУЖНО!
 ---
 
 <html>
   <head>
-    <title>{entry?.data?.title || 'Стих'} | Umoral</title>
+    <title>{entry.data.title} | Umoral</title>
     <meta charset="UTF-8">
     <style>
       body { font-family: 'Georgia', serif; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Umoral/bg-early-poems.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: #f0f0f0; padding: 3rem 2rem; max-width: 700px; margin: 0 auto; line-height: 1.8; min-height: 100vh; }
@@ -33,8 +34,8 @@ const entry = await getEntry('content', `creativity/poems/full/${slug}`);
   </head>
   <body>
     <nav><a href="/Umoral/content/creativity/poems/full/">← К списку</a></nav>
-    <h1>{entry?.data?.title}</h1>
-    <div class="poem"><entry.Content /></div>
-    {entry?.data?.date && <div class="date">{entry.data.date}</div>}
+    <h1>{entry.data.title}</h1>
+    <div class="poem"><Content /></div>
+    {entry.data.date && <div class="date">{entry.data.date}</div>}
   </body>
 </html>
