@@ -10,8 +10,6 @@ export async function getStaticPaths() {
 }
 
 const { poem } = Astro.props;
-// Рендерим контент правильно для Astro 4+
-const { Content } = await poem.render();
 ---
 
 <html>
@@ -38,10 +36,6 @@ const { Content } = await poem.render();
         margin-bottom: 1.5rem;
         font-size: 2rem;
         text-align: center;
-      }
-      .content { 
-        white-space: pre-line; 
-        font-size: 1.1rem;
       }
       .date { 
         text-align: right; 
@@ -70,7 +64,7 @@ const { Content } = await poem.render();
       <a href="/Umoral/content/creativity/poems/full/">← К списку</a>
     </nav>
     <h1>{poem.data.title}</h1>
-    <div class="content"><Content /></div>
+    <poem.Content />
     {poem.data.date && <div class="date">{poem.data.date}</div>}
   </body>
 </html>
