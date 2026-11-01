@@ -4,14 +4,13 @@ export const prerender = true;
 
 <html>
   <head>
-    <title>Читательский дневник | Umoral</title>
+    <title>Umoral</title>
     <meta charset="UTF-8">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
         font-family: 'Georgia', serif;
-        /* Изменён путь на ваш новый файл из папки public */
         background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/Umoral/bg-hospital.jpg');
         background-size: cover;
         background-position: center;
@@ -47,17 +46,6 @@ export const prerender = true;
         background: rgba(0,0,0,0.5);
       }
 
-      h1 {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        font-weight: 300;
-        letter-spacing: 2px;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        position: relative;
-        z-index: 20;
-      }
-
       .content {
         max-width: 900px;
         margin: 0 auto;
@@ -65,7 +53,6 @@ export const prerender = true;
         z-index: 20;
       }
 
-      /* Контейнер для кружков, не препятствующий кликам по пустым местам */
       .circles-container {
         position: fixed;
         top: 0;
@@ -92,7 +79,7 @@ export const prerender = true;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5);
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        pointer-events: auto; /* Включаем клики только для самих кружков */
+        pointer-events: auto;
         border: 2px solid rgba(255, 255, 255, 0.4);
         font-weight: bold;
         text-shadow: 0 1px 3px rgba(0,0,0,0.5);
@@ -105,7 +92,6 @@ export const prerender = true;
         border-color: #fff;
       }
 
-      /* Хаотичные позиции для основных кликабельных кружков */
       .circle-1 {
         top: 25%;
         left: 15%;
@@ -116,7 +102,6 @@ export const prerender = true;
         left: 75%;
       }
 
-      /* Декоративные кружки для усиления эффекта хаотичного разброса */
       .circle-deco-1 {
         top: 45%;
         left: 85%;
@@ -145,7 +130,6 @@ export const prerender = true;
       }
 
       @media (max-width: 600px) {
-        h1 { font-size: 1.8rem; }
         .green-circle {
           width: 80px;
           height: 80px;
@@ -162,22 +146,15 @@ export const prerender = true;
       <a href="/Umoral/">← На главную</a>
     </nav>
 
-    <div class="content">
-      <h1>Читательский дневник</h1>
-    </div>
-
     <div class="circles-container">
-      <!-- Первый кликабельный кружок -->
       <a href="https://dariaternovskaia.github.io/Umoral/content/philosophy/essays/reading-diary/krasznahorkai/" class="green-circle circle-1">
         Краснахоркаи
       </a>
       
-      <!-- Второй кликабельный кружок -->
       <a href="https://dariaternovskaia.github.io/Umoral/content/philosophy/essays/reading-diary/le-fanu/" class="green-circle circle-2">
         Ле Фаню
       </a>
       
-      <!-- Декоративные элементы для атмосферы -->
       <div class="green-circle circle-deco-1"></div>
       <div class="green-circle circle-deco-2"></div>
       <div class="green-circle circle-deco-3"></div>
