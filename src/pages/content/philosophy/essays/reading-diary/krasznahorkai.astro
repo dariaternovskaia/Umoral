@@ -1,0 +1,117 @@
+---
+export const prerender = true;
+---
+
+<html>
+  <head>
+    <title>Ласло Краснахоркаи | Читательский дневник | Umoral</title>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/Umoral/bg-reading-diary.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        color: #fff;
+        padding: 5rem 2rem 3rem;
+      }
+
+      .nav {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .nav a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+      }
+      .nav a:hover {
+        color: #fff;
+        border-color: #fff;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+
+      .content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .video-section {
+        margin-bottom: 3rem;
+      }
+
+      .video-container {
+        width: 100%;
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+
+      @media (max-width: 600px) {
+        h1 { font-size: 1.8rem; }
+        .section-title { font-size: 1.4rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/Umoral/content/philosophy/essays/reading-diary/">← Назад к дневнику</a>
+      <a href="/Umoral/">← На главную</a>
+    </nav>
+
+    <div class="content">
+      <h1>Читательский дневник</h1>
+      
+      <div class="video-section">
+        <h2 class="section-title">Экзистенциальная и притчевая реальность в романе Ласло Краснахоркаи "Сатанинское танго"</h2>
+        <div class="video-container">
+          <iframe 
+            src="https://www.youtube.com/embed/NIwSpJbynUs"
+            title="Читательский дневник"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
