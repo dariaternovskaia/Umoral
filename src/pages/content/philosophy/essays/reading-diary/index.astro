@@ -1,4 +1,5 @@
 ---
+---
 export const prerender = true;
 ---
 
@@ -11,66 +12,14 @@ export const prerender = true;
 
       body {
         font-family: 'Georgia', serif;
-        /* Новое фото с больницей. Можно заменить на локальный файл: url('/Umoral/bg-hospital.jpg') */
-        background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('/Umoral/bg-hospital.jpg');
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/Umoral/bg-reading-diary.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
         min-height: 100vh;
         color: #fff;
         padding: 5rem 2rem 3rem;
-        position: relative;
-        overflow-x: hidden;
       }
-
-      /* Контейнер для хаотичных зелёных кружочков */
-      .circles-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none; /* Чтобы кружочки не мешали кликам */
-        z-index: 1;
-        overflow: hidden;
-      }
-
-      .circle {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0.35;
-        filter: blur(3px);
-        animation: float 25s infinite ease-in-out;
-      }
-
-      @keyframes float {
-        0%, 100% { transform: translateY(0) translateX(0); }
-        25% { transform: translateY(-20px) translateX(15px); }
-        50% { transform: translateY(15px) translateX(-20px); }
-        75% { transform: translateY(-15px) translateX(10px); }
-      }
-
-      /* Хаотичные позиции, размеры и оттенки зелёного */
-      .circle:nth-child(1) { width: 120px; height: 120px; background: #2ecc71; top: 12%; left: 8%; animation-delay: 0s; }
-      .circle:nth-child(2) { width: 80px; height: 80px; background: #27ae60; top: 25%; left: 85%; animation-delay: 1s; }
-      .circle:nth-child(3) { width: 150px; height: 150px; background: #1abc9c; top: 65%; left: 12%; animation-delay: 2s; }
-      .circle:nth-child(4) { width: 60px; height: 60px; background: #16a085; top: 78%; left: 72%; animation-delay: 3s; }
-      .circle:nth-child(5) { width: 200px; height: 200px; background: #2ecc71; top: 45%; left: 55%; animation-delay: 4s; }
-      .circle:nth-child(6) { width: 90px; height: 90px; background: #229954; top: 18%; left: 62%; animation-delay: 5s; }
-      .circle:nth-child(7) { width: 110px; height: 110px; background: #1e8449; top: 88%; left: 35%; animation-delay: 6s; }
-      .circle:nth-child(8) { width: 70px; height: 70px; background: #27ae60; top: 52%; left: 22%; animation-delay: 7s; }
-      .circle:nth-child(9) { width: 130px; height: 130px; background: #1abc9c; top: 32%; left: 92%; animation-delay: 8s; }
-      .circle:nth-child(10) { width: 100px; height: 100px; background: #2ecc71; top: 92%; left: 82%; animation-delay: 9s; }
-      .circle:nth-child(11) { width: 160px; height: 160px; background: #16a085; top: 8%; left: 45%; animation-delay: 10s; }
-      .circle:nth-child(12) { width: 85px; height: 85px; background: #229954; top: 72%; left: 58%; animation-delay: 11s; }
-      .circle:nth-child(13) { width: 140px; height: 140px; background: #1e8449; top: 38%; left: 30%; animation-delay: 12s; }
-      .circle:nth-child(14) { width: 95px; height: 95px; background: #27ae60; top: 82%; left: 15%; animation-delay: 13s; }
-      .circle:nth-child(15) { width: 115px; height: 115px; background: #1abc9c; top: 15%; left: 75%; animation-delay: 14s; }
-      .circle:nth-child(16) { width: 75px; height: 75px; background: #16a085; top: 58%; left: 88%; animation-delay: 15s; }
-      .circle:nth-child(17) { width: 180px; height: 180px; background: #2ecc71; top: 2%; left: 20%; animation-delay: 16s; }
-      .circle:nth-child(18) { width: 65px; height: 65px; background: #229954; top: 95%; left: 50%; animation-delay: 17s; }
-      .circle:nth-child(19) { width: 105px; height: 105px; background: #58d68d; top: 42%; left: 5%; animation-delay: 18s; }
-      .circle:nth-child(20) { width: 125px; height: 125px; background: #82e0aa; top: 28%; left: 48%; animation-delay: 19s; }
 
       .nav {
         position: absolute;
@@ -78,7 +27,6 @@ export const prerender = true;
         left: 2rem;
         display: flex;
         gap: 1rem;
-        z-index: 10;
       }
       .nav a {
         color: rgba(255,255,255,0.8);
@@ -87,19 +35,10 @@ export const prerender = true;
         padding: 0.3rem 0.8rem;
         border: 1px solid rgba(255,255,255,0.3);
         border-radius: 4px;
-        transition: all 0.3s ease;
       }
       .nav a:hover {
         color: #fff;
         border-color: #fff;
-        background: rgba(255,255,255,0.1);
-      }
-
-      .content {
-        max-width: 900px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 5; /* Контент поверх кружочков */
       }
 
       h1 {
@@ -108,7 +47,12 @@ export const prerender = true;
         margin-bottom: 3rem;
         font-weight: 300;
         letter-spacing: 2px;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+
+      .content {
+        max-width: 900px;
+        margin: 0 auto;
       }
 
       .video-section {
@@ -123,7 +67,7 @@ export const prerender = true;
         background: #000;
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       }
 
       .video-container iframe {
@@ -140,25 +84,16 @@ export const prerender = true;
         margin-bottom: 1.5rem;
         text-align: center;
         font-weight: 600;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       }
 
       @media (max-width: 600px) {
         h1 { font-size: 1.8rem; }
         .section-title { font-size: 1.4rem; }
-        .nav { top: 1rem; left: 1rem; flex-direction: column; gap: 0.5rem; }
       }
     </style>
   </head>
   <body>
-    <!-- Хаотичные зелёные кружочки -->
-    <div class="circles-container">
-      <div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div>
-      <div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div>
-      <div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div>
-      <div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div>
-    </div>
-
     <nav class="nav">
       <a href="/Umoral/content/philosophy/essays/">← Назад</a>
       <a href="/Umoral/">← На главную</a>
